@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="margin_top_card">52dp</dimen>
+    <dimen name="margin_card">32dp</dimen>
+    <dimen name="title_card">28sp</dimen>
+</resources>

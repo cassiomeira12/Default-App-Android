@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#84E8B2</color>
+    <color name="colorPrimaryDark">#66B489</color>
+    <color name="colorAccent">#808080</color>
+    <color name="backgroud">#FFFFFF</color>
+    
+    <color name="backgroud_shape">#FFFFFF</color>
+    <color name="border_shape">#E9E9E9</color>
+
+    <color name="black_overlay">#66000000</color>
+    <color name="backgroud_card">@color/colorPrimary</color>
+
+    <color name="btn_text_color">#FFFFFF</color>
+    <color name="btn_text_link">#2196F3</color>
+
+</resources>
