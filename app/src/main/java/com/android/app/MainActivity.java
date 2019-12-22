@@ -1,10 +1,12 @@
 package com.android.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.android.app.data.UserSingleton;
 import com.android.app.data.model.BaseUser;
+import com.android.app.view.chat.ChatsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        startActivity(new Intent(getApplicationContext(), ChatsActivity.class));
     }
 
 }

@@ -11,6 +11,8 @@ import com.android.app.data.model.Chat
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterChat
 import kotlinx.android.synthetic.main.activity_chats.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatsActivity : AppCompatActivity(), Adapter.Actions {
     private val TAG = javaClass.simpleName
@@ -26,9 +28,9 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions {
         recyclerChats.layoutManager = layout
         recyclerChats.adapter = adapter
 
-        adapter.add(Chat("UESB Computação"))
-        adapter.add(Chat("Frei"))
-        adapter.add(Chat("Us Karas"))
+        adapter.add(Chat("UESB Computação", Date()))
+        adapter.add(Chat("Frei", Date()))
+        adapter.add(Chat("Us Karas", Date()))
     }
 
     override fun onLongClickItem(view: View?) {
@@ -37,7 +39,9 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions {
 
     override fun onClickItem(view: View?) {
         if (adapter.itensSelected.isEmpty()) {
-            startActivity(Intent(getApplicationContext(), ChatActivity::class.java))
+            val intent = Intent(getApplicationContext(), ChatActivity::class.java)
+            intent.putExtra("chat", adapter.objectSelected)
+            startActivity(intent)
         }
     }
 }
