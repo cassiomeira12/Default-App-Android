@@ -9,19 +9,22 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:usesCleartextTraffic="true"
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.chat.ChatActivity"/>
+        <activity
+            android:name=".view.chat.ChatsActivity" />
+        <activity
+            android:name=".view.login.VerifiedEmailActivity"
             android:label=""
-            android:screenOrientation="portrait"
             android:parentActivityName=".view.login.VerifiedEmailActivity"
-            android:name=".view.login.VerifiedEmailActivity"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.login.TermosAppActivity"
             android:label="Termos do App"
@@ -31,8 +34,7 @@
             android:label=""
             android:parentActivityName=".view.login.ContinueUserDataActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".view.login.ValidarTelefoneActivity" />
+        <activity android:name=".view.login.ValidarTelefoneActivity" />
         <activity
             android:name=".view.login.CreateAccountActivity"
             android:theme="@style/AppThemeNoActionBar" />
@@ -50,8 +52,7 @@
             android:name=".view.login.LoginActivity"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".MainActivity" />
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".view.SplashActivity"
             android:theme="@style/LaunchTheme">
