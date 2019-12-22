@@ -2,6 +2,7 @@ package com.android.app;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.app.data.UserSingleton;
 import com.android.app.data.model.BaseUser;
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        Toast.makeText(this, user.email, Toast.LENGTH_LONG).show();
     }
 
 }
