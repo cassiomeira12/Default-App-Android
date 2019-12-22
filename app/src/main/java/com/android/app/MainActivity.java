@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        //Aqui
         Toast.makeText(this, user.email, Toast.LENGTH_LONG).show();
     }
 
