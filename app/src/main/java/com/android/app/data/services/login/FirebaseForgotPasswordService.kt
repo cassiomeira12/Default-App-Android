@@ -14,10 +14,29 @@ class FirebaseForgotPasswordService (var listener: IForgotPasswordContract.Liste
                         Log.d(TAG, "Email para recuperar senha enviado com sucesso")
                         listener.onSuccess()
                     } else {
-                        Log.e(TAG, task.exception.toString())
-                        listener.onFailure("Erro ao enviar email")
+                        checkException(task.exception!!)
                     }
                 }
+    }
+
+    private fun checkException(ex: Exception) {
+        Log.e(TAG, ex.toString())
+        when (ex.message) {
+            DISCONNECTED_NETWORK -> {
+                listener.onFailure("Verifique sua conexão com a internet")
+            }
+            ACCOUNT_NOT_FOUND -> {
+                listener.onFailure("Não existe nenhuma conta com esse email")
+            }
+            else -> {
+                listener.onFailure(ex.message!!)
+            }
+        }
+    }
+
+    companion object {
+        private val DISCONNECTED_NETWORK = "An internal error has occurred. [ 7: ]"
+        private val ACCOUNT_NOT_FOUND = "There is no user record corresponding to this identifier. The user may have been deleted."
     }
 
 }

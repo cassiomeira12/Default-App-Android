@@ -32,22 +32,23 @@ class FirebaseUserService(var listener : IUser.Listener) : IUser.Service {
         db.collection("users")
                 .whereEqualTo("email", email)
                 .get()
-                .addOnSuccessListener { querySnapshot ->
-                    if (querySnapshot.size() == 0) {
-                        Log.e(TAG, "Usuario nao encontrado com email " + email)
-                        listener.onResult(null)//Erro usuario nao encontrado
-                    } else if (querySnapshot.size() == 1) {
-                        Log.d(TAG, "Usuario logado " + email)
-                        val user = querySnapshot.documents.get(0).toObject(BaseUser::class.java)
-                        listener.onResult(user)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        if (task.result!!.documents.size == 0) {
+                            Log.e(TAG, "Usuario nao encontrado com email " + email)
+                            listener.onResult(null)//Erro usuario nao encontrado
+                        } else if (task.result!!.documents.size == 1) {
+                            Log.d(TAG, "Usuario logado " + email)
+                            val user = task.result!!.documents.get(0).toObject(BaseUser::class.java)
+                            listener.onResult(user)
+                        } else {
+                            Log.e(TAG, "Foram encontradas " + task.result!!.documents.size + " contas com email " + email)
+                            listener.onResult(null)
+                        }
                     } else {
-                        Log.e(TAG, "Foram encontradas " + querySnapshot.size() + " contas com email " + email)
+                        Log.e(TAG, task.exception.toString())
                         listener.onResult(null)
                     }
-                }
-                .addOnFailureListener { exception ->
-                    Log.e(TAG, exception.toString())
-                    listener.onResult(null)
                 }
     }
 }

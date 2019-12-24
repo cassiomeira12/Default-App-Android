@@ -46,4 +46,8 @@
     <string name="email_enviado_com_sucesso">Email enviado com sucesso!</string>
     <string name="verifique_sua_caixa_de_entrada_e_spam">Verifique sua caixa de entrada e spam</string>
     <string name="user_email_com">user@email.com</string>
+    <string name="verifique_sua_conexao_internet">Verifique sua conexão com a internet</string>
+    <string name="esse_email_ja_esta_sendo_usado">Esse email já está sendo utilizado em outra conta</string>
+    <string name="digite_seu_nome">Digite seu nome</string>
+    <string name="senha_nao_sao_iguais">Senha não são iguais</string>
 </resources>
