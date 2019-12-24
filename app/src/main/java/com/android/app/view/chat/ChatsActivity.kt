@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.app.R
@@ -31,6 +33,36 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions {
         adapter.add(Chat("UESB Computação", Date()))
         adapter.add(Chat("Frei", Date()))
         adapter.add(Chat("Us Karas", Date()))
+
+        supportNaviagteUp()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
+
+    private fun supportNaviagteUp() {
+        setSupportActionBar(toolbar)
+        //getSupportActionBar()!!.setDisplayShowHomeEnabled(true)
+        //getSupportActionBar()!!.setHomeButtonEnabled(true)
+        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()!!.setDisplayShowTitleEnabled(false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        getMenuInflater().inflate(R.menu.menu_chat, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_settings -> {
+
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onLongClickItem(view: View?) {

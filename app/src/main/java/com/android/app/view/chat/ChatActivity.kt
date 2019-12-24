@@ -1,8 +1,12 @@
 package com.android.app.view.chat
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.app.R
@@ -12,10 +16,8 @@ import com.android.app.utils.KeyboardUtils
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterMessage
 import kotlinx.android.synthetic.main.activity_chat.*
-import kotlinx.android.synthetic.main.activity_chats.*
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 class ChatActivity : AppCompatActivity(), Adapter.Actions {
     private val TAG = javaClass.simpleName
@@ -34,14 +36,46 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions {
         recyclerMensagens.layoutManager = layout
         recyclerMensagens.adapter = adapter
 
+        supportNaviagteUp()
+
         KeyboardUtils.addKeyboardToggleListener(this) { isVisible ->
             recyclerMensagens.smoothScrollToPosition(adapter.itemCount)
         }
+
+        showChatData(chat)
+        carregarMensagens(chat)
     }
 
-    override fun onResume() {
-        super.onResume()
-        carregarMensagens(chat)
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
+    }
+
+    private fun supportNaviagteUp() {
+        setSupportActionBar(toolbar)
+        //getSupportActionBar()!!.setDisplayShowHomeEnabled(true)
+        //getSupportActionBar()!!.setHomeButtonEnabled(true)
+        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()!!.setDisplayShowTitleEnabled(false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        getMenuInflater().inflate(R.menu.menu_chat, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_settings -> {
+
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showChatData(chat: Chat) {
+        txtToolbarTitle.setText(chat.nome)
     }
 
     fun carregarMensagens(chat: Chat) {
@@ -87,5 +121,9 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions {
 
     override fun onLongClickItem(view: View) {
 
+    }
+
+    fun onAppBarClick(view: View) {
+        startActivity(Intent(getApplicationContext(), ChatConfigActivity::class.java))
     }
 }

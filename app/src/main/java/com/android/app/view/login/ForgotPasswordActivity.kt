@@ -34,7 +34,7 @@ class ForgotPasswordActivity : AppCompatActivity(), IForgotPasswordContract.View
         val email = edtEmail.text.toString().trim()
         val isEmailValid = (!TextUtils.isEmpty(email)) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
         if (!isEmailValid) {
-            edtEmail.error = "Email inválido"
+            edtEmail.error = getString(R.string.email_invalido)
         }
         return isEmailValid
     }

@@ -1,14 +1,24 @@
 package com.android.app.data.model;
 
+import com.google.firebase.firestore.Exclude;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Message {
-    public boolean enviado = false;
+    @SerializedName("tipo")
     public Tipo tipo;
+    @SerializedName("message")
     public String message;
+    @SerializedName("hide")
     public boolean hide;
+    @SerializedName("sendDate")
     public Date sendDate;
+    @SerializedName("mediaURL")
     public String mediaURL;
+
+    @Exclude
+    public boolean enviado = false;
 
     public Message(String message, Tipo tipo, Date sendDate) {
         this.message = message;

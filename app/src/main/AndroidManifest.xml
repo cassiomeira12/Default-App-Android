@@ -16,10 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".view.chat.ChatConfigActivity"></activity>
         <activity
-            android:name=".view.chat.ChatActivity"/>
+            android:name=".view.chat.ChatActivity"
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
-            android:name=".view.chat.ChatsActivity" />
+            android:name=".view.chat.ChatsActivity"
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".view.login.VerifiedEmailActivity"
             android:label=""
@@ -34,7 +37,6 @@
             android:label=""
             android:parentActivityName=".view.login.ContinueUserDataActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".view.login.ValidarTelefoneActivity" />
         <activity
             android:name=".view.login.CreateAccountActivity"
             android:theme="@style/AppThemeNoActionBar" />

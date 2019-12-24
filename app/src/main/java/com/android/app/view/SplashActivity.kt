@@ -22,13 +22,7 @@ class SplashActivity : AppCompatActivity(), IUser.View {
         setContentView(R.layout.activity_splash)
 
         iPresenter = UserPresenter(this)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Handler().postDelayed(Runnable {
-            iPresenter.currentUser(this)
-        }, 1000)
+        iPresenter.currentUser(this)
     }
 
     override fun onDestroy() {

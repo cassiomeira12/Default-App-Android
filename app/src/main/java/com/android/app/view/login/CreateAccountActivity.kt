@@ -37,6 +37,11 @@ class CreateAccountActivity : AppCompatActivity(), ICreateAccountContract.View {
         createAccount()
     }
 
+    override fun onBackPressed() {
+        startActivity(Intent(getApplication(), SignupActivity::class.java))
+        finish()
+    }
+
     override fun onDestroy() {
         iPresenter.onDestroy()
         super.onDestroy()
@@ -63,7 +68,7 @@ class CreateAccountActivity : AppCompatActivity(), ICreateAccountContract.View {
                 Runnable {
                     startActivity(Intent(getApplicationContext(), VerifiedEmailActivity::class.java))
                     finish()
-                }, 1500
+                }, 1000
         )
     }
 
