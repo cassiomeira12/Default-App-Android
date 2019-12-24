@@ -24,5 +24,4 @@ class UserPresenter (view: IUser.View) : IUser.Presenter, IUser.Listener {
     override fun onResult(user: BaseUser?) {
         view?.onResult(user)
     }
-
 }

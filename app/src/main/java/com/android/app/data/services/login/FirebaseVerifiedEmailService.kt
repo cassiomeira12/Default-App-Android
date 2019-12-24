@@ -18,8 +18,7 @@ class FirebaseVerifiedEmailService (var listener : IVerifiedEmailContract.Listen
                         Log.d(TAG, "Email de verificação enviado com sucesso!")
                         listener.onSuccess("Email de verificação enviado com sucesso!")
                     } else {
-                        listener.onFailure("Não foi possível enviar o email de verificação")
-                        Log.e(TAG, task.exception.toString())
+                        checkException(task.exception!!)
                     }
                 }
     }
@@ -31,6 +30,26 @@ class FirebaseVerifiedEmailService (var listener : IVerifiedEmailContract.Listen
                 .document(user.uID)
                 .update("emailVerified", emailVerified)
         return emailVerified
+    }
+
+    private fun checkException(ex: Exception) {
+        Log.e(TAG, ex.toString())
+        when (ex.message) {
+            DISCONNECTED_NETWORK -> {
+                listener.onFailure("Verifique sua conexão com a internet")
+            }
+            ACCOUNT_NOT_FOUND -> {
+                listener.onFailure("Não existe nenhuma conta com esse email")
+            }
+            else -> {
+                listener.onFailure(ex.message!!)
+            }
+        }
+    }
+
+    companion object {
+        private val DISCONNECTED_NETWORK = "An internal error has occurred. [ 7: ]"
+        private val ACCOUNT_NOT_FOUND = "There is no user record corresponding to this identifier. The user may have been deleted."
     }
 
 }

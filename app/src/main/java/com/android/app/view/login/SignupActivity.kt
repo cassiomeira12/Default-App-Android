@@ -15,6 +15,9 @@ class SignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+
+        edtName.setText(UserSingleton.instance!!.name)
+        edtEmail.setText(UserSingleton.instance!!.email)
     }
 
     override fun onBackPressed() {
@@ -33,13 +36,13 @@ class SignupActivity : AppCompatActivity() {
         val name = edtName.text.toString().trim()
         val isNameValid = !TextUtils.isEmpty(name)
         if (!isNameValid) {
-            edtName.error = "Digite seu nome"
+            edtName.error = getString(R.string.digite_seu_nome)
         }
 
         val email = edtEmail.text.toString().trim()
         val isEmailValid = (!TextUtils.isEmpty(email)) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
         if (!isEmailValid) {
-            edtEmail.error = "Email inválido"
+            edtEmail.error = getString(R.string.email_invalido)
         }
 
 //        val phone = txtPhone.text.toString()
@@ -51,14 +54,14 @@ class SignupActivity : AppCompatActivity() {
         val firstPassword = edtPassword.text.toString()
         var isPassswordValid = firstPassword.length >= 6
         if (!isPassswordValid) {
-            edtPassword.error = "Senha muito curta"
+            edtPassword.error = getString(R.string.senha_curta)
             edtPasswordComfirmed.text.clear()
             edtPassword.requestFocus()
         } else {
             val secondPassword = edtPasswordComfirmed.text.toString()
             isPassswordValid = isPassswordValid && TextUtils.equals(firstPassword, secondPassword)
             if (!isPassswordValid) {
-                edtPasswordComfirmed.error = "Senha nao confere"
+                edtPasswordComfirmed.error = getString(R.string.senha_nao_sao_iguais)
             }
         }
 

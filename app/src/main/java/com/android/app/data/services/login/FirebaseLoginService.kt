@@ -21,8 +21,17 @@ class FirebaseLoginService (var listener : ILoginContract.Listener) : ILoginCont
                         findUserByEmail(user?.email!!)
                     } else {
                         Log.e(TAG, task.exception.toString())
-                        task.exception?.printStackTrace()
-                        listener.onFailure(task.exception.toString())
+                        when (task.exception!!.message) {
+                            USUARIO_NOT_FOUND -> {
+                                listener.onFailure("Não foi possível encontrar usuário com esse e-mail")
+                            }
+                            PASSWORD_INVALID -> {
+                                listener.onFailure("Sua senha está incorreta")
+                            }
+                            DISCONNECTED_NETWORK -> {
+                                listener.onFailure("Verifique sua conexão com a internet")
+                            }
+                        }
                     }
                 }
     }
@@ -32,21 +41,31 @@ class FirebaseLoginService (var listener : ILoginContract.Listener) : ILoginCont
         db.collection("users")
                 .whereEqualTo("email", email)
                 .get()
-                .addOnSuccessListener { querySnapshot ->
-                    Log.d(TAG, "Size " + querySnapshot.size())
-                    if (querySnapshot.size() == 0) {
-                        Log.d(TAG, "Usuario nao encontrado")
-                        listener.onFailure("Usuário não encontrado")//Erro usuario nao encontrado
-                    } else if (querySnapshot.size() == 1) {
-                        val user = querySnapshot.documents.get(0).toObject(BaseUser::class.java)
-                        Log.d(TAG, user.toString())
-                        listener.onSuccess(user!!)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "Size " + task.result!!.documents.size)
+                        if (task.result!!.documents.size == 0) {
+                            Log.d(TAG, "Usuario nao encontrado")
+                            listener.onFailure("Usuário não encontrado")//Erro usuario nao encontrado
+                        } else if (task.result!!.documents.size == 1) {
+                            val user = task.result!!.documents.get(0).toObject(BaseUser::class.java)
+                            Log.d(TAG, user.toString())
+                            listener.onSuccess(user!!)
+                        } else {
+                            Log.e(TAG, "Foram encontradas " + task.result!!.documents.size + " contas com email " + email)
+                            listener.onFailure("Multiplas contas com mesmo email")
+                        }
+                    } else {
+                        Log.e(TAG, task.exception.toString())
+                        listener.onFailure(task.exception.toString())
                     }
                 }
-                .addOnFailureListener { exception ->
-                    Log.e(TAG, exception.toString())
-                    listener.onFailure(exception.toString())
-                }
+    }
+
+    companion object {
+        private val USUARIO_NOT_FOUND = "There is no user record corresponding to this identifier. The user may have been deleted.";
+        private val PASSWORD_INVALID = "The password is invalid or the user does not have a password.";
+        private val DISCONNECTED_NETWORK = "An internal error has occurred. [ 7: ]";
     }
 
 }

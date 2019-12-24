@@ -13,12 +13,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import java.lang.Exception
 import java.util.*
 
 class FirebaseGoogleSignService (var listener : IGoogleSignContract.Listener): IGoogleSignContract.Service {
     val TAG = this::class.java.canonicalName
 
-    lateinit var activity: Activity
+    private lateinit var activity: Activity
 
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -47,8 +48,8 @@ class FirebaseGoogleSignService (var listener : IGoogleSignContract.Listener): I
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account!!)
             } catch (e: ApiException) {
-                Log.e(TAG, e.toString())
-                listener.onFailure(e.toString())
+                Log.d(TAG, "1")
+                checkException(e)
             }
         }
     }
@@ -61,7 +62,8 @@ class FirebaseGoogleSignService (var listener : IGoogleSignContract.Listener): I
                         val googleUser = FirebaseAuth.getInstance().currentUser
                         loginWithGoogle(googleUser!!)
                     } else {
-                        listener.onFailure(task.exception.toString())
+                        Log.e(TAG, "2 " + task.exception.toString())
+                        checkException(task.exception!!)
                     }
                 }
     }
@@ -80,8 +82,8 @@ class FirebaseGoogleSignService (var listener : IGoogleSignContract.Listener): I
                             listener.onSuccess(user!!)
                         }
                     } else {
-                        Log.d(TAG, task.exception.toString())
-                        listener.onFailure(task.exception.toString())
+                        Log.d(TAG, "3 " + task.exception.toString())
+                        checkException(task.exception!!)
                     }
                 }
     }
@@ -107,19 +109,44 @@ class FirebaseGoogleSignService (var listener : IGoogleSignContract.Listener): I
         db.collection("users")
                 .document(uID)
                 .set(user)
-                .addOnSuccessListener {
-                    Log.d(TAG, "Usuario adicionado no BD com sucesso")
-                    listener.onSuccess(user)
-                }
-                .addOnFailureListener { exception ->
-                    Log.e(TAG, exception.toString())
-                    listener.onFailure(exception.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "Usuario adicionado no BD com sucesso")
+                        listener.onSuccess(user)
+                    } else {
+                        Log.e(TAG, "4 " + task.exception.toString())
+                        checkException(task.exception!!)
+                    }
                 }
     }
 
+    private fun checkException(ex: Exception) {
+        Log.e(TAG, ex.toString())
+        when (ex.message) {
+            DISCONNECTED_NETWORK -> {
+                listener.onFailure(activity.getString(R.string.verifique_sua_conexao_internet))
+            }
+            LOGIN_FAILED -> {
+                listener.onFailure("Selecione uma conta")
+            }
+            FIREBASE_AUTHENTICATION_SHA1 -> {
+                listener.onFailure("Falha na autenticação com o Firebase")
+            }
+            FIREBASE_AUTHENTICATION_CREDENCIAIS -> {
+                listener.onFailure("Falha na autenticação das credencias OAuth")
+            }
+            else -> {
+                listener.onFailure(ex.message!!)
+            }
+        }
+    }
+
     companion object {
-        private const val TAG = "GoogleActivity"
         private const val RC_SIGN_IN = 9001
+        private val DISCONNECTED_NETWORK = "com.google.android.gms.common.api.ApiException: 7:"
+        private val LOGIN_FAILED = "12501: "
+        private val FIREBASE_AUTHENTICATION_SHA1 = "10: "
+        private val FIREBASE_AUTHENTICATION_CREDENCIAIS = "12500: "
     }
 
 }
