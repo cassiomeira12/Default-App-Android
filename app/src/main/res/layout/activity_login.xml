@@ -141,7 +141,8 @@
                 android:layout_marginLeft="64dp"
                 android:layout_marginRight="64dp"
                 android:layout_gravity="center"
-                android:onClick="googleSignIn"
+                android:onClick="facebookSignIn"
+                android:visibility="gone"
                 android:background="@drawable/btn_round_facebook">
 
                 <TextView
