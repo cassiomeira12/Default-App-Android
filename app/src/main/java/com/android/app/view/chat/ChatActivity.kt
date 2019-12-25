@@ -6,7 +6,6 @@ import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.app.R
@@ -42,6 +41,10 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions {
             recyclerMensagens.smoothScrollToPosition(adapter.itemCount)
         }
 
+        toolbar.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(getApplicationContext(), ChatConfigActivity::class.java))
+        })
+
         showChatData(chat)
         carregarMensagens(chat)
     }
@@ -49,6 +52,14 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        if (adapter.isItensSelectedEmpty) {
+            super.onBackPressed()
+        }
+
+        adapter.clearItensSelected()
     }
 
     private fun supportNaviagteUp() {
@@ -76,6 +87,13 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions {
 
     private fun showChatData(chat: Chat) {
         txtToolbarTitle.setText(chat.nome)
+    }
+
+    private fun addMessage(message: Message) {
+        recyclerMensagens.visibility = View.VISIBLE
+        txtSemMensagens.visibility = View.INVISIBLE
+        adapter.add(message)
+        recyclerMensagens.smoothScrollToPosition(adapter.itemCount)
     }
 
     fun carregarMensagens(chat: Chat) {
@@ -123,7 +141,16 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions {
 
     }
 
-    fun onAppBarClick(view: View) {
-        startActivity(Intent(getApplicationContext(), ChatConfigActivity::class.java))
+    fun sendMessage(view: View) {
+        if (edtMessage.text.isEmpty()) {
+            return
+        }
+
+        val message = edtMessage.text.toString()
+        val newMessage = Message(message, Message.Tipo.TEXT, Date(),true)
+        addMessage(newMessage)
+
+        edtMessage.text.clear()
     }
+
 }

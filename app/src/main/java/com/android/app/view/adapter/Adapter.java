@@ -109,6 +109,15 @@ public abstract class Adapter<T> extends RecyclerView.Adapter implements View.On
         notifyDataSetChanged();
     }
 
+    public boolean isItensSelectedEmpty() {
+        return itensSelected.isEmpty();
+    }
+
+    public void clearItensSelected() {
+        itensSelected.clear();
+        notifyDataSetChanged();
+    }
+
     public T get(int index) {
         return itensList.isEmpty() ? null : itensList.get(index);
     }

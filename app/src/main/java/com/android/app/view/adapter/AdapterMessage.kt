@@ -11,39 +11,42 @@ import com.android.app.R
 import com.android.app.data.model.Message
 
 class AdapterMessage(itensList: MutableList<Message>, context: Context, actions: Actions): Adapter<Message>(itensList, context, actions) {
+    private val TAG = javaClass.simpleName
+    private val layoutID = R.layout.item_message //Id do item layout
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_message, parent, false))
+        return ViewHolder(LayoutInflater.from(context).inflate(layoutID, parent, false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = holder as ViewHolder
 
-        val message = itensList.get(position)
-        val tipo = message.tipo
+        val item = itensList.get(position)
+        val tipo = item.tipo
         val tipoConnect = (tipo == Message.Tipo.JOIN || tipo == Message.Tipo.LEAVE)
 
-        if (itensSelected.contains(message) && !tipoConnect) {
+        if (itensSelected.contains(item) && !tipoConnect) {
             viewHolder.layout.setBackgroundResource(R.color.colorPrimaryDark)
         } else {
             viewHolder.layout.setBackgroundResource(android.R.color.white)
         }
 
-        viewHolder.setTipo(message)
+        viewHolder.setTipo(item)
 
         when(tipo) {
             Message.Tipo.LEAVE -> {
-                viewHolder.txtUser.text = message.message
+                viewHolder.txtUser.text = item.message
             }
             Message.Tipo.JOIN -> {
-                viewHolder.txtUser.text = message.message
+                viewHolder.txtUser.text = item.message
             }
             Message.Tipo.TEXT -> {
-                if (message.enviado) {
-                    viewHolder.txtMessageS.text = message.message
+                if (item.enviado) {
+                    viewHolder.txtMessageS.text = item.message
                 } else {
-                    viewHolder.txtMessageR.text = message.message
+                    viewHolder.txtMessageR.text = item.message
                 }
+                viewHolder.txtSendDateS.text = item.sendDate.toString()
             }
             Message.Tipo.PHOTO -> {
 

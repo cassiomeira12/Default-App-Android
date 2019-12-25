@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.chat.ChatConfigActivity"></activity>
+        <activity
+            android:name=".view.chat.ChatConfigActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".view.chat.ChatActivity"
             android:theme="@style/AppThemeNoActionBar" />

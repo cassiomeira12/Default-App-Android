@@ -12,7 +12,11 @@ import com.android.app.R
 import com.android.app.data.model.Chat
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterChat
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_chat_config.*
 import kotlinx.android.synthetic.main.activity_chats.*
+import kotlinx.android.synthetic.main.activity_chats.fab
+import kotlinx.android.synthetic.main.activity_chats.toolbar
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -33,6 +37,26 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions {
         adapter.add(Chat("UESB Computação", Date()))
         adapter.add(Chat("Frei", Date()))
         adapter.add(Chat("Us Karas", Date()))
+        adapter.add(Chat("UESB Computação", Date()))
+        adapter.add(Chat("Frei", Date()))
+        adapter.add(Chat("Us Karas", Date()))
+        adapter.add(Chat("UESB Computação", Date()))
+        adapter.add(Chat("Frei", Date()))
+        adapter.add(Chat("Us Karas", Date()))
+        adapter.add(Chat("UESB Computação", Date()))
+        adapter.add(Chat("Frei", Date()))
+        adapter.add(Chat("Us Karas", Date()))
+        adapter.add(Chat("UESB Computação", Date()))
+        adapter.add(Chat("Frei", Date()))
+        adapter.add(Chat("Us Karas", Date()))
+        adapter.add(Chat("UESB Computação", Date()))
+        adapter.add(Chat("Frei", Date()))
+        adapter.add(Chat("Us Karas", Date()))
+
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        }
 
         supportNaviagteUp()
     }
@@ -40,6 +64,14 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        if (adapter.isItensSelectedEmpty) {
+            super.onBackPressed()
+        }
+
+        adapter.clearItensSelected()
     }
 
     private fun supportNaviagteUp() {

@@ -9,11 +9,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.app.R
-import com.android.app.data.model.Chat
+import com.android.app.data.model.BaseUser
 
-class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actions): Adapter<Chat>(itensList, context, actions) {
+class AdapterUser(itensList: MutableList<BaseUser>, context: Context, actions: Actions): Adapter<BaseUser>(itensList, context, actions) {
     private val TAG = javaClass.simpleName
-    private val layoutID = R.layout.item_chat //Id do item layout
+    private val layoutID = R.layout.item_user //Id do item layout
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(layoutID, parent, false))
@@ -24,7 +24,7 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
 
         val item = itensList.get(position)
 
-        viewHolder.txtUserName.text = item.nome
+        //viewHolder.txtUserName.text = user.name
 
 
 //        val tipo = message.tipo
@@ -85,7 +85,7 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
         viewHolder.layout.setTag(position)
     }
 
-    override fun update(item: Chat): Boolean {
+    override fun update(item: BaseUser): Boolean {
         return false
     }
 
@@ -94,19 +94,19 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
 
         val imgUser: ImageView
         val txtUserName: TextView
-        val txtLastMessage: TextView
-        val txtLastUpdate: TextView
+        //val txtLastMessage: TextView
+        //val txtLastUpdate: TextView
 
         init {
-            layout = itemView.findViewById(R.id.item_chat)
+            layout = itemView.findViewById(R.id.item_user)
 
             imgUser = itemView.findViewById(R.id.imgChat)
             txtUserName = itemView.findViewById(R.id.txtUserName)
-            txtLastMessage = itemView.findViewById(R.id.txtLastMessage)
-            txtLastUpdate = itemView.findViewById(R.id.txtLastUpdate)
+            //txtLastMessage = itemView.findViewById(R.id.txtLastMessage)
+            //txtLastUpdate = itemView.findViewById(R.id.txtLastUpdate)
 
-            layout.setOnClickListener(this@AdapterChat)
-            layout.setOnLongClickListener(this@AdapterChat)
+            layout.setOnClickListener(this@AdapterUser)
+            layout.setOnLongClickListener(this@AdapterUser)
         }
 
     }
