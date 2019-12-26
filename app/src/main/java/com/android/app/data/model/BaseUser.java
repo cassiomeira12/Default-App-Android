@@ -28,7 +28,7 @@ public class BaseUser implements Serializable {
     public Date updateAt;
 
     public BaseUser() {
-
+        //Firebase
     }
 
     public BaseUser(String uID, Status status, String name, String email, Boolean emailVerified, Date createAt, Date updateAt) {

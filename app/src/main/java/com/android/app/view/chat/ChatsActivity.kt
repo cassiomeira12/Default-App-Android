@@ -7,9 +7,13 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.app.R
+import com.android.app.contract.IChatsContract
+import com.android.app.data.UserSingleton
 import com.android.app.data.model.Chat
+import com.android.app.presenter.chat.ChatsPresenter
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterChat
 import com.google.android.material.snackbar.Snackbar
@@ -20,8 +24,10 @@ import kotlinx.android.synthetic.main.activity_chats.toolbar
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ChatsActivity : AppCompatActivity(), Adapter.Actions {
+class ChatsActivity : AppCompatActivity(), Adapter.Actions, IChatsContract.View {
     private val TAG = javaClass.simpleName
+
+    internal lateinit var iPresenter: IChatsContract.Presenter
 
     lateinit var adapter: AdapterChat
 
@@ -34,28 +40,16 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions {
         recyclerChats.layoutManager = layout
         recyclerChats.adapter = adapter
 
-        adapter.add(Chat("UESB Computação", Date()))
-        adapter.add(Chat("Frei", Date()))
-        adapter.add(Chat("Us Karas", Date()))
-        adapter.add(Chat("UESB Computação", Date()))
-        adapter.add(Chat("Frei", Date()))
-        adapter.add(Chat("Us Karas", Date()))
-        adapter.add(Chat("UESB Computação", Date()))
-        adapter.add(Chat("Frei", Date()))
-        adapter.add(Chat("Us Karas", Date()))
-        adapter.add(Chat("UESB Computação", Date()))
-        adapter.add(Chat("Frei", Date()))
-        adapter.add(Chat("Us Karas", Date()))
-        adapter.add(Chat("UESB Computação", Date()))
-        adapter.add(Chat("Frei", Date()))
-        adapter.add(Chat("Us Karas", Date()))
-        adapter.add(Chat("UESB Computação", Date()))
-        adapter.add(Chat("Frei", Date()))
-        adapter.add(Chat("Us Karas", Date()))
+        iPresenter = ChatsPresenter(this)
+        iPresenter.listChats()
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            val chat = Chat("Grupo", Date())
+            chat.createdBy = UserSingleton.instance.uID
+            chat.administradores.put(chat.administradores.size.toString(), UserSingleton.instance.uID)
+            chat.descricao = "Descricao do grupo"
+
+            iPresenter.createChat(this, chat)
         }
 
         supportNaviagteUp()
@@ -102,10 +96,35 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions {
     }
 
     override fun onClickItem(view: View?) {
-        if (adapter.itensSelected.isEmpty()) {
+        if (adapter.itensSelected.isEmpty() && adapter.objectSelected != null) {
             val intent = Intent(getApplicationContext(), ChatActivity::class.java)
             intent.putExtra("chat", adapter.objectSelected)
             startActivity(intent)
         }
+    }
+
+    override fun showProgress() {
+        layoutCarregando.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        layoutCarregando.visibility = View.INVISIBLE
+    }
+
+    override fun onCreatedSuccess(chat: Chat) {
+        adapter.add(chat)
+    }
+
+    override fun onRemovedSucess(chat: Chat) {
+        adapter.remove(chat)
+    }
+
+    override fun onListSuccess(list: List<Chat>) {
+        adapter.itensList.addAll(list)
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun onFailure(message: String) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show()
     }
 }

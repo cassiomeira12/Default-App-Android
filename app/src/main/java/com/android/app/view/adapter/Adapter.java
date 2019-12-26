@@ -40,10 +40,10 @@ public abstract class Adapter<T> extends RecyclerView.Adapter implements View.On
                 itensSelected.remove(objectSelected);
                 objectSelected = null;
                 //Nao executar onClick quando for o ultimo item
-                if (itensSelected.isEmpty()) {
-                    notifyDataSetChanged();
-                    return;
-                }
+                //if (itensSelected.isEmpty()) {
+                //    notifyDataSetChanged();
+                //    return;
+                //}
             } else {
                 itensSelected.add(objectSelected);
             }

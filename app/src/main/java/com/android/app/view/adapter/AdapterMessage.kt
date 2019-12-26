@@ -8,7 +8,9 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.app.R
+import com.android.app.data.UserSingleton
 import com.android.app.data.model.Message
+import com.android.app.utils.DateUtils
 
 class AdapterMessage(itensList: MutableList<Message>, context: Context, actions: Actions): Adapter<Message>(itensList, context, actions) {
     private val TAG = javaClass.simpleName
@@ -41,12 +43,13 @@ class AdapterMessage(itensList: MutableList<Message>, context: Context, actions:
                 viewHolder.txtUser.text = item.message
             }
             Message.Tipo.TEXT -> {
-                if (item.enviado) {
+                if (item.remetente.equals(UserSingleton.instance.uID)) {
                     viewHolder.txtMessageS.text = item.message
+                    viewHolder.txtSendDateS.text = DateUtils.getHourMinute(item.sendDate)
                 } else {
                     viewHolder.txtMessageR.text = item.message
+                    viewHolder.txtSendDateR.text = DateUtils.getHourMinute(item.sendDate)
                 }
-                viewHolder.txtSendDateS.text = item.sendDate.toString()
             }
             Message.Tipo.PHOTO -> {
 
@@ -123,7 +126,7 @@ class AdapterMessage(itensList: MutableList<Message>, context: Context, actions:
                     layoutJoin.visibility = View.VISIBLE
                 }
                 Message.Tipo.TEXT -> {
-                    if (message.enviado) {
+                    if (message.remetente.equals(UserSingleton.instance.uID)) {
                         layoutTextS.visibility = View.VISIBLE
                     } else {
                         layoutTextR.visibility = View.VISIBLE

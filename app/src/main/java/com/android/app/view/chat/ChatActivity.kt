@@ -1,16 +1,25 @@
 package com.android.app.view.chat
 
+import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.app.R
+import com.android.app.contract.IMessagesContract
+import com.android.app.data.UserSingleton
 import com.android.app.data.model.Chat
 import com.android.app.data.model.Message
+import com.android.app.presenter.chat.MessagePresenter
 import com.android.app.utils.KeyboardUtils
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterMessage
@@ -18,8 +27,10 @@ import kotlinx.android.synthetic.main.activity_chat.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ChatActivity : AppCompatActivity(), Adapter.Actions {
+class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.View {
     private val TAG = javaClass.simpleName
+
+    internal lateinit var iPresenter: IMessagesContract.Presenter
 
     lateinit var adapter: AdapterMessage
     lateinit var chat: Chat
@@ -35,7 +46,7 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions {
         recyclerMensagens.layoutManager = layout
         recyclerMensagens.adapter = adapter
 
-        supportNaviagteUp()
+        iPresenter = MessagePresenter(this)
 
         KeyboardUtils.addKeyboardToggleListener(this) { isVisible ->
             recyclerMensagens.smoothScrollToPosition(adapter.itemCount)
@@ -46,7 +57,8 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions {
         })
 
         showChatData(chat)
-        carregarMensagens(chat)
+        iPresenter.listMessages(chat)
+        supportNaviagteUp()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -71,18 +83,76 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        getMenuInflater().inflate(R.menu.menu_chat, menu)
+        if (adapter.isItensSelectedEmpty) {
+            txtToolbarTitle.setText(chat.nome)
+            getMenuInflater().inflate(R.menu.menu_chat, menu)
+        } else {
+            txtToolbarTitle.setText("" + adapter.itensSelected.size)
+            getMenuInflater().inflate(R.menu.menu_message_selected, menu)
+        }
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.action_settings -> {
-
+                return true
+            }
+            R.id.action_copy -> {
+                copyMessages()
+                return true
+            }
+            R.id.action_delete -> {
+                showDialogDeleteMessages(this, "Apagar", "Deseja realmente apagar " + adapter.itensSelected.size + " mensagens ?")
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun copyMessages() {
+        var messagesCopy = ""
+        for (message in adapter.itensSelected) {
+            messagesCopy += message.message + "\n\n"
+        }
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("", messagesCopy)
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(getApplicationContext(), getString(R.string.mensagem_copiada), Toast.LENGTH_LONG).show()
+
+        adapter.clearItensSelected()
+        invalidateOptionsMenu()
+    }
+
+    private fun showDialogDeleteMessages(activity: Activity, title: String, message: String) {
+        var alertBuilder = AlertDialog.Builder(activity)
+        alertBuilder.setTitle(title)
+        alertBuilder.setMessage(message)
+        alertBuilder.setPositiveButton(activity.getString(R.string.sim)) { dialog, which ->
+            deleteMessages()
+            dialog.dismiss()
+        }
+        alertBuilder.setNegativeButton(activity.getString(R.string.cancelar)) { dialog, which ->
+            dialog.cancel()
+            adapter.clearItensSelected()
+            invalidateOptionsMenu()
+        }
+        val alert = alertBuilder.create()
+        alert.setCanceledOnTouchOutside(false)
+        alert.show()
+    }
+
+    private fun deleteMessages() {
+        adapter.itensList.removeAll(adapter.itensSelected)
+        iPresenter.HideMessages(adapter.itensSelected)
+
+        adapter.clearItensSelected()
+
+        if (adapter.isEmpty) {
+            txtSemMensagens.visibility = View.VISIBLE
+        }
+
+        invalidateOptionsMenu()
     }
 
     private fun showChatData(chat: Chat) {
@@ -90,55 +160,17 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions {
     }
 
     private fun addMessage(message: Message) {
-        recyclerMensagens.visibility = View.VISIBLE
         txtSemMensagens.visibility = View.INVISIBLE
         adapter.add(message)
         recyclerMensagens.smoothScrollToPosition(adapter.itemCount)
     }
 
-    fun carregarMensagens(chat: Chat) {
-        recyclerMensagens.visibility = View.INVISIBLE
-        layoutCarregando.visibility = View.VISIBLE
-        Handler().postDelayed(Runnable {
-
-            if (chat.nome.equals("Frei")) {
-                layoutCarregando.visibility = View.GONE
-                recyclerMensagens.visibility = View.VISIBLE
-                txtSemMensagens.visibility = View.VISIBLE
-            } else {
-                adapter.add(Message("Obrigada Cel \uD83D\uDE18\uD83D\uDE18", Message.Tipo.TEXT, Date()))
-                adapter.add(Message("E da especial @Celina Computação ?", Message.Tipo.TEXT, Date(), true))
-                adapter.add(Message("Tb ta dando problema pq Catia não fechou as notas", Message.Tipo.TEXT, Date()))
-                adapter.add(Message("Queria saber a nota da final de lfa tbm", Message.Tipo.TEXT, Date()))
-                adapter.add(Message("Ai da n ta no sistema \uD83D\uDE42", Message.Tipo.TEXT, Date(), true))
-                adapter.add(Message("\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02", Message.Tipo.TEXT, Date()))
-                adapter.add(Message("Confirmação de matrícula já disponível", Message.Tipo.TEXT, Date()))
-                adapter.add(Message("Cátia ainda não lançou as notas de ap1 e ap2 não apareceu, vai ter como adicionar depois?", Message.Tipo.TEXT, Date()))
-                adapter.add(Message("No dia da presencial tu pode pedir para adicionar", Message.Tipo.TEXT, Date()))
-                adapter.add(Message("Bom dia povo. Alguém sabe de algum apartamento alugando no candeias?", Message.Tipo.TEXT, Date()))
-                adapter.add(Message("Cátia não colocou as notas de ap1 no sagres\n" +
-                        "A matrícula de ap2 então será só no primeiro dia de aula?", Message.Tipo.TEXT, Date(), true))
-                adapter.add(Message("Obrigada Cel \uD83D\uDE18\uD83D\uDE18", Message.Tipo.TEXT, Date()))
-                adapter.add(Message("E da especial @Celina Computação ?", Message.Tipo.TEXT, Date(), true))
-                adapter.add(Message("Tb ta dando problema pq Catia não fechou as notas", Message.Tipo.TEXT, Date()))
-                adapter.add(Message("Queria saber a nota da final de lfa tbm", Message.Tipo.TEXT, Date()))
-                adapter.add(Message("Ai da n ta no sistema \uD83D\uDE42", Message.Tipo.TEXT, Date(), true))
-                adapter.add(Message("\uD83D\uDE02\uD83D\uDE02\uD83D\uDE02", Message.Tipo.TEXT, Date()))
-
-                layoutCarregando.visibility = View.GONE
-                recyclerMensagens.visibility = View.VISIBLE
-                recyclerMensagens.smoothScrollToPosition(adapter.itemCount)
-            }
-
-        }, 2000)
-    }
-
     override fun onClickItem(view: View) {
-
+        invalidateOptionsMenu()
     }
 
     override fun onLongClickItem(view: View) {
-
+        invalidateOptionsMenu()
     }
 
     fun sendMessage(view: View) {
@@ -146,11 +178,48 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions {
             return
         }
 
-        val message = edtMessage.text.toString()
-        val newMessage = Message(message, Message.Tipo.TEXT, Date(),true)
-        addMessage(newMessage)
+        val message = Message(edtMessage.text.toString(), Message.Tipo.TEXT, Date(),true)
 
+        message.idChat = chat.id
+        message.hide = false
+        message.remetente = UserSingleton.instance.uID
+
+        addMessage(message)
         edtMessage.text.clear()
+        iPresenter.sendMessage(message)
+    }
+
+    override fun showProgress() {
+        layoutCarregando.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        layoutCarregando.visibility = View.INVISIBLE
+    }
+
+    fun checkIsListEmpty() {
+        if (adapter.isEmpty) {
+            txtSemMensagens.visibility = View.VISIBLE
+        } else {
+            txtSemMensagens.visibility = View.INVISIBLE
+            recyclerMensagens.smoothScrollToPosition(adapter.itemCount)
+        }
+    }
+
+    override fun onHideSuccess(list: List<Message>) {
+        adapter.itensList.removeAll(list)
+        adapter.notifyDataSetChanged()
+        checkIsListEmpty()
+    }
+
+    override fun onListSuccess(list: List<Message>) {
+        adapter.itensList.addAll(list)
+        adapter.notifyDataSetChanged()
+        checkIsListEmpty()
+    }
+
+    override fun onFailure(message: String) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show()
     }
 
 }

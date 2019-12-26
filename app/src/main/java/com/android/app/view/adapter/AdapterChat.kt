@@ -1,15 +1,20 @@
 package com.android.app.view.adapter
 
 import android.content.Context
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
 import com.android.app.R
 import com.android.app.data.model.Chat
+import com.android.app.utils.DateUtils
+import com.android.app.utils.FileUtils
 
 class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actions): Adapter<Chat>(itensList, context, actions) {
     private val TAG = javaClass.simpleName
@@ -25,64 +30,28 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
         val item = itensList.get(position)
 
         viewHolder.txtUserName.text = item.nome
+        viewHolder.txtLastUpdate.text = DateUtils.formatDateExtenso(item.updatedAt)
+        viewHolder.txtLastMessage.text = item.descricao
 
-
-//        val tipo = message.tipo
-//        val tipoConnect = (tipo == Message.Tipo.JOIN || tipo == Message.Tipo.LEAVE)
-
-
-//
         if (itensSelected.contains(item)) {
             viewHolder.layout.isSelected = true
-            //viewHolder.layout.setBackgroundResource(R.color.colorPrimary)
         } else {
             viewHolder.layout.isSelected = false
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                viewHolder.layout.setBackground(context.getDrawable(R.drawable.view))
-//            } else {
-//                viewHolder.layout.setBackgroundResource(R.color.white)
-//            }
         }
 
-//
-//
-//        viewHolder.setTipo(message)
-//
-//        when(tipo) {
-//            Message.Tipo.LEAVE -> {
-//                viewHolder.txtUser.text = message.message
-//            }
-//            Message.Tipo.JOIN -> {
-//                viewHolder.txtUser.text = message.message
-//            }
-//            Message.Tipo.TEXT -> {
-//                if (message.enviado) {
-//                    viewHolder.txtMessageS.text = message.message
-//                } else {
-//                    viewHolder.txtMessageR.text = message.message
-//                }
-//            }
-//            Message.Tipo.PHOTO -> {
-//
-//            }
-//            Message.Tipo.VIDEO -> {
-//
-//            }
-//            Message.Tipo.AUDIO -> {
-//
-//            }
-//            Message.Tipo.ARQUIVO -> {
-//
-//            }
-//            Message.Tipo.LOCALIZACAO -> {
-//
-//            }
-//            Message.Tipo.CONTATO -> {
-//
-//            }
-//        }
+        downloadImage(viewHolder)
 
         viewHolder.layout.setTag(position)
+    }
+
+    private fun downloadImage(viewHolder: ViewHolder) {
+        viewHolder.imgChat.visibility = View.INVISIBLE
+        viewHolder.progressBar.visibility = View.VISIBLE
+
+        Handler().postDelayed(Runnable {
+            viewHolder.progressBar.visibility = View.INVISIBLE
+            viewHolder.imgChat.visibility = View.VISIBLE
+        }, 3000)
     }
 
     override fun update(item: Chat): Boolean {
@@ -92,7 +61,10 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val layout: FrameLayout
 
-        val imgUser: ImageView
+        val viewOline: FrameLayout
+        val progressBar: ProgressBar
+        val imgChat: ImageView
+
         val txtUserName: TextView
         val txtLastMessage: TextView
         val txtLastUpdate: TextView
@@ -100,7 +72,10 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
         init {
             layout = itemView.findViewById(R.id.item_chat)
 
-            imgUser = itemView.findViewById(R.id.imgChat)
+            viewOline = itemView.findViewById(R.id.viewOline)
+            progressBar = itemView.findViewById(R.id.progressBar)
+            imgChat = itemView.findViewById(R.id.imgChat)
+
             txtUserName = itemView.findViewById(R.id.txtUserName)
             txtLastMessage = itemView.findViewById(R.id.txtLastMessage)
             txtLastUpdate = itemView.findViewById(R.id.txtLastUpdate)

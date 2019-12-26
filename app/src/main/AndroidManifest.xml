@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".view.chat.ChatConfigActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppThemeNoActionBar"/>
         <activity
             android:name=".view.chat.ChatActivity"
             android:theme="@style/AppThemeNoActionBar" />
@@ -59,6 +59,7 @@
         <activity android:name=".MainActivity" />
         <activity
             android:name=".view.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
