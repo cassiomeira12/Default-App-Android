@@ -14,18 +14,18 @@ class ImageUtils(var context: Context) {
 
     fun picassoImage(imgView: ImageView, url: String?) {
         if (url == null || url.isEmpty()) {
-            imgView.setImageResource(R.drawable.error)
+            //imgView.setImageResource(R.drawable.error)
             return
         }
         Picasso.with(context)
             .load(url)
-            .error(R.drawable.error)
+            //.error(R.drawable.error)
             .into(imgView)
     }
 
     fun picassoImage(imgView: ImageView, url: String?, progressBar: ProgressBar?) {
         if (url == null || url.isEmpty()) {
-            imgView.setImageResource(R.drawable.error)
+            //imgView.setImageResource(R.drawable.error)
             progressBar!!.visibility = View.INVISIBLE
             return
         }
@@ -34,7 +34,7 @@ class ImageUtils(var context: Context) {
 
         Picasso.with(context)
             .load(url)
-            .error(R.drawable.error)
+            //.error(R.drawable.error)
             .into(imgView, object : Callback {
                 override fun onSuccess() {
                     Log.d(TAG, "onSuccess")

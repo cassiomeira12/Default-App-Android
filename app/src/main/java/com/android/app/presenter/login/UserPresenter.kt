@@ -17,6 +17,10 @@ class UserPresenter (view: IUser.View) : IUser.Presenter, IUser.Listener {
         service.signOut(context)
     }
 
+    override fun updateOnline() {
+        service.updateOnline()
+    }
+
     override fun onDestroy() {
         this.view = null
     }

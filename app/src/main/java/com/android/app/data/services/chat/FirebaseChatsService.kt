@@ -8,6 +8,7 @@ import com.android.app.data.UserSingleton
 import com.android.app.data.model.Chat
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import java.lang.Exception
 import java.util.*
@@ -78,6 +79,7 @@ class FirebaseChatsService(var listener : IChatsContract.Listener) : IChatsContr
         pesquisarChatDoUsuario()
         val db = FirebaseFirestore.getInstance()
         db.collection("conversas")
+            .orderBy("updatedAt", Query.Direction.DESCENDING)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {

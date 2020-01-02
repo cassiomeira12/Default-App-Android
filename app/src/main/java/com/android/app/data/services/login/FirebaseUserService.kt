@@ -7,6 +7,7 @@ import com.android.app.data.UserSingleton
 import com.android.app.data.model.BaseUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 
 class FirebaseUserService(var listener : IUser.Listener) : IUser.Service {
     val TAG = this::class.java.canonicalName
@@ -25,6 +26,15 @@ class FirebaseUserService(var listener : IUser.Listener) : IUser.Service {
         val currentUser = FirebaseAuth.getInstance()
         currentUser.signOut()
         listener.onResult(null)
+    }
+
+    override fun updateOnline() {
+        val user = UserSingleton.instance
+        user.online = Date()//Atualizando data online
+        val db = FirebaseFirestore.getInstance()
+        db.collection("users")
+            .document(user.uID)
+            .update("online", user.online)
     }
 
     private fun findUserByEmail(email: String) {

@@ -19,30 +19,37 @@
             android:padding="8dp">
 
             <FrameLayout
+                android:id="@+id/viewOline"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="gone"
                 android:background="@drawable/shape_round_circle_green"
-                android:padding="3dp">
+                android:padding="3dp"/>
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgChat"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/email"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@color/colorPrimary"/>
 
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="visible"
-                    android:padding="4dp"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgChat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:src="@drawable/user_default_img_white_48dp"/>
 
-            </FrameLayout>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:padding="10dp"/>
 
             <View
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_gravity="bottom|right"
+                android:visibility="invisible"
                 android:background="@drawable/shape_circle_green"/>
 
         </FrameLayout>

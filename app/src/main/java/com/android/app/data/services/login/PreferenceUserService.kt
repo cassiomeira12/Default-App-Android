@@ -27,4 +27,6 @@ class PreferenceUserService (var listener : IUser.Listener) : IUser.Service {
         PreferenceUtils2(context).setUserName(null)
         PreferenceUtils2(context).setUserEmail(null)
     }
+
+    override fun updateOnline() { }
 }

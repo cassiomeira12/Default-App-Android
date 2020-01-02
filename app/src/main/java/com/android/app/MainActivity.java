@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.app.contract.IUser;
 import com.android.app.data.UserSingleton;
 import com.android.app.data.model.BaseUser;
+import com.android.app.presenter.login.UserPresenter;
 import com.android.app.view.chat.ChatsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -15,6 +17,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import org.jetbrains.annotations.Nullable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        new UserPresenter(new IUser.View() {
+            @Override
+            public void onResult(@Nullable BaseUser user) {
+
+            }
+        }).updateOnline();
 
         Toast.makeText(this, user.email, Toast.LENGTH_LONG).show();
 

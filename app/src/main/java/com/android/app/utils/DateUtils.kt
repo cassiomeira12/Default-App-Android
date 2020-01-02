@@ -1,10 +1,9 @@
 package com.android.app.utils
 
-import android.util.Log
-import com.google.firebase.firestore.model.value.IntegerValue
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.min
 
 object DateUtils {
     private val locale = Locale("pt", "BR")
@@ -44,5 +43,40 @@ object DateUtils {
         return date.hours.toString().plus(":").plus(date.minutes.toString())
     }
 
+    fun getMinutosPassados(start: Date, end: Date): Int {
+        if (start.time > end.time) {
+            return 0
+        }
+        return (((end.time - start.time) / 1000) / 60).toInt()
+    }
+
+    fun getMinutosPassadosString(start: Date, end: Date): String {
+        if (getMinutosPassados(start, end) <= 0) {
+            return "0 min"
+        }
+
+        val hour = getMinutosPassados(start, end) / 60
+        val minutes = getMinutosPassados(start, end) - (hour * 60)
+
+        if (hour == 0) {
+            return "$minutes min"
+        }
+
+        if (hour == 1 && minutes == 0) {
+            return "$hour hora"
+        } else if (hour >= 24 && hour < 48) {
+            return "ontem"
+        } else if (hour > 48) {
+            return formatDateExtenso(start)
+        } else if (hour > 1 && minutes == 0) {
+            return "$hour horas"
+        } else if (hour == 1 && minutes > 0) {
+            return "$hour hora e $minutes min"
+        } else if (hour > 1 && minutes > 0) {
+            return "$hour horas e $minutes min"
+        } else {
+            return "error"
+        }
+    }
 
 }

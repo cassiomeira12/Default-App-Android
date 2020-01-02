@@ -24,16 +24,21 @@
                 android:layout_height="match_parent"
                 android:visibility="visible"
                 android:background="@drawable/shape_round_circle_green"
-                android:padding="3dp">
+                android:padding="3dp"/>
 
-            </FrameLayout>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="3dp"
+                android:src="@color/colorPrimary"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgChat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="3dp"
-                android:src="@drawable/email"/>
+                android:visibility="visible"
+                android:src="@drawable/user_default_img_white_48dp"/>
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -74,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textSize="12sp"
-                    android:text="06 de set"/>
+                    android:text="0 min"/>
 
             </LinearLayout>
 
@@ -90,5 +95,13 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="72dp"
+        android:layout_marginRight="8dp"
+        android:layout_gravity="bottom"
+        android:background="@color/border_shape"/>
 
 </FrameLayout>

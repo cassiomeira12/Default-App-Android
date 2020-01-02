@@ -18,11 +18,14 @@ interface IUser {
 
         fun currentUser(context: Context)
         fun signOut(context: Context)
+
+        fun updateOnline()
     }
 
     interface Service {
         fun currentUser(context: Context)
         fun signOut(context: Context)
+        fun updateOnline()
     }
 
 }

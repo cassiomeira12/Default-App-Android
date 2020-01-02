@@ -26,12 +26,14 @@ public class BaseUser implements Serializable {
     public Date createAt;
     @SerializedName("updateAt")
     public Date updateAt;
+    @SerializedName("online")
+    public Date online;
 
     public BaseUser() {
         //Firebase
     }
 
-    public BaseUser(String uID, Status status, String name, String email, Boolean emailVerified, Date createAt, Date updateAt) {
+    public BaseUser(String uID, Status status, String name, String email, Boolean emailVerified, Date createAt, Date updateAt, Date online) {
         this.uID = uID;
         this.status = status;
         this.name = name;
@@ -39,6 +41,7 @@ public class BaseUser implements Serializable {
         this.emailVerified = emailVerified;
         this.createAt = createAt;
         this.updateAt = updateAt;
+        this.online = online;
     }
 
     public void setUser(BaseUser user) {
@@ -49,18 +52,20 @@ public class BaseUser implements Serializable {
         this.emailVerified = user.emailVerified;
         this.createAt = user.createAt;
         this.updateAt = user.updateAt;
+        this.online = user.online;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return "BaseUser" +
-                "\nuID ".concat(uID) +
-                "\nstatus ".concat(status.toString()) +
-                "\nname ".concat(name) +
-                "\nemail ".concat(email) +
-                "\nemailVerified ".concat(String.valueOf(emailVerified)) +
-                "\ncreateAt ".concat(createAt.toString()) +
-                "\nupdateAt ".concat(updateAt.toString());
+        return "BaseUser"
+                + "\nuID ".concat(uID)
+                + "\nstatus ".concat(status.toString())
+                + "\nname ".concat(name)
+                + "\nemail ".concat(email)
+                + "\nemailVerified ".concat(String.valueOf(emailVerified))
+                + "\ncreateAt ".concat(createAt.toString())
+                + "\nupdateAt ".concat(updateAt.toString())
+                + "\nupdateAt ".concat(updateAt.toString());
     }
 }

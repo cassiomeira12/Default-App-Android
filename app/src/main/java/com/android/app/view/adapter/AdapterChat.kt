@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -16,11 +15,9 @@ import com.android.app.data.model.BaseUser
 import com.android.app.data.model.Chat
 import com.android.app.utils.DateUtils
 import com.android.app.utils.ImageUtils
-import com.google.android.material.shape.RoundedCornerTreatment
 import com.google.firebase.firestore.FirebaseFirestore
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import java.util.*
 
 
 class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actions): Adapter<Chat>(itensList, context, actions) {
@@ -35,8 +32,6 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
         val viewHolder = holder as ViewHolder
 
         val item = itensList.get(position)
-
-        setDataChat(viewHolder, item.nome, item.descricao, DateUtils.formatDateExtenso(item.updatedAt))
 
         if (itensSelected.contains(item)) {
             viewHolder.layout.isSelected = true
@@ -57,8 +52,12 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
 
     private fun downloadImageChat(item: Chat, viewHolder: ViewHolder) {
         if (item.users.size > 2) {
+            viewHolder.viewOline.visibility = View.INVISIBLE
+            viewHolder.txtLastMessage.visibility = View.VISIBLE
+            setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
             ImageUtils(context).picassoImage(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
         } else {
+            viewHolder.txtLastMessage.visibility = View.GONE
             val currentID = UserSingleton.instance.uID
             for (id in item.users.values) {
                 if (!currentID.equals(id)) {
@@ -79,10 +78,19 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
                 if (task.isSuccessful) {
                     val user = task.result!!.toObject(BaseUser::class.java)
                     item.nome = user!!.name
-                    item.descricao = "Online"
+                    item.descricao = ""
                     item.avatarURL = user!!.avatarURL
-                    setDataChat(viewHolder, item.nome, item.descricao, DateUtils.formatDateExtenso(item.updatedAt))
+
+                    val online = DateUtils.getMinutosPassados(user.online, Date())
+                    if (online <= 5) {
+                        viewHolder.viewOline.visibility = View.VISIBLE
+                        setDataChat(viewHolder, item.nome, item.descricao, "online")
+                    } else {
+                        viewHolder.viewOline.visibility = View.INVISIBLE
+                        setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(user.online, Date()))
+                    }
                     ImageUtils(context).picassoImage(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
+
                 } else {
                     viewHolder.progressBar.visibility = View.INVISIBLE
                 }
@@ -114,6 +122,11 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
             txtUserName = itemView.findViewById(R.id.txtUserName)
             txtLastMessage = itemView.findViewById(R.id.txtLastMessage)
             txtLastUpdate = itemView.findViewById(R.id.txtLastUpdate)
+
+            viewOline.visibility = View.INVISIBLE
+            txtUserName.setText("")
+            txtLastMessage.setText("")
+            txtLastUpdate.setText("")
 
             layout.setOnClickListener(this@AdapterChat)
             layout.setOnLongClickListener(this@AdapterChat)
