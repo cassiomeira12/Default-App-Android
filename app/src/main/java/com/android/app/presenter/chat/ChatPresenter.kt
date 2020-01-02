@@ -50,8 +50,9 @@ class ChatPresenter (view: IChatContract.View) : IChatContract.Presenter, IChatC
         view!!.onChangeDescriptionSuccess(description)
     }
 
-    override fun onLeaveSuccess(user: BaseUser) {
-
+    override fun onLeaveSuccess(chat: Chat) {
+        view!!.hideProgress()
+        view!!.onLeaveSuccess(chat)
     }
 
     override fun onDestroy() {
@@ -95,8 +96,9 @@ class ChatPresenter (view: IChatContract.View) : IChatContract.Presenter, IChatC
         service.changeDescription(chat, description)
     }
 
-    override fun leaveChat(chat: Chat) {
-
+    override fun leaveChat(chat: Chat, user: BaseUser) {
+        view!!.showProgress()
+        service.leaveChat(chat, user)
     }
 
 }

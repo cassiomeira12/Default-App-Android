@@ -18,7 +18,7 @@ interface IChatContract {
         fun onChangeNameSuccess(name: String)
         fun onChangeImgURLSuccess(imgURL: String)
         fun onChangeDescriptionSuccess(description: String)
-        fun onLeaveSuccess(user: BaseUser)
+        fun onLeaveSuccess(chat: Chat)
     }
 
     interface Listener {
@@ -32,7 +32,7 @@ interface IChatContract {
         fun onChangeNameSuccess(name: String)
         fun onChangeImgURLSuccess(imgURL: String)
         fun onChangeDescriptionSuccess(description: String)
-        fun onLeaveSuccess(user: BaseUser)
+        fun onLeaveSuccess(chat: Chat)
     }
 
     interface Presenter {
@@ -46,7 +46,7 @@ interface IChatContract {
         fun changeName(chat: Chat, name: String)
         fun changeImgURL(chat: Chat, imgURL: String)
         fun changeDescription(chat: Chat, description: String)
-        fun leaveChat(chat: Chat)
+        fun leaveChat(chat: Chat, user: BaseUser)
     }
 
     interface Service {
@@ -58,7 +58,7 @@ interface IChatContract {
         fun changeImgURL(chat: Chat, imgURL: String)
         fun changeDescription(chat: Chat, description: String)
         fun removeUser(chat: Chat, user: BaseUser)
-        fun leaveChat(chat: Chat)
+        fun leaveChat(chat: Chat, user: BaseUser)
     }
 
 }

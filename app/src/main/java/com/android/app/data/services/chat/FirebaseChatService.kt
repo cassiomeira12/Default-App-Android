@@ -3,9 +3,11 @@ package com.android.app.data.services.chat
 import android.util.Log
 import com.android.app.R
 import com.android.app.contract.IChatContract
+import com.android.app.data.UserSingleton
 import com.android.app.data.model.BaseUser
 import com.android.app.data.model.Chat
 import com.android.app.data.model.ChatUser
+import com.android.app.data.model.Message
 import com.google.firebase.firestore.FirebaseFirestore
 import java.lang.Exception
 import java.util.*
@@ -105,8 +107,51 @@ class FirebaseChatService(var listener : IChatContract.Listener) : IChatContract
 
     }
 
-    override fun leaveChat(chat: Chat) {
+    override fun leaveChat(chat: Chat, user: BaseUser) {
+        chat.users.remove(user.uID)
 
+        val db = FirebaseFirestore.getInstance()
+        db.collection("conversas")
+            .document(chat.id)
+            .update("users", chat.users)
+            .addOnSuccessListener {
+                enviarMensagemLeave(user.name, chat)
+                listener.onLeaveSuccess(chat)
+            }
+            .addOnFailureListener { exception ->
+                checkException(exception)
+            }
+    }
+
+    private fun enviarMensagemLeave(userName: String, chat: Chat) {
+        val message = Message(userName, Message.Tipo.LEAVE, Date(),true)
+
+        message.idChat = chat.id
+        message.hide = false
+        message.remetenteID = UserSingleton.instance.uID
+        message.remetenteNome = UserSingleton.instance.name
+
+        sendMessage(message)
+    }
+
+    private fun sendMessage(message: Message) {
+        val db = FirebaseFirestore.getInstance()
+        val uID = db.collection("conversas").document().id
+
+        message.id = uID
+        message.sendDate = Date()
+
+        db.collection("conversas")
+            .document(message.idChat)
+            .collection("messages")
+            .document(uID)
+            .set(message)
+            .addOnSuccessListener {
+                Log.d(TAG, "Message adicionado no BD com sucesso")
+            }
+            .addOnFailureListener { exception ->
+                checkException(exception)
+            }
     }
 
     private fun checkException(ex: Exception) {

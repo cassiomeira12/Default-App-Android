@@ -100,6 +100,17 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
         when (resultCode) {
             REQUEST_LEAVE_CHAT -> {
                 Log.d(TAG, "REQUEST_LEAVE_CHAT")
+
+                val userName = UserSingleton.instance.name
+                val message = Message(userName, Message.Tipo.LEAVE, Date(),true)
+
+                message.idChat = chat.id
+                message.hide = false
+                message.remetenteID = UserSingleton.instance.uID
+                message.remetenteNome = UserSingleton.instance.name
+
+                addMessage(message)
+
                 //finish()
             }
         }
@@ -189,11 +200,31 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
         recyclerMensagens.smoothScrollToPosition(adapter.itemCount)
     }
 
+    private fun mensagemTipoConnect(): Boolean {
+        if (adapter.objectSelected != null) {
+            val tipoConnect = (adapter.objectSelected.tipo == Message.Tipo.JOIN || adapter.objectSelected.tipo == Message.Tipo.LEAVE)
+            if (tipoConnect) {
+                adapter.itensSelected.remove(adapter.objectSelected)
+                adapter.notifyDataSetChanged()
+                return true
+            }
+        }
+        return false
+    }
+
     override fun onClickItem(view: View) {
+        if (mensagemTipoConnect()) {
+            return
+        }
+
         invalidateOptionsMenu()
     }
 
     override fun onLongClickItem(view: View) {
+        if (mensagemTipoConnect()) {
+            return
+        }
+
         invalidateOptionsMenu()
     }
 

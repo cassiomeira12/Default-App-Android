@@ -58,4 +58,6 @@
     <string name="adicionar_usuario">Adicionar usuário</string>
     <string name="online">online</string>
     <string name="online_ha">online há</string>
+    <string name="saiu_do_grupo">saiu do grupo</string>
+    <string name="entrou_no_grupo">entrou no grupo</string>
 </resources>

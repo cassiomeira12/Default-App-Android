@@ -105,7 +105,7 @@ class ChatConfigActivity : AppCompatActivity(), Adapter.Actions, IChatContract.V
 
     }
 
-    override fun onLeaveSuccess(user: BaseUser) {
+    override fun onLeaveSuccess(chat: Chat) {
 
     }
 

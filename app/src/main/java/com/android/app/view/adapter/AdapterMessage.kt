@@ -40,10 +40,10 @@ class AdapterMessage(itensList: MutableList<Message>, context: Context, actions:
 
         when(tipo) {
             Message.Tipo.LEAVE -> {
-                viewHolder.txtUser.text = item.message
+                viewHolder.txtUser.text = item.message.plus(" " + context.getString(R.string.saiu_do_grupo))
             }
             Message.Tipo.JOIN -> {
-                viewHolder.txtUser.text = item.message
+                viewHolder.txtUser.text = item.message.plus(" " + context.getString(R.string.entrou_no_grupo))
             }
             Message.Tipo.TEXT -> {
                 if (item.remetenteID.equals(UserSingleton.instance.uID)) {

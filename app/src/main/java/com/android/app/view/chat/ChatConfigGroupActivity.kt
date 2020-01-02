@@ -2,14 +2,17 @@ package com.android.app.view.chat
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.app.R
 import com.android.app.contract.IChatContract
+import com.android.app.data.UserSingleton
 import com.android.app.data.model.BaseUser
 import com.android.app.data.model.Chat
 import com.android.app.presenter.chat.ChatPresenter
 import com.android.app.utils.ImageUtils
+import com.android.app.utils.UserService
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterUser
 import kotlinx.android.synthetic.main.activity_chat_group_config.*
@@ -106,12 +109,15 @@ class ChatConfigGroupActivity : AppCompatActivity(), Adapter.Actions, IChatContr
 
     }
 
-    override fun onLeaveSuccess(user: BaseUser) {
-
+    override fun onLeaveSuccess(chat: Chat) {
+        Toast.makeText(getApplicationContext(), "Removido com sucesso!", Toast.LENGTH_LONG).show()
+        this.chat = chat
+        listUsers()
     }
 
     fun leave(view: View) {
-        //iPresenter.leaveChat(chat)
+        val user = UserSingleton.instance
+        iPresenter.leaveChat(chat, user)
         setResult(ChatActivity.REQUEST_LEAVE_CHAT)
         finish()
     }
