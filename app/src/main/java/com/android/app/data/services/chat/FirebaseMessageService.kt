@@ -29,10 +29,18 @@ class FirebaseMessageService(var listener : IMessagesContract.Listener) : IMessa
             .set(message)
             .addOnSuccessListener {
                 Log.d(TAG, "Message adicionado no BD com sucesso")
+                updateChatOnline(message.idChat)
             }
             .addOnFailureListener { exception ->
                 checkException(exception)
             }
+    }
+
+    private fun updateChatOnline(chatID: String) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("conversas")
+            .document(chatID)
+            .update("updatedAt", Date())
     }
 
     override fun HideMessages(list: List<Message>) {
@@ -46,7 +54,7 @@ class FirebaseMessageService(var listener : IMessagesContract.Listener) : IMessa
                 .document(message.id)
                 .update("hide", true)
         }
-        //listener.onHideSuccess(list)
+        updateChatOnline(list.get(0).idChat)
     }
 
     fun listMessageSnapshot(chat: Chat) {

@@ -24,8 +24,6 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
     private val TAG = javaClass.simpleName
     private val layoutID = R.layout.item_chat //Id do item layout
 
-    var primeiraExecucao = true
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(layoutID, parent, false))
     }
@@ -55,11 +53,9 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
     private fun downloadImageChat(item: Chat, viewHolder: ViewHolder) {
         if (item.users.size > 2) {
             viewHolder.viewOline.visibility = View.INVISIBLE
-            viewHolder.txtLastMessage.visibility = View.VISIBLE
             setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
             ImageUtils(context).picassoImageUser(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
         } else {
-            viewHolder.txtLastMessage.visibility = View.GONE
             if (item.avatarURL == null) {
                 val currentID = UserSingleton.instance.uID
                 for (id in item.users.values) {
@@ -69,11 +65,11 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
                     }
                 }
             } else {
-                val online = DateUtils.getMinutosPassados(item.updatedAt, Date())
+                val online = DateUtils.getMinutosPassados(item.userOnline, Date())
                 if (online <= 5) {
                     viewHolder.viewOline.visibility = View.VISIBLE
-                    viewHolder.txtLastUpdate.setTextColor(context.resources.getColor(R.color.green))
-                    setDataChat(viewHolder, item.nome, item.descricao, "online")
+                    viewHolder.txtLastMessage.setTextColor(context.resources.getColor(R.color.green))
+                    setDataChat(viewHolder, item.nome, context.getString(R.string.online), DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
                 } else {
                     viewHolder.viewOline.visibility = View.INVISIBLE
                     setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
@@ -93,22 +89,20 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
                 if (task.isSuccessful) {
                     val user = task.result!!.toObject(BaseUser::class.java)
                     item.nome = user!!.name
-                    item.descricao = ""
+                    item.userOnline = user.online
+                    item.descricao = context.getString(R.string.online_ha).plus(" " + DateUtils.getMinutosPassadosString(user.online, Date()))
                     item.avatarURL = user!!.avatarURL
-                    item.updatedAt = user.online
 
-                    val online = DateUtils.getMinutosPassados(item.updatedAt, Date())
+                    val online = DateUtils.getMinutosPassados(user.online, Date())
                     if (online <= 5) {
                         viewHolder.viewOline.visibility = View.VISIBLE
-                        viewHolder.txtLastUpdate.setTextColor(context.resources.getColor(R.color.green))
-                        setDataChat(viewHolder, item.nome, item.descricao, "online")
+                        viewHolder.txtLastMessage.setTextColor(context.resources.getColor(R.color.green))
+                        setDataChat(viewHolder, item.nome, context.getString(R.string.online), DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
                     } else {
                         viewHolder.viewOline.visibility = View.INVISIBLE
                         setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
                     }
-
                     ImageUtils(context).picassoImageUser(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
-
                 } else {
                     viewHolder.progressBar.visibility = View.INVISIBLE
                 }

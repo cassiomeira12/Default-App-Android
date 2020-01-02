@@ -1,6 +1,7 @@
 package com.android.app.data.model;
 
 import com.android.app.data.UserSingleton;
+import com.google.firebase.firestore.Exclude;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -8,7 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Chat implements Serializable {
+public class Chat implements Serializable, Comparable<Date> {
     @SerializedName("_id")
     public String id;
     @SerializedName("avatarURL")
@@ -30,6 +31,9 @@ public class Chat implements Serializable {
     @SerializedName("users")
     public Map<String, String> users = new HashMap<>();
 
+    @Exclude
+    public Date userOnline;
+
     public Chat() {
         //Firebase
     }
@@ -39,4 +43,12 @@ public class Chat implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    @Override
+    public int compareTo(Date date) {
+        if (updatedAt.getTime() > date.getTime()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }

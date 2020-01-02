@@ -134,7 +134,7 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
     }
 
     private fun copyMessages() {
-        var messagesCopy = ""
+        var messagesCopy = String()
         for (message in adapter.itensSelected) {
             messagesCopy += message.message + "\n\n"
         }
@@ -202,6 +202,7 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
             return
         }
 
+        chat.updatedAt = Date()
         val message = Message(edtMessage.text.toString(), Message.Tipo.TEXT, Date(),true)
 
         message.idChat = chat.id

@@ -47,8 +47,8 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions, IChatsContract.View 
             val chat = Chat("Grupo", Date())
             val userID = UserSingleton.instance.uID
             chat.createdBy = userID
-            chat.administradores.put(chat.administradores.size.toString(), userID)
-            chat.users.put(chat.users.size.toString(), userID)
+            chat.administradores.put(userID, userID)
+            chat.users.put(userID, userID)
             chat.descricao = "Descricao do grupo"
 
             iPresenter.createChat(this, chat)
@@ -126,7 +126,8 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions, IChatsContract.View 
     }
 
     override fun onListSuccess(list: List<Chat>) {
-        adapter.itensList.addAll(list)
+        adapter.itensList.addAll(list.sortedWith(compareBy({ it.updatedAt.time })).reversed())
+        //adapter.itensList.addAll(list)
         adapter.notifyDataSetChanged()
         if (adapter.isEmpty) {
             txtSemChats.visibility = View.VISIBLE

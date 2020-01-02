@@ -78,7 +78,7 @@
             android:background="@drawable/btn_round"
             android:textColor="@color/btn_text_color"
             android:onClick="leave"
-            android:text="Sair e Apagar"
+            android:text="Sair"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerUsers"/>

@@ -37,7 +37,6 @@ class FirebaseChatsService(var listener : IChatsContract.Listener) : IChatsContr
         val map = HashMap<String, String>()
         map.put(chat.id, chat.id)
 
-
         val conversasCollections = db.collection("users")
             .document(userID)
             .collection("conversas")
@@ -76,62 +75,20 @@ class FirebaseChatsService(var listener : IChatsContract.Listener) : IChatsContr
     }
 
     override fun listChats() {
-        pesquisarChatDoUsuario()
         val db = FirebaseFirestore.getInstance()
+        val userID = UserSingleton.instance.uID
         db.collection("conversas")
-            .orderBy("updatedAt", Query.Direction.DESCENDING)
+            .whereEqualTo("users.$userID", userID)
+            //.orderBy("updatedAt", Query.Direction.DESCENDING)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Log.d(TAG, "Itens Chat " + task.result!!.size())
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    Log.d(TAG, "Itens Chatsss " + task.result!!.size())
                     listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
                 } else {
                     checkException(task.exception!!)
                 }
             }
-    }
-
-    private fun pesquisarChatDoUsuario() {
-        val db = FirebaseFirestore.getInstance()
-        val userID = UserSingleton.instance.uID
-
-        db.collection("users")
-            .document(userID)
-            .collection("conversas")
-            .get()
-            .addOnCompleteListener { task: Task<QuerySnapshot> ->
-                if (task.isSuccessful) {
-                    val id = "";
-                    for (doc in task.result!!.documents) {
-                        Log.d(TAG, "idChat: " + doc.data!!.keys.toString())
-                    }
-//                    if (task.result!!.isEmpty) {
-//
-//                    } else {
-//
-//                    }
-                } else {
-                    checkException(task.exception!!)
-                }
-            }
-
     }
 
 //    private fun adicionarChatNoUsuario(chat: Chat) {

@@ -56,4 +56,6 @@
     <string name="mensagem_copiada">Mensagem copiada!</string>
     <string name="configuracao">Configuração</string>
     <string name="adicionar_usuario">Adicionar usuário</string>
+    <string name="online">online</string>
+    <string name="online_ha">online há</string>
 </resources>
