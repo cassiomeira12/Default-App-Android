@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +42,7 @@ class AdapterUser(itensList: MutableList<BaseUser>, context: Context, actions: A
             viewHolder.layout.isSelected = false
         }
 
-        ImageUtils(context).picassoImage(viewHolder.imgUser, item.avatarURL, viewHolder.progressBar)
+        ImageUtils(context).picassoImageUser(viewHolder.imgUser, item.avatarURL, viewHolder.progressBar)
 
         viewHolder.layout.setTag(position)
     }

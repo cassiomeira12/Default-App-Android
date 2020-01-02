@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -25,11 +24,8 @@ import com.android.app.utils.ImageUtils
 import com.android.app.utils.KeyboardUtils
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterMessage
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_chat.imgChat
-import kotlinx.android.synthetic.main.item_chat.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -184,7 +180,7 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
 
     private fun showChatData(chat: Chat) {
         txtToolbarTitle.setText(chat.nome)
-        ImageUtils(this).picassoImage(imgChat, chat.avatarURL)
+        ImageUtils(this).picassoImageUser(imgChat, chat.avatarURL)
     }
 
     private fun addMessage(message: Message) {

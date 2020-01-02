@@ -24,6 +24,8 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
     private val TAG = javaClass.simpleName
     private val layoutID = R.layout.item_chat //Id do item layout
 
+    var primeiraExecucao = true
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(layoutID, parent, false))
     }
@@ -55,15 +57,28 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
             viewHolder.viewOline.visibility = View.INVISIBLE
             viewHolder.txtLastMessage.visibility = View.VISIBLE
             setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
-            ImageUtils(context).picassoImage(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
+            ImageUtils(context).picassoImageUser(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
         } else {
             viewHolder.txtLastMessage.visibility = View.GONE
-            val currentID = UserSingleton.instance.uID
-            for (id in item.users.values) {
-                if (!currentID.equals(id)) {
-                    getAvatarUser(id, viewHolder, item)
-                    return
+            if (item.avatarURL == null) {
+                val currentID = UserSingleton.instance.uID
+                for (id in item.users.values) {
+                    if (!currentID.equals(id)) {
+                        getAvatarUser(id, viewHolder, item)
+                        return
+                    }
                 }
+            } else {
+                val online = DateUtils.getMinutosPassados(item.updatedAt, Date())
+                if (online <= 5) {
+                    viewHolder.viewOline.visibility = View.VISIBLE
+                    viewHolder.txtLastUpdate.setTextColor(context.resources.getColor(R.color.green))
+                    setDataChat(viewHolder, item.nome, item.descricao, "online")
+                } else {
+                    viewHolder.viewOline.visibility = View.INVISIBLE
+                    setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
+                }
+                ImageUtils(context).picassoImageUser(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
             }
         }
     }
@@ -80,16 +95,19 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
                     item.nome = user!!.name
                     item.descricao = ""
                     item.avatarURL = user!!.avatarURL
+                    item.updatedAt = user.online
 
-                    val online = DateUtils.getMinutosPassados(user.online, Date())
+                    val online = DateUtils.getMinutosPassados(item.updatedAt, Date())
                     if (online <= 5) {
                         viewHolder.viewOline.visibility = View.VISIBLE
+                        viewHolder.txtLastUpdate.setTextColor(context.resources.getColor(R.color.green))
                         setDataChat(viewHolder, item.nome, item.descricao, "online")
                     } else {
                         viewHolder.viewOline.visibility = View.INVISIBLE
-                        setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(user.online, Date()))
+                        setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
                     }
-                    ImageUtils(context).picassoImage(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
+
+                    ImageUtils(context).picassoImageUser(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
 
                 } else {
                     viewHolder.progressBar.visibility = View.INVISIBLE

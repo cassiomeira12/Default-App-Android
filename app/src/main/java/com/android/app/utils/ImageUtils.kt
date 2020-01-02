@@ -12,20 +12,20 @@ import com.squareup.picasso.Picasso
 class ImageUtils(var context: Context) {
     private val TAG = javaClass.simpleName
 
-    fun picassoImage(imgView: ImageView, url: String?) {
+    fun picassoImageUser(imgView: ImageView, url: String?) {
         if (url == null || url.isEmpty()) {
-            //imgView.setImageResource(R.drawable.error)
+            imgView.setImageResource(R.drawable.user_default_img_white_48dp)
             return
         }
         Picasso.with(context)
             .load(url)
-            //.error(R.drawable.error)
+            .error(R.drawable.user_default_img_white_48dp)
             .into(imgView)
     }
 
-    fun picassoImage(imgView: ImageView, url: String?, progressBar: ProgressBar?) {
+    fun picassoImageUser(imgView: ImageView, url: String?, progressBar: ProgressBar?) {
         if (url == null || url.isEmpty()) {
-            //imgView.setImageResource(R.drawable.error)
+            imgView.setImageResource(R.drawable.user_default_img_white_48dp)
             progressBar!!.visibility = View.INVISIBLE
             return
         }
@@ -34,7 +34,7 @@ class ImageUtils(var context: Context) {
 
         Picasso.with(context)
             .load(url)
-            //.error(R.drawable.error)
+            .error(R.drawable.user_default_img_white_48dp)
             .into(imgView, object : Callback {
                 override fun onSuccess() {
                     Log.d(TAG, "onSuccess")
