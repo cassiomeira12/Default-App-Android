@@ -32,7 +32,7 @@
                     android:background="@drawable/shape_round_circle_white"
                     android:padding="1dp">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imgChat"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

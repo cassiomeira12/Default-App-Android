@@ -54,4 +54,6 @@
     <string name="cancelar">Cancelar</string>
     <string name="sim">Sim</string>
     <string name="mensagem_copiada">Mensagem copiada!</string>
+    <string name="configuracao">Configuração</string>
+    <string name="adicionar_usuario">Adicionar usuário</string>
 </resources>

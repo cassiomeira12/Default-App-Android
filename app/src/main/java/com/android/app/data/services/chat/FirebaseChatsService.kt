@@ -20,7 +20,44 @@ class FirebaseChatsService(var listener : IChatsContract.Listener) : IChatsContr
 
     override fun createChat(activity: Activity, chat: Chat) {
         this.activity = activity
-        adicionarChatNoUsuario(chat)
+        createChatTransaction(chat)
+    }
+
+    private fun createChatTransaction(chat: Chat) {
+        val db = FirebaseFirestore.getInstance()
+
+        val chatID = db.collection("conversas").document().id
+        val userID = UserSingleton.instance.uID
+
+        chat.id = chatID
+        chat.createdAt = Date()
+        chat.updatedAt = Date()
+
+        val map = HashMap<String, String>()
+        map.put(chat.id, chat.id)
+
+
+        val conversasCollections = db.collection("users")
+            .document(userID)
+            .collection("conversas")
+            .document(chat.id)
+
+        val chatDocument = db.collection("conversas")
+            .document(chat.id)
+
+        FirebaseFirestore.getInstance()
+            .runTransaction { transaction ->
+
+                transaction.set(chatDocument, chat)
+                transaction.set(conversasCollections, map)
+
+            }
+            .addOnSuccessListener { result ->
+                listener.onCreatedSuccess(chat)
+            }
+            .addOnFailureListener {exception ->
+                checkException(exception)
+            }
     }
 
     override fun removeChat(chat: Chat) {
@@ -78,51 +115,69 @@ class FirebaseChatsService(var listener : IChatsContract.Listener) : IChatsContr
 
     }
 
-    private fun adicionarChatNoUsuario(chat: Chat) {
-        val db = FirebaseFirestore.getInstance()
-        val chatID = db.collection("conversas").document().id
-        val userID = UserSingleton.instance.uID
-
-        chat.id = chatID
-        chat.createdAt = Date()
-        chat.updatedAt = Date()
-
-        val map = HashMap<String, String>()
-        map.put(chat.id, chat.id)
-
-        db.collection("users")
-            .document(userID)
-            .collection("conversas")
-            .document(chat.id)
-            .set(map)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    createChat(chat)
-                } else {
-                    checkException(task.exception!!)
-                }
-            }
-    }
+//    private fun adicionarChatNoUsuario(chat: Chat) {
+//        val db = FirebaseFirestore.getInstance()
+//        val chatID = db.collection("conversas").document().id
+//        val userID = UserSingleton.instance.uID
+//
+//        chat.id = chatID
+//        chat.createdAt = Date()
+//        chat.updatedAt = Date()
+//
+//        val map = HashMap<String, String>()
+//        map.put(chat.id, chat.id)
+//
+//        db.collection("users")
+//            .document(userID)
+//            .collection("conversas")
+//            .document(chat.id)
+//            .set(map)
+//            .addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    createChat(chat)
+//                } else {
+//                    checkException(task.exception!!)
+//                }
+//            }
+//    }
 
     private fun removerChatNoUsuario(chat: Chat) {
 
     }
 
-    private fun createChat(chat: Chat) {
-        val db = FirebaseFirestore.getInstance()
+//    private fun adicionarNaListaDeUsuarios(chat: Chat) {
+//        val user = UserSingleton.instance
+//
+//        val db = FirebaseFirestore.getInstance()
+//        db.collection("conversas")
+//            .document(chat.id)
+//            .collection("users")
+//            .document(user.uID)
+//            .set(user)
+//            .addOnSuccessListener {
+//                Log.d(TAG, "Chat adicionado no BD com sucesso")
+//                listener.onCreatedSuccess(chat)
+//            }
+//            .addOnFailureListener { exception ->
+//                checkException(exception)
+//            }
+//    }
 
-        db.collection("conversas")
-            .document(chat.id)
-            .set(chat)
-            .addOnSuccessListener {
-                Log.d(TAG, "Chat adicionado no BD com sucesso")
-                listener.onCreatedSuccess(chat)
-            }
-            .addOnFailureListener { exception ->
-                removerChatNoUsuario(chat)
-                checkException(exception)
-            }
-    }
+//    private fun createChat(chat: Chat) {
+//        val db = FirebaseFirestore.getInstance()
+//        db.collection("conversas")
+//            .document(chat.id)
+//            .set(chat)
+//            .addOnSuccessListener {
+//                Log.d(TAG, "Chat adicionado no BD com sucesso")
+//                listener.onCreatedSuccess(chat)
+//                //adicionarNaListaDeUsuarios(chat)
+//            }
+//            .addOnFailureListener { exception ->
+//                removerChatNoUsuario(chat)
+//                checkException(exception)
+//            }
+//    }
 
     private fun checkException(ex: Exception) {
         Log.e(TAG, ex.toString())

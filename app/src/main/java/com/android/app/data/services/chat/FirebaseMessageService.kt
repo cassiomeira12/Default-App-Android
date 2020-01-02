@@ -1,7 +1,6 @@
 package com.android.app.data.services.chat
 
 import android.util.Log
-import com.android.app.R
 import com.android.app.contract.IMessagesContract
 import com.android.app.data.UserSingleton
 import com.android.app.data.model.Chat
@@ -72,7 +71,7 @@ class FirebaseMessageService(var listener : IMessagesContract.Listener) : IMessa
                         if (message.hide) {
                             listHide.add(message)
                         } else if (!itensDeleted.contains(message)) {
-                            if (LIST_MESSAGES || !message.remetente.equals(UserSingleton.instance.uID)) {
+                            if (LIST_MESSAGES || !message.remetenteID.equals(UserSingleton.instance.uID)) {
                                 list.add(message)
                             }
                         }

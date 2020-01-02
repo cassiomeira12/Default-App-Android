@@ -1,8 +1,5 @@
 package com.android.app.data.model;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.google.firebase.firestore.Exclude;
 import com.google.gson.annotations.SerializedName;
 
@@ -23,8 +20,10 @@ public class Message {
     public Date sendDate;
     @SerializedName("mediaURL")
     public String mediaURL;
-    @SerializedName("remetente")
-    public String remetente;
+    @SerializedName("remetenteID")
+    public String remetenteID;
+    @SerializedName("remetenteNome")
+    public String remetenteNome;
 
     @Exclude
     public boolean enviado = false;
@@ -73,6 +72,7 @@ public class Message {
                 + "\nhide " + hide
                 + "\nsendDate " + sendDate
                 + "\nmediaURL " + mediaURL
-                + "\nremetente " + remetente;
+                + "\nremetenteID " + remetenteID
+                + "\nremetenteNome " + remetenteNome;
     }
 }

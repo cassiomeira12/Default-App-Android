@@ -9,19 +9,20 @@ interface IUser {
         fun onResult(user: BaseUser?)
     }
 
+    interface Listener {
+        fun onResult(user: BaseUser?)
+    }
+
     interface Presenter {
+        fun onDestroy()
+
         fun currentUser(context: Context)
         fun signOut(context: Context)
-        fun onDestroy()
     }
 
     interface Service {
         fun currentUser(context: Context)
         fun signOut(context: Context)
-    }
-
-    interface Listener {
-        fun onResult(user: BaseUser?)
     }
 
 }

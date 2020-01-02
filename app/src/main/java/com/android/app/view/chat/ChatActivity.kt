@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -20,10 +21,15 @@ import com.android.app.data.UserSingleton
 import com.android.app.data.model.Chat
 import com.android.app.data.model.Message
 import com.android.app.presenter.chat.MessagePresenter
+import com.android.app.utils.ImageUtils
 import com.android.app.utils.KeyboardUtils
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterMessage
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.activity_chat.imgChat
+import kotlinx.android.synthetic.main.item_chat.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -42,6 +48,7 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
         chat = intent.getSerializableExtra("chat") as Chat
 
         adapter = AdapterMessage(ArrayList<Message>(), this, this)
+        adapter.chat = chat
         val layout = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerMensagens.layoutManager = layout
         recyclerMensagens.adapter = adapter
@@ -53,7 +60,9 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
         }
 
         toolbar.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(getApplicationContext(), ChatConfigActivity::class.java))
+            val intent = Intent(getApplicationContext(), ChatConfigActivity::class.java)
+            intent.putExtra("chat", chat)
+            startActivityForResult(intent, REQUEST_LEAVE_CHAT)
         })
 
         showChatData(chat)
@@ -80,6 +89,19 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
         //getSupportActionBar()!!.setHomeButtonEnabled(true)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()!!.setDisplayShowTitleEnabled(false)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+//        if (data == null) {
+//            return
+//        }
+        when (resultCode) {
+            REQUEST_LEAVE_CHAT -> {
+                Log.d(TAG, "REQUEST_LEAVE_CHAT")
+                //finish()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -157,6 +179,7 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
 
     private fun showChatData(chat: Chat) {
         txtToolbarTitle.setText(chat.nome)
+        ImageUtils(this).picassoImage(imgChat, chat.avatarURL)
     }
 
     private fun addMessage(message: Message) {
@@ -182,7 +205,8 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
 
         message.idChat = chat.id
         message.hide = false
-        message.remetente = UserSingleton.instance.uID
+        message.remetenteID = UserSingleton.instance.uID
+        message.remetenteNome = UserSingleton.instance.name
 
         addMessage(message)
         edtMessage.text.clear()
@@ -220,6 +244,10 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
 
     override fun onFailure(message: String) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show()
+    }
+
+    companion object {
+        val REQUEST_LEAVE_CHAT = 1
     }
 
 }

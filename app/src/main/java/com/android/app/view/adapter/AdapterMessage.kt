@@ -9,12 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.app.R
 import com.android.app.data.UserSingleton
+import com.android.app.data.model.Chat
 import com.android.app.data.model.Message
 import com.android.app.utils.DateUtils
 
 class AdapterMessage(itensList: MutableList<Message>, context: Context, actions: Actions): Adapter<Message>(itensList, context, actions) {
     private val TAG = javaClass.simpleName
     private val layoutID = R.layout.item_message //Id do item layout
+
+    lateinit var chat: Chat
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(layoutID, parent, false))
@@ -43,10 +46,11 @@ class AdapterMessage(itensList: MutableList<Message>, context: Context, actions:
                 viewHolder.txtUser.text = item.message
             }
             Message.Tipo.TEXT -> {
-                if (item.remetente.equals(UserSingleton.instance.uID)) {
+                if (item.remetenteID.equals(UserSingleton.instance.uID)) {
                     viewHolder.txtMessageS.text = item.message
                     viewHolder.txtSendDateS.text = DateUtils.getHourMinute(item.sendDate)
                 } else {
+                    viewHolder.txtRemetente.text = item.remetenteNome
                     viewHolder.txtMessageR.text = item.message
                     viewHolder.txtSendDateR.text = DateUtils.getHourMinute(item.sendDate)
                 }
@@ -82,6 +86,7 @@ class AdapterMessage(itensList: MutableList<Message>, context: Context, actions:
         val layout: FrameLayout
 
         val layoutTextR: FrameLayout
+        val txtRemetente: TextView
         val txtMessageR: TextView
         val txtSendDateR: TextView
 
@@ -95,11 +100,12 @@ class AdapterMessage(itensList: MutableList<Message>, context: Context, actions:
         init {
             layout = itemView.findViewById(R.id.item_message)
 
-            layoutTextR = itemView.findViewById(R.id.layoutTextR);
+            layoutTextR = itemView.findViewById(R.id.layoutTextR)
+            txtRemetente = itemView.findViewById(R.id.txtRemetente)
             txtMessageR = itemView.findViewById(R.id.txtMessageR)
             txtSendDateR = itemView.findViewById(R.id.txtSendDateR)
 
-            layoutTextS = itemView.findViewById(R.id.layoutTextS);
+            layoutTextS = itemView.findViewById(R.id.layoutTextS)
             txtMessageS = itemView.findViewById(R.id.txtMessageS)
             txtSendDateS = itemView.findViewById(R.id.txtSendDateS)
 
@@ -126,7 +132,7 @@ class AdapterMessage(itensList: MutableList<Message>, context: Context, actions:
                     layoutJoin.visibility = View.VISIBLE
                 }
                 Message.Tipo.TEXT -> {
-                    if (message.remetente.equals(UserSingleton.instance.uID)) {
+                    if (message.remetenteID.equals(UserSingleton.instance.uID)) {
                         layoutTextS.visibility = View.VISIBLE
                     } else {
                         layoutTextR.visibility = View.VISIBLE

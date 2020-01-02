@@ -1,5 +1,6 @@
 package com.android.app.data.model;
 
+import com.android.app.data.UserSingleton;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -24,7 +25,10 @@ public class Chat implements Serializable {
     public String descricao;
     @SerializedName("criptografia")
     public String criptografia;
+    @SerializedName("administradores")
     public Map<String, String> administradores = new HashMap<>();
+    @SerializedName("users")
+    public Map<String, String> users = new HashMap<>();
 
     public Chat() {
         //Firebase
@@ -34,4 +38,5 @@ public class Chat implements Serializable {
         this.nome = nome;
         this.updatedAt = updatedAt;
     }
+
 }

@@ -9,13 +9,22 @@ interface IMessagesContract {
     interface View {
         fun showProgress()
         fun hideProgress()
+        fun onFailure(message : String)
+
         fun onHideSuccess(list: List<Message>)
         fun onListSuccess(list: List<Message>)
-        fun onFailure(message : String)
+    }
+
+    interface Listener {
+        fun onFailure(message: String)
+
+        fun onHideSuccess(list: List<Message>)
+        fun onListSuccess(list: List<Message>)
     }
 
     interface Presenter {
         fun onDestroy()
+
         fun sendMessage(message: Message)
         fun HideMessages(list: List<Message>)
         fun listMessages(chat: Chat)
@@ -25,12 +34,6 @@ interface IMessagesContract {
         fun sendMessage(message: Message)
         fun HideMessages(list: List<Message>)
         fun listMessages(chat: Chat)
-    }
-
-    interface Listener {
-        fun onHideSuccess(list: List<Message>)
-        fun onListSuccess(list: List<Message>)
-        fun onFailure(message: String)
     }
 
 }

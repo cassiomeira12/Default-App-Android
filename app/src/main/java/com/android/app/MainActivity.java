@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         BaseUser user = UserSingleton.Companion.getInstance();
-        Log.d("cassio", user.toString());
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

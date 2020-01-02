@@ -68,6 +68,15 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/txtSemChats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:text="Você ainda não tem conversas"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

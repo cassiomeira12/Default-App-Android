@@ -24,7 +24,7 @@
                 android:background="@drawable/shape_round_circle_green"
                 android:padding="3dp">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgChat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -34,7 +34,7 @@
                     android:id="@+id/progressBar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     android:padding="4dp"/>
 
             </FrameLayout>

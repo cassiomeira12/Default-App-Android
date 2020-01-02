@@ -7,12 +7,19 @@ interface IVerifiedEmailContract {
     interface View {
         fun showProgress()
         fun hideProgress()
-        fun onSuccess(message: String)
         fun onFailure(message : String)
+
+        fun onSuccess(message: String)
+    }
+
+    interface Listener {
+        fun onFailure(message: String)
+        fun onSuccess(message: String)
     }
 
     interface Presenter {
         fun onDestroy()
+
         fun sendEmailVerification()
         fun isEmailVerified(user: BaseUser): Boolean
     }
@@ -20,11 +27,6 @@ interface IVerifiedEmailContract {
     interface Service {
         fun sendEmailVerification()
         fun isEmailVerified(user: BaseUser): Boolean
-    }
-
-    interface Listener {
-        fun onSuccess(message: String)
-        fun onFailure(message: String)
     }
 
 }

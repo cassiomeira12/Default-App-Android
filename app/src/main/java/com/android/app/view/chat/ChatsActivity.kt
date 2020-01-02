@@ -45,8 +45,10 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions, IChatsContract.View 
 
         fab.setOnClickListener { view ->
             val chat = Chat("Grupo", Date())
-            chat.createdBy = UserSingleton.instance.uID
-            chat.administradores.put(chat.administradores.size.toString(), UserSingleton.instance.uID)
+            val userID = UserSingleton.instance.uID
+            chat.createdBy = userID
+            chat.administradores.put(chat.administradores.size.toString(), userID)
+            chat.users.put(chat.users.size.toString(), userID)
             chat.descricao = "Descricao do grupo"
 
             iPresenter.createChat(this, chat)
@@ -83,6 +85,10 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions, IChatsContract.View 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
+            R.id.action_add_user -> {
+                
+                return true
+            }
             R.id.action_settings -> {
 
                 return true
@@ -122,6 +128,11 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions, IChatsContract.View 
     override fun onListSuccess(list: List<Chat>) {
         adapter.itensList.addAll(list)
         adapter.notifyDataSetChanged()
+        if (adapter.isEmpty) {
+            txtSemChats.visibility = View.VISIBLE
+        } else {
+            txtSemChats.visibility = View.INVISIBLE
+        }
     }
 
     override fun onFailure(message: String) {

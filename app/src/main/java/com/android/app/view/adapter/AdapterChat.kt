@@ -1,7 +1,7 @@
 package com.android.app.view.adapter
 
 import android.content.Context
-import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +9,18 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
 import com.android.app.R
+import com.android.app.data.UserSingleton
 import com.android.app.data.model.Chat
 import com.android.app.utils.DateUtils
-import com.android.app.utils.FileUtils
+import com.android.app.utils.ImageUtils
+import com.google.android.material.shape.RoundedCornerTreatment
+import com.google.firebase.firestore.FirebaseFirestore
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
+
 
 class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actions): Adapter<Chat>(itensList, context, actions) {
     private val TAG = javaClass.simpleName
@@ -39,19 +45,39 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
             viewHolder.layout.isSelected = false
         }
 
-        downloadImage(viewHolder)
+        downloadImageChat(item, viewHolder)
 
         viewHolder.layout.setTag(position)
     }
 
-    private fun downloadImage(viewHolder: ViewHolder) {
-        viewHolder.imgChat.visibility = View.INVISIBLE
-        viewHolder.progressBar.visibility = View.VISIBLE
+    private fun downloadImageChat(item: Chat, viewHolder: ViewHolder) {
+        if (item.users.size > 2) {
+            ImageUtils(context).picassoImage(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
+        } else {
+            val currentID = UserSingleton.instance.uID
+            for (id in item.users.values) {
+                if (currentID.equals(id)) {
+                    getAvatarUser(id, viewHolder, item)
+                    return
+                }
+            }
+        }
+    }
 
-        Handler().postDelayed(Runnable {
-            viewHolder.progressBar.visibility = View.INVISIBLE
-            viewHolder.imgChat.visibility = View.VISIBLE
-        }, 3000)
+    private fun getAvatarUser(userID: String, viewHolder: ViewHolder, item: Chat) {
+        Log.d(TAG, "Get $userID")
+        val db = FirebaseFirestore.getInstance()
+        db.collection("users")
+            .document(userID)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = task.result!!.toObject(Chat::class.java)
+                    ImageUtils(context).picassoImage(viewHolder.imgChat, user?.avatarURL, viewHolder.progressBar)
+                } else {
+                    viewHolder.progressBar.visibility = View.INVISIBLE
+                }
+            }
     }
 
     override fun update(item: Chat): Boolean {
@@ -63,7 +89,7 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
 
         val viewOline: FrameLayout
         val progressBar: ProgressBar
-        val imgChat: ImageView
+        val imgChat: CircleImageView
 
         val txtUserName: TextView
         val txtLastMessage: TextView

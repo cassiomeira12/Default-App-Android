@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/item_message"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="1dp">
 
     <FrameLayout
         android:id="@+id/layoutJoin"
@@ -57,10 +58,17 @@
             android:padding="8dp">
 
             <TextView
+                android:id="@+id/txtRemetente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remetente"/>
+
+            <TextView
                 android:id="@+id/txtMessageR"
                 android:maxWidth="300dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:textSize="18sp"
                 android:gravity="left"
                 android:text="mensagem"/>
@@ -71,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:layout_gravity="right"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:text="19:27"/>
 
         </LinearLayout>

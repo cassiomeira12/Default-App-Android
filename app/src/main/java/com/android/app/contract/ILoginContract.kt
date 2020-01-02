@@ -8,25 +8,25 @@ interface ILoginContract {
     interface View {
         fun showProgress()
         fun hideProgress()
-        fun onSuccess(user: BaseUser)
         fun onFailure(message: String)
 
+        fun onSuccess(user: BaseUser)
         fun setLoginNameError(message: String)
         fun setPasswordNameError(message: String)
     }
 
+    interface Listener {
+        fun onFailure(message : String)
+        fun onSuccess(user: BaseUser)
+    }
+
     interface Presenter {
-        fun onLogin(activity: Activity, email : String, password : String)
         fun onDestroy()
+        fun onLogin(activity: Activity, email : String, password : String)
     }
 
     interface Service {
         fun onLogin(activity : Activity, login : String, password: String)
-    }
-
-    interface Listener {
-        fun onSuccess(user: BaseUser)
-        fun onFailure(message : String)
     }
 
 }

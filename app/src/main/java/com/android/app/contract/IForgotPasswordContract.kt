@@ -7,6 +7,11 @@ interface IForgotPasswordContract {
         fun onFailureResult(message: String)
     }
 
+    interface Listener {
+        fun onSuccess()
+        fun onFailure(message: String)
+    }
+
     interface Presenter {
         fun onDestroy()
         fun onSend(email: String)
@@ -14,11 +19,6 @@ interface IForgotPasswordContract {
 
     interface Service {
         fun onSend(email: String)
-    }
-
-    interface Listener {
-        fun onSuccess()
-        fun onFailure(message: String)
     }
 
 }
