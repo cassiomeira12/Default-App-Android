@@ -20,6 +20,9 @@
             android:name=".view.chat.ChatConfigActivity"
             android:theme="@style/AppThemeNoActionBar"/>
         <activity
+            android:name=".view.chat.ChatConfigGroupActivity"
+            android:theme="@style/AppThemeNoActionBar"/>
+        <activity
             android:name=".view.chat.ChatActivity"
             android:theme="@style/AppThemeNoActionBar" />
         <activity

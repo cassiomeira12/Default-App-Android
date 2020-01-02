@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.app.R
 import com.android.app.data.UserSingleton
+import com.android.app.data.model.BaseUser
 import com.android.app.data.model.Chat
 import com.android.app.utils.DateUtils
 import com.android.app.utils.ImageUtils
@@ -35,9 +36,7 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
 
         val item = itensList.get(position)
 
-        viewHolder.txtUserName.text = item.nome
-        viewHolder.txtLastUpdate.text = DateUtils.formatDateExtenso(item.updatedAt)
-        viewHolder.txtLastMessage.text = item.descricao
+        setDataChat(viewHolder, item.nome, item.descricao, DateUtils.formatDateExtenso(item.updatedAt))
 
         if (itensSelected.contains(item)) {
             viewHolder.layout.isSelected = true
@@ -50,13 +49,19 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
         viewHolder.layout.setTag(position)
     }
 
+    private fun setDataChat(viewHolder: ViewHolder, userName: String, description: String, lastMessage: String) {
+        viewHolder.txtUserName.text = userName
+        viewHolder.txtLastMessage.text = description
+        viewHolder.txtLastUpdate.text = lastMessage
+    }
+
     private fun downloadImageChat(item: Chat, viewHolder: ViewHolder) {
         if (item.users.size > 2) {
             ImageUtils(context).picassoImage(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
         } else {
             val currentID = UserSingleton.instance.uID
             for (id in item.users.values) {
-                if (currentID.equals(id)) {
+                if (!currentID.equals(id)) {
                     getAvatarUser(id, viewHolder, item)
                     return
                 }
@@ -72,8 +77,12 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val user = task.result!!.toObject(Chat::class.java)
-                    ImageUtils(context).picassoImage(viewHolder.imgChat, user?.avatarURL, viewHolder.progressBar)
+                    val user = task.result!!.toObject(BaseUser::class.java)
+                    item.nome = user!!.name
+                    item.descricao = "Online"
+                    item.avatarURL = user!!.avatarURL
+                    setDataChat(viewHolder, item.nome, item.descricao, DateUtils.formatDateExtenso(item.updatedAt))
+                    ImageUtils(context).picassoImage(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
                 } else {
                     viewHolder.progressBar.visibility = View.INVISIBLE
                 }

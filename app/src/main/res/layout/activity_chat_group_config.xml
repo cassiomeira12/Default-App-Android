@@ -28,8 +28,7 @@
                 android:id="@+id/imgChat"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:src="@drawable/logo_app"
-                android:scaleType="centerCrop"/>
+                android:src="@drawable/email"/>
 
             <View
                 android:layout_width="match_parent"
@@ -54,6 +53,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_chat_config" />
+    <include layout="@layout/content_chat_group_config" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

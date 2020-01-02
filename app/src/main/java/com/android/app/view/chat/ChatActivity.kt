@@ -60,7 +60,12 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
         }
 
         toolbar.setOnClickListener(View.OnClickListener {
-            val intent = Intent(getApplicationContext(), ChatConfigActivity::class.java)
+            val intent: Intent?
+            if (chat.users.size > 2) {
+                intent = Intent(getApplicationContext(), ChatConfigGroupActivity::class.java)
+            } else {
+                intent = Intent(getApplicationContext(), ChatConfigActivity::class.java)
+            }
             intent.putExtra("chat", chat)
             startActivityForResult(intent, REQUEST_LEAVE_CHAT)
         })
