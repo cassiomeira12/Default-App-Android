@@ -69,7 +69,6 @@
                     android:textSize="18sp"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:textStyle="bold"
                     android:gravity="left"
                     android:text="Nome usuario"/>
 

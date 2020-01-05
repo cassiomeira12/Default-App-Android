@@ -9,6 +9,7 @@ import com.android.app.contract.IUser;
 import com.android.app.data.UserSingleton;
 import com.android.app.data.model.BaseUser;
 import com.android.app.presenter.login.UserPresenter;
+import com.android.app.utils.PermissionUtils;
 import com.android.app.view.chat.ChatsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -35,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_notifications)
                 .build();
 
-        BaseUser user = UserSingleton.Companion.getInstance();
-
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
@@ -48,8 +47,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).updateOnline();
 
-        Toast.makeText(this, user.email, Toast.LENGTH_LONG).show();
-
+        PermissionUtils.INSTANCE.requestPermissionWriteStorage(this);
         startActivity(new Intent(getApplicationContext(), ChatsActivity.class));
     }
 

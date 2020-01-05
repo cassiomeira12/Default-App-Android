@@ -51,12 +51,12 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
     }
 
     private fun downloadImageChat(item: Chat, viewHolder: ViewHolder) {
-        if (item.users.size > 2) {
+        if (item.users.size > 2) {// Grupos
             viewHolder.viewOline.visibility = View.INVISIBLE
             setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
             ImageUtils(context).picassoImageUser(item.id, viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
-        } else {
-            if (item.avatarURL == null) {
+        } else {// Conversas
+            if (item.avatarURL == null) {// Baixar a primeira vez
                 val currentID = UserSingleton.instance.uID
                 for (id in item.users.values) {
                     if (!currentID.equals(id)) {
@@ -64,7 +64,7 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
                         return
                     }
                 }
-            } else {
+            } else {// Ja baixou, apenas mostrar
                 val online = DateUtils.getMinutosPassados(item.userOnline, Date())
                 if (online <= 5) {
                     viewHolder.viewOline.visibility = View.VISIBLE
@@ -80,7 +80,6 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
     }
 
     private fun getAvatarUser(userID: String, viewHolder: ViewHolder, item: Chat) {
-        Log.d(TAG, "Get $userID")
         val db = FirebaseFirestore.getInstance()
         db.collection("users")
             .document(userID)

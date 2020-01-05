@@ -56,47 +56,10 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions, IChatsContract.View 
             chat.administradores.put(userID, userID)
             chat.users.put(userID, userID)
             chat.descricao = "Descricao do grupo"
-
             //iPresenter.createChat(this, chat)
-            //lerArquivo()
-            //gravarArquivo()
-
-            if (PermissionUtils.checkPermissionWriteStorage(this)) {
-                FileUtils(this).createDirectory()
-            }
         }
 
         supportNaviagteUp()
-    }
-
-    private fun lerArquivo() {
-        val file = "arquivo.txt"
-        var conteudo = ""
-        try {
-            val inp = openFileInput(file)
-            val reader = BufferedReader(InputStreamReader(inp))
-            conteudo = reader.readLine()
-            reader.close()
-            Toast.makeText(this, conteudo, Toast.LENGTH_LONG).show()
-        } catch (ex: Exception) {
-            Toast.makeText(this, "erro leitura", Toast.LENGTH_LONG).show()
-            ex.printStackTrace()
-        }
-    }
-
-    private fun gravarArquivo() {
-        val file = "arquivo.txt"
-        val conteudo = "conteudo do arquivo"
-        try {
-            val out = openFileOutput(file, Context.MODE_PRIVATE)
-            val writter = BufferedWriter(OutputStreamWriter(out))
-            writter.write(conteudo)
-            writter.close()
-            Toast.makeText(this, "gravou", Toast.LENGTH_LONG).show()
-        } catch (ex: Exception) {
-            Toast.makeText(this, "erro", Toast.LENGTH_LONG).show()
-            ex.printStackTrace()
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

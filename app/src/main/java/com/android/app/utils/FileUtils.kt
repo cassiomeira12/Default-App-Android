@@ -1,27 +1,23 @@
 package com.android.app.utils
 
-import android.content.ContentResolver
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Environment
 import android.util.Log
+import android.widget.Toast
 import com.android.app.R
 import java.io.*
-
+import java.lang.Exception
 
 class FileUtils(val context: Context) {
+    private val TAG = javaClass.simpleName
 
-    fun getPath(): String {
-        return Environment.getExternalStorageDirectory().absolutePath + "/${context.getString(R.string.app_name)}/"
-    }
-
-    fun createDirectory() {
-        val file = File(getPath())
+    private fun getPathRoot(): String {
+        val pathRoot = Environment.getExternalStorageDirectory().absolutePath + "/${context.getString(R.string.app_name)}/"
+        val file = File(pathRoot)
         if (!file.exists()) {
             file.mkdir()
         }
+        return pathRoot
     }
 
 //    fun isExternalStorageWritable(): Boolean {
@@ -66,73 +62,86 @@ class FileUtils(val context: Context) {
 //        }
 //    }
 
-    fun lerArquivo(fileName: String) {
-        var conteudo = ""
-        try {
-            val inp = context.openFileInput(fileName)
-            val reader = BufferedReader(InputStreamReader(inp))
-            conteudo = reader.readLine()
-            reader.close()
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
-    }
+//    private fun lerArquivo() {
+//        val file = "arquivo.txt"
+//        var conteudo = ""
+//        try {
+//            val inp = openFileInput(file)
+//            val reader = BufferedReader(InputStreamReader(inp))
+//            conteudo = reader.readLine()
+//            reader.close()
+//            Toast.makeText(this, conteudo, Toast.LENGTH_LONG).show()
+//        } catch (ex: Exception) {
+//            Toast.makeText(this, "erro leitura", Toast.LENGTH_LONG).show()
+//            ex.printStackTrace()
+//        }
+//    }
+//
+//    private fun gravarArquivo() {
+//        val file = "arquivo.txt"
+//        val conteudo = "conteudo do arquivo"
+//        try {
+//            val out = openFileOutput(file, Context.MODE_PRIVATE)
+//            val writter = BufferedWriter(OutputStreamWriter(out))
+//            writter.write(conteudo)
+//            writter.close()
+//            Toast.makeText(this, "gravou", Toast.LENGTH_LONG).show()
+//        } catch (ex: Exception) {
+//            Toast.makeText(this, "erro", Toast.LENGTH_LONG).show()
+//            ex.printStackTrace()
+//        }
+//    }
 
-    private fun writeFileInStorage(fileName: String, bytes: ByteArray): Boolean {
+    fun writeFileInStorage(fileName: String, bytes: ByteArray): Boolean {
+        Log.d(TAG, "fileName: $fileName")
         try {
-            val path = getPath()
+            val path = getPathRoot()
             val file = File(path, fileName)
+            Log.d(TAG, "path: ${file.absolutePath}")
             val out = FileOutputStream(file)
             out.write(bytes)
             out.close()
+            Log.d(TAG, "write file success")
             return true
         } catch (ex: IOException) {
+            Log.e(TAG, "write file error")
             ex.printStackTrace()
             return false
         }
     }
 
-    private fun readFileInStorage(fileName: String): File? {
+    fun readFileInStorage(fileName: String): File? {
+        Log.d(TAG, "fileName: $fileName")
         try {
-            val path = getPath()
+            val path = getPathRoot()
             val file = File(path, fileName)
+            Log.d(TAG, "path: ${file.absolutePath}")
+            Log.d(TAG, "read file success")
+            Log.d(TAG, "file exists ${file.exists()}")
             return file
         } catch (ex: IOException) {
+            Log.e(TAG, "read file error")
             ex.printStackTrace()
             return null
         }
     }
 
-    fun writeImage(fileName: String, img: Bitmap): Boolean {
-        val stream = ByteArrayOutputStream()
-        img.compress(Bitmap.CompressFormat.PNG, 50, stream)
-        val bytes = stream.toByteArray()
-        return this.writeFileInStorage(fileName.plus(".png"), bytes)
-    }
-
-    fun readImage(fileName: String): Bitmap? {
-        try {
-            val file = readFileInStorage(fileName.plus(".png"))
-            if (file == null) {
-                return null
-            }
-            val bitmap = BitmapFactory.decodeStream(FileInputStream(file))
-            return bitmap
-        } catch (ex: IOException) {
-            ex.printStackTrace()
-            return null
-        }
-    }
-
-//    fun readImage(fileName: String, content: ContentResolver): Bitmap? {
+//    fun writeImage(fileName: String, img: Bitmap): Boolean {
+//        val stream = ByteArrayOutputStream()
+//        img.compress(Bitmap.CompressFormat.PNG, 50, stream)
+//        val bytes = stream.toByteArray()
+//        return this.writeFileInStorage(fileName.plus(".png"), bytes)
+//    }
+//
+//    fun readImage(fileName: String): Bitmap? {
 //        try {
-//            val path = getPath()
-//            val parcelFile = content.openFileDescriptor(Uri.parse(path.plus(fileName)), "r")
-//            val fileDescriptor = parcelFile!!.getFileDescriptor()
-//            val image = BitmapFactory.decodeFileDescriptor(fileDescriptor)
-//            parcelFile.close()
-//            return image
-//        } catch(ex: Exception) {
+//            val file = readFileInStorage(fileName.plus(".png"))
+//            if (file == null) {
+//                return null
+//            }
+//            val bitmap = BitmapFactory.decodeStream(FileInputStream(file))
+//            return bitmap
+//        } catch (ex: IOException) {
 //            ex.printStackTrace()
 //            return null
 //        }

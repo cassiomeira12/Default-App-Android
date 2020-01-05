@@ -1,5 +1,7 @@
 package com.android.app.data.model;
 
+import androidx.annotation.Nullable;
+
 import com.android.app.data.UserSingleton;
 import com.google.firebase.firestore.Exclude;
 import com.google.gson.annotations.SerializedName;
@@ -41,6 +43,11 @@ public class Chat implements Serializable, Comparable<Date> {
     public Chat(String nome, Date updatedAt) {
         this.nome = nome;
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return ((Chat) obj).nome.equals(nome);
     }
 
     @Override

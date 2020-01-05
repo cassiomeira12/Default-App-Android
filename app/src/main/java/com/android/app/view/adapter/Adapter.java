@@ -49,7 +49,8 @@ public abstract class Adapter<T> extends RecyclerView.Adapter implements View.On
             }
         }
 
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
+        notifyItemChanged((int) view.getTag());
         this.actions.onClickItem(view);
     }
 
@@ -67,7 +68,8 @@ public abstract class Adapter<T> extends RecyclerView.Adapter implements View.On
 
         this.actions.onLongClickItem(view);
 
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
+        notifyItemChanged((int) view.getTag());
         return true;
     }
 
