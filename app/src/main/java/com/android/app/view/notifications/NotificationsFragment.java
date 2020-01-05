@@ -1,5 +1,6 @@
 package com.android.app.view.notifications;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,9 @@ public class NotificationsFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        startActivity(new Intent(getContext(), NotificationsActivity.class));
+
         return root;
     }
 }
