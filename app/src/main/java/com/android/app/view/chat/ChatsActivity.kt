@@ -1,5 +1,6 @@
 package com.android.app.view.chat
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,13 +15,18 @@ import com.android.app.contract.IChatsContract
 import com.android.app.data.UserSingleton
 import com.android.app.data.model.Chat
 import com.android.app.presenter.chat.ChatsPresenter
+import com.android.app.utils.FileUtils
+import com.android.app.utils.PermissionUtils
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterChat
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_chat_config.*
 import kotlinx.android.synthetic.main.activity_chats.*
 import kotlinx.android.synthetic.main.activity_chats.fab
 import kotlinx.android.synthetic.main.activity_chats.toolbar
+import java.io.BufferedReader
+import java.io.BufferedWriter
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -51,10 +57,46 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions, IChatsContract.View 
             chat.users.put(userID, userID)
             chat.descricao = "Descricao do grupo"
 
-            iPresenter.createChat(this, chat)
+            //iPresenter.createChat(this, chat)
+            //lerArquivo()
+            //gravarArquivo()
+
+            if (PermissionUtils.checkPermissionWriteStorage(this)) {
+                FileUtils(this).createDirectory()
+            }
         }
 
         supportNaviagteUp()
+    }
+
+    private fun lerArquivo() {
+        val file = "arquivo.txt"
+        var conteudo = ""
+        try {
+            val inp = openFileInput(file)
+            val reader = BufferedReader(InputStreamReader(inp))
+            conteudo = reader.readLine()
+            reader.close()
+            Toast.makeText(this, conteudo, Toast.LENGTH_LONG).show()
+        } catch (ex: Exception) {
+            Toast.makeText(this, "erro leitura", Toast.LENGTH_LONG).show()
+            ex.printStackTrace()
+        }
+    }
+
+    private fun gravarArquivo() {
+        val file = "arquivo.txt"
+        val conteudo = "conteudo do arquivo"
+        try {
+            val out = openFileOutput(file, Context.MODE_PRIVATE)
+            val writter = BufferedWriter(OutputStreamWriter(out))
+            writter.write(conteudo)
+            writter.close()
+            Toast.makeText(this, "gravou", Toast.LENGTH_LONG).show()
+        } catch (ex: Exception) {
+            Toast.makeText(this, "erro", Toast.LENGTH_LONG).show()
+            ex.printStackTrace()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

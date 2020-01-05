@@ -45,7 +45,7 @@ class ChatConfigActivity : AppCompatActivity(), Adapter.Actions, IChatContract.V
         toolbarLayout.setTitle(chat.nome)
         txtChatName.setText(chat.nome)
         txtDescription.setText(chat.descricao)
-        ImageUtils(this).picassoImageUser(imgChat, chat.avatarURL, progressBar)
+        ImageUtils(this).picassoImageUser(chat.id, imgChat, chat.avatarURL, progressBar)
     }
 
     private fun listUsers() {

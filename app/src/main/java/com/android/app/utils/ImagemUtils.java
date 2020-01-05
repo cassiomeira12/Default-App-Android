@@ -26,6 +26,7 @@ import com.android.app.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -56,8 +57,7 @@ public class ImagemUtils {
 
     public static Bitmap bitmapFromUri(Uri uri, ContentResolver contentResolver) {
         try {
-            ParcelFileDescriptor parcelFileDescriptor =
-                    contentResolver.openFileDescriptor(uri, "r");
+            ParcelFileDescriptor parcelFileDescriptor = contentResolver.openFileDescriptor(uri, "r");
             FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
             Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
             parcelFileDescriptor.close();

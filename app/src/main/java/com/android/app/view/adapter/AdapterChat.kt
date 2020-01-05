@@ -54,7 +54,7 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
         if (item.users.size > 2) {
             viewHolder.viewOline.visibility = View.INVISIBLE
             setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
-            ImageUtils(context).picassoImageUser(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
+            ImageUtils(context).picassoImageUser(item.id, viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
         } else {
             if (item.avatarURL == null) {
                 val currentID = UserSingleton.instance.uID
@@ -74,7 +74,7 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
                     viewHolder.viewOline.visibility = View.INVISIBLE
                     setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
                 }
-                ImageUtils(context).picassoImageUser(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
+                ImageUtils(context).picassoImageUser(item.id, viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
             }
         }
     }
@@ -102,7 +102,7 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
                         viewHolder.viewOline.visibility = View.INVISIBLE
                         setDataChat(viewHolder, item.nome, item.descricao, DateUtils.getMinutosPassadosString(item.updatedAt, Date()))
                     }
-                    ImageUtils(context).picassoImageUser(viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
+                    ImageUtils(context).picassoImageUser(userID, viewHolder.imgChat, item.avatarURL, viewHolder.progressBar)
                 } else {
                     viewHolder.progressBar.visibility = View.INVISIBLE
                 }

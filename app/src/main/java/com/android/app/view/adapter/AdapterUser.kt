@@ -42,7 +42,7 @@ class AdapterUser(itensList: MutableList<BaseUser>, context: Context, actions: A
             viewHolder.layout.isSelected = false
         }
 
-        ImageUtils(context).picassoImageUser(viewHolder.imgUser, item.avatarURL, viewHolder.progressBar)
+        ImageUtils(context).picassoImageUser(item.uID, viewHolder.imgUser, item.avatarURL, viewHolder.progressBar)
 
         viewHolder.layout.setTag(position)
     }

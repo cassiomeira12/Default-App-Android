@@ -191,7 +191,7 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
 
     private fun showChatData(chat: Chat) {
         txtToolbarTitle.setText(chat.nome)
-        ImageUtils(this).picassoImageUser(imgChat, chat.avatarURL)
+        ImageUtils(this).picassoImageUser(chat.id, imgChat, chat.avatarURL)
     }
 
     private fun addMessage(message: Message) {
