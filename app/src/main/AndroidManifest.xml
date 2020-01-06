@@ -35,10 +35,6 @@
             android:label="Perfil"
             android:parentActivityName=".view.settings.UserSettingsActivity" />
         <activity
-            android:name=".view.settings.SettingsActivity"
-            android:label="Configurações"
-            android:parentActivityName=".view.settings.SettingsActivity" />
-        <activity
             android:name=".view.notifications.NotificationsConfigActivity"
             android:label="Notificações"
             android:parentActivityName=".view.notifications.NotificationsConfigActivity" />
@@ -46,10 +42,6 @@
             android:name=".view.notifications.NotificationActivity"
             android:label="Notificação"
             android:parentActivityName=".view.notifications.NotificationActivity" />
-        <activity
-            android:name=".view.notifications.NotificationsActivity"
-            android:label="Notificações"
-            android:parentActivityName=".view.notifications.NotificationsActivity" />
         <activity
             android:name=".view.chat.ChatConfigActivity"
             android:theme="@style/AppThemeNoActionBar" />

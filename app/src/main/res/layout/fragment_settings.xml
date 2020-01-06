@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.settings.SettingsActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,9 +14,14 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/margin_card"
-            android:background="@color/backgroud_card">
+            android:layout_height="200dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="110dp"
+                android:visibility="gone"
+                android:background="@color/backgroud_card"/>
 
             <LinearLayout
                 android:id="@+id/layoutImgUser"
@@ -25,22 +29,29 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:onClick="onClick"
                 android:orientation="vertical">
 
                 <FrameLayout
-                    android:layout_width="150dp"
-                    android:layout_height="150dp">
+                    android:layout_width="120dp"
+                    android:layout_height="120dp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="visible"
+                        android:background="@drawable/shape_circle_transparent"/>
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:padding="2dp"
                         android:src="@color/colorPrimary"/>
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imgUser"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:padding="2dp"
                         android:visibility="visible"
                         android:src="@drawable/user_default_img_white_48dp"/>
 
@@ -60,13 +71,11 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:textColor="@color/text_color"
                     android:text="Name"/>
 
             </LinearLayout>
 
         </FrameLayout>
-
 
         <TextView
             android:layout_width="match_parent"
@@ -81,8 +90,7 @@
             android:id="@+id/layoutUserSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/view"
-            android:onClick="onClick">
+            android:background="@drawable/view">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -126,8 +134,7 @@
             android:id="@+id/layoutNotificationsSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/view"
-            android:onClick="onClick">
+            android:background="@drawable/view">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -170,8 +177,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/view"
-            android:onClick="onClick">
+            android:background="@drawable/view">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -223,8 +229,7 @@
             android:id="@+id/layoutAboutSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/view"
-            android:onClick="onClick">
+            android:background="@drawable/view">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -268,8 +273,7 @@
             android:id="@+id/layoutTermosSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/view"
-            android:onClick="onClick">
+            android:background="@drawable/view">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -313,8 +317,7 @@
             android:id="@+id/layoutDisableAccountSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/view"
-            android:onClick="onClick">
+            android:background="@drawable/view">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -358,8 +361,7 @@
             android:id="@+id/layoutExitApp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/view"
-            android:onClick="onClick">
+            android:background="@drawable/view">
 
             <LinearLayout
                 android:layout_width="match_parent"

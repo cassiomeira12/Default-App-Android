@@ -32,7 +32,7 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    fun isDataValid(): Boolean {
+    private fun isDataValid(): Boolean {
         val name = edtName.text.toString().trim()
         val isNameValid = !TextUtils.isEmpty(name)
         if (!isNameValid) {

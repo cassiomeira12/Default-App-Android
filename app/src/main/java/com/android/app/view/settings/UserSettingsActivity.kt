@@ -12,7 +12,6 @@ import com.android.app.data.UserSingleton
 import com.android.app.data.model.BaseUser
 import com.android.app.utils.FileUtils
 import com.android.app.utils.ImageUtils
-import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.activity_user_settings.*
 import kotlinx.android.synthetic.main.activity_user_settings.imgUser
 import kotlinx.android.synthetic.main.activity_user_settings.progressBar

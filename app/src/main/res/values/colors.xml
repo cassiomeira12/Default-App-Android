@@ -5,16 +5,18 @@
     <color name="colorAccent">#2196F3</color>
     <color name="background">#FFFFFF</color>
     
-    <color name="background_shape">#FFFFFF</color>
+    <color name="background_shape">@color/white</color>
+    <color name="backgroud_card">@color/colorPrimary</color>
     <color name="border_shape">#E9E9E9</color>
 
+    <color name="new_view">#6684E8B2</color><!-- colorPrimary 40% transparencia-->
     <color name="black_overlay">#66000000</color>
-    <color name="backgroud_card">@color/colorPrimary</color>
 
     <color name="text_color">#636363</color>
     <color name="btn_text_color">#FFFFFF</color>
     <color name="btn_text_link">#2196F3</color>
 
+    <color name="transparent">@android:color/transparent</color>
     <color name="white">#FFFFFF</color>
     <color name="green">#14F03A</color>
     <color name="red">#FC0016</color>

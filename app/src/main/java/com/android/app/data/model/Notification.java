@@ -12,7 +12,7 @@ public class Notification implements Serializable {
     public Tipo tipo;
     public Date date;
     public String avatarURL;
-    public boolean lida;
+    public boolean lida = true;
 
     public Notification() {
         tipo = Tipo.TEXT;

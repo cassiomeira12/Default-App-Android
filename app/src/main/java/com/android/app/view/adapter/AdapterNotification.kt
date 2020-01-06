@@ -1,17 +1,17 @@
 package com.android.app.view.adapter
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.android.app.R
 import com.android.app.data.UserSingleton
 import com.android.app.data.model.Message
 import com.android.app.data.model.Notification
+import de.hdodenhof.circleimageview.CircleImageView
 
 class AdapterNotification(itensList: MutableList<Notification>, context: Context, actions: Actions): Adapter<Notification>(itensList, context, actions) {
     private val TAG = javaClass.simpleName
@@ -25,16 +25,13 @@ class AdapterNotification(itensList: MutableList<Notification>, context: Context
         val viewHolder = holder as ViewHolder
 
         val item = itensList.get(position)
-//        val tipo = item.tipo
-//        val tipoConnect = (tipo == Message.Tipo.JOIN || tipo == Message.Tipo.LEAVE)
-//
-//        if (itensSelected.contains(item) && !tipoConnect) {
-//            viewHolder.layout.setBackgroundResource(R.color.colorPrimaryDark)
-//        } else {
-//            viewHolder.layout.setBackgroundResource(android.R.color.white)
-//        }
-
         viewHolder.setTipo(item)
+
+        if (item.lida) {
+            viewHolder.layout.setBackgroundResource(R.color.white)
+        } else {
+            viewHolder.layout.setBackgroundResource(R.color.new_view)
+        }
 
         viewHolder.layout.setTag(position)
     }
@@ -47,31 +44,41 @@ class AdapterNotification(itensList: MutableList<Notification>, context: Context
         val layout: FrameLayout
 
         val layoutNotificationText: LinearLayout
-//        val txtRemetente: TextView
-//        val txtMessageR: TextView
-//        val txtSendDateR: TextView
+        val txtNotificationText: TextView
+        val txtDataNotificationText: TextView
 
         val layoutNotificationImg: LinearLayout
-//        val txtMessageS: TextView
-//        val txtSendDateS: TextView
+        val imgNotificationImg: CircleImageView
+        val progressBarImg: ProgressBar
+        val txtNotificationImg: TextView
+        val txtDataNotificationImg: TextView
 
         val layoutNotificationSeguir: LinearLayout
-        //val txtUser: TextView
+        val imgNotificationSeguir: CircleImageView
+        val progressBarSeguir: ProgressBar
+        val txtNotificationSeguir: TextView
+        val txtDataNotificationSeguir: TextView
+        val btnSeguir: Button
 
         init {
             layout = itemView.findViewById(R.id.item_notification)
 
             layoutNotificationText = itemView.findViewById(R.id.layoutNotificationText)
-//            txtRemetente = itemView.findViewById(R.id.txtRemetente)
-//            txtMessageR = itemView.findViewById(R.id.txtMessageR)
-//            txtSendDateR = itemView.findViewById(R.id.txtSendDateR)
+            txtNotificationText = itemView.findViewById(R.id.txtNotificationText)
+            txtDataNotificationText = itemView.findViewById(R.id.txtDataNotificationText)
 
             layoutNotificationImg = itemView.findViewById(R.id.layoutNotificationImg)
-//            txtMessageS = itemView.findViewById(R.id.txtMessageS)
-//            txtSendDateS = itemView.findViewById(R.id.txtSendDateS)
+            imgNotificationImg = itemView.findViewById(R.id.imgNotificationImg)
+            progressBarImg = itemView.findViewById(R.id.progressBarImg)
+            txtNotificationImg = itemView.findViewById(R.id.txtDataNotificationImg)
+            txtDataNotificationImg = itemView.findViewById(R.id.txtDataNotificationImg)
 
             layoutNotificationSeguir = itemView.findViewById(R.id.layoutNotificationSeguir)
-            //txtUser = itemView.findViewById(R.id.txtUser)
+            imgNotificationSeguir = itemView.findViewById(R.id.imgNotificationImg)
+            progressBarSeguir = itemView.findViewById(R.id.progressBarImg)
+            txtNotificationSeguir = itemView.findViewById(R.id.txtDataNotificationImg)
+            txtDataNotificationSeguir = itemView.findViewById(R.id.txtDataNotificationImg)
+            btnSeguir = itemView.findViewById(R.id.btnSeguir)
 
             layout.setOnClickListener(this@AdapterNotification)
             layout.setOnLongClickListener(this@AdapterNotification)
