@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         }).updateOnline();
 
         PermissionUtils.INSTANCE.requestPermissionWriteStorage(this);
-        //startActivity(new Intent(getApplicationContext(), ChatsActivity.class));
+        startActivity(new Intent(getApplicationContext(), ChatsActivity.class));
     }
 
 }

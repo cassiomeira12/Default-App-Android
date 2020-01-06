@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.settings.UserSettingsActivity"></activity>
+        <activity android:name=".view.settings.AboutAppActivity"></activity>
+        <activity android:name=".view.settings.UserSettingsActivity" />
         <activity
             android:name=".view.settings.SettingsActivity"
             android:label="Configurações"

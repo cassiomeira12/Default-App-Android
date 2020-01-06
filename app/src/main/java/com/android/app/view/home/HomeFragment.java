@@ -45,20 +45,19 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        String token = new PreferenceUtils2(getContext()).getToken();
-
-        Call<List<BaseUser>> t = new RetrofitInitializer().users().list("asdg");
-        t.enqueue(new Callback<List<BaseUser>>() {
-            @Override
-            public void onResponse(Call<List<BaseUser>> call, Response<List<BaseUser>> response) {
-                Log.d("Cassio", response.errorBody().toString());
-            }
-
-            @Override
-            public void onFailure(Call<List<BaseUser>> call, Throwable t) {
-                Log.e("cassio", t.toString());
-            }
-        });
+//        String token = new PreferenceUtils2(getContext()).getToken();
+//        Call<List<BaseUser>> t = new RetrofitInitializer().users().list("asdg");
+//        t.enqueue(new Callback<List<BaseUser>>() {
+//            @Override
+//            public void onResponse(Call<List<BaseUser>> call, Response<List<BaseUser>> response) {
+//                Log.d("Cassio", response.errorBody().toString());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<BaseUser>> call, Throwable t) {
+//                Log.e("cassio", t.toString());
+//            }
+//        });
 
     }
 }
