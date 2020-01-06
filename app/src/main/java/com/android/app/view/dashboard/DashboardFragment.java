@@ -1,5 +1,6 @@
 package com.android.app.view.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.app.R;
+import com.android.app.view.settings.SettingsActivity;
 
 public class DashboardFragment extends Fragment {
 
@@ -30,6 +32,9 @@ public class DashboardFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        startActivity(new Intent(getContext(), SettingsActivity.class));
+
         return root;
     }
 }

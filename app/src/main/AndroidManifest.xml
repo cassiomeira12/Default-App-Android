@@ -18,13 +18,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.notifications.NotificationsConfigActivity"></activity>
+        <activity android:name=".view.settings.UserSettingsActivity"></activity>
+        <activity
+            android:name=".view.settings.SettingsActivity"
+            android:label="Configurações"
+            android:parentActivityName=".view.settings.SettingsActivity" />
+        <activity
+            android:name=".view.notifications.NotificationsConfigActivity"
+            android:label="Configuração"
+            android:parentActivityName=".view.notifications.NotificationsConfigActivity" />
         <activity
             android:name=".view.notifications.NotificationActivity"
-            android:label="Notification" />
+            android:label="Notificação"
+            android:parentActivityName=".view.notifications.NotificationActivity" />
         <activity
             android:name=".view.notifications.NotificationsActivity"
-            android:label="Notifications" />
+            android:label="Notificações"
+            android:parentActivityName=".view.notifications.NotificationsActivity" />
         <activity
             android:name=".view.chat.ChatConfigActivity"
             android:theme="@style/AppThemeNoActionBar" />

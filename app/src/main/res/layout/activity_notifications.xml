@@ -13,7 +13,7 @@
         android:visibility="visible"
 
         android:clipToPadding="false"
-        android:paddingBottom="72dp"
+        android:paddingBottom="90dp"
 
         tools:listitem="@layout/item_chat"/>
 
@@ -53,14 +53,14 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:src="@drawable/email"/>
+            android:src="@drawable/notification"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:layout_gravity="center"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:textSize="14sp"
             android:text="Você ainda não tem notificações"/>
 
     </LinearLayout>
@@ -78,7 +78,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:src="@drawable/email"/>
+            android:src="@drawable/notification"/>
 
         <TextView
             android:layout_width="wrap_content"

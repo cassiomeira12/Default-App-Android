@@ -1,7 +1,10 @@
 package com.android.app.view.notifications
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.app.R
@@ -27,6 +30,20 @@ class NotificationsActivity : AppCompatActivity(), Adapter.Actions {
         list()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        getMenuInflater().inflate(R.menu.menu_notifications, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_settings -> {
+                startActivity(Intent(this, NotificationsConfigActivity::class.java))
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     fun list() {
         adapter.add(Notification())
@@ -48,6 +65,6 @@ class NotificationsActivity : AppCompatActivity(), Adapter.Actions {
     }
 
     override fun onClickItem(view: View?) {
-
+        startActivity(Intent(this, NotificationActivity::class.java))
     }
 }
