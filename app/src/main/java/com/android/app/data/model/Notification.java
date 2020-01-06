@@ -1,11 +1,18 @@
 package com.android.app.data.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Notification implements Serializable {
 
+    public String id;
+    public String titulo;
     public String mensagem;
+    public String topico;
     public Tipo tipo;
+    public Date date;
+    public String avatarURL;
+    public boolean lida;
 
     public Notification() {
         tipo = Tipo.TEXT;

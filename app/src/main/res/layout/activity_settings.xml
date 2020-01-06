@@ -15,14 +15,17 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_card"
             android:background="@color/backgroud_card">
 
             <LinearLayout
+                android:id="@+id/layoutImgUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:onClick="onClick"
                 android:orientation="vertical">
 
                 <FrameLayout
@@ -30,7 +33,12 @@
                     android:layout_height="150dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imgChat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@color/colorPrimary"/>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imgUser"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:visibility="visible"
@@ -40,18 +48,20 @@
                         android:id="@+id/progressBar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone"
+                        android:visibility="invisible"
                         android:padding="52dp"/>
 
                 </FrameLayout>
 
                 <TextView
+                    android:id="@+id/txtUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textStyle="bold"
+                    android:gravity="center"
                     android:textColor="@color/text_color"
-                    android:text="Cássio Meira Silva"/>
+                    android:text="Name"/>
 
             </LinearLayout>
 

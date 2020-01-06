@@ -1,7 +1,6 @@
 package com.android.app.view.home;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.app.R;
-import com.android.app.data.model.BaseUser;
-import com.android.app.utils.PreferenceUtils2;
-import com.android.app.utils.RetrofitInitializer;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 

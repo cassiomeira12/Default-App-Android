@@ -25,6 +25,7 @@ class ImageUtils(var context: Context) {
 
     fun picassoImageUser(id: String, imgView: ImageView, url: String?) {
         if ((url == null || url.isEmpty()) || id.isEmpty()) {
+            Log.w(TAG, "Error: ID[$id], URL[$url]")
             imgView.setImageResource(R.drawable.user_default_img_white_48dp)
             return
         }
@@ -33,6 +34,7 @@ class ImageUtils(var context: Context) {
 
     fun picassoImageUser(id: String, imgView: ImageView, url: String?, progressBar: ProgressBar) {
         if ((url == null || url.isEmpty()) || id.isEmpty()) {
+            Log.w(TAG, "Error: ID[$id], URL[$url]")
             imgView.setImageResource(R.drawable.user_default_img_white_48dp)
             progressBar.visibility = View.INVISIBLE
             return

@@ -11,7 +11,7 @@ import java.lang.Exception
 class FileUtils(val context: Context) {
     private val TAG = javaClass.simpleName
 
-    private fun getPathRoot(): String {
+    fun getPathRoot(): String {
         val pathRoot = Environment.getExternalStorageDirectory().absolutePath + "/${context.getString(R.string.app_name)}/"
         val file = File(pathRoot)
         if (!file.exists()) {

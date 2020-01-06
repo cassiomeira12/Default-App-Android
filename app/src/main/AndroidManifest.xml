@@ -18,15 +18,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.settings.AboutAppActivity"></activity>
-        <activity android:name=".view.settings.UserSettingsActivity" />
+        <activity
+            android:name=".view.settings.DisableAccountActivity"
+            android:label="Desativar conta"
+            android:parentActivityName=".view.settings.DisableAccountActivity"/>
+        <activity
+            android:name=".view.settings.ChangePasswordActivity"
+            android:label="Alterar senha"
+            android:parentActivityName=".view.settings.ChangePasswordActivity" />
+        <activity
+            android:name=".view.settings.AboutAppActivity"
+            android:label="Sobre"
+            android:parentActivityName=".view.settings.AboutAppActivity" />
+        <activity
+            android:name=".view.settings.UserSettingsActivity"
+            android:label="Perfil"
+            android:parentActivityName=".view.settings.UserSettingsActivity" />
         <activity
             android:name=".view.settings.SettingsActivity"
             android:label="Configurações"
             android:parentActivityName=".view.settings.SettingsActivity" />
         <activity
             android:name=".view.notifications.NotificationsConfigActivity"
-            android:label="Configuração"
+            android:label="Notificações"
             android:parentActivityName=".view.notifications.NotificationsConfigActivity" />
         <activity
             android:name=".view.notifications.NotificationActivity"

@@ -4,10 +4,8 @@ import android.app.Activity
 import android.util.Log
 import com.android.app.contract.ILoginContract
 import com.android.app.data.model.BaseUser
-import com.android.app.utils.PreferenceUtils2
+import com.android.app.utils.PreferenceUtils
 import com.android.app.utils.RetrofitInitializer
-import com.google.gson.JsonObject
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,7 +36,7 @@ class RestLoginService (var listener : ILoginContract.Listener) : ILoginContract
                 }
 
                 //Salvando o token de autenticacao
-                PreferenceUtils2(activity).setToken(response.headers().get("auth-token")!!)
+                PreferenceUtils(activity).setToken(response.headers().get("auth-token")!!)
                 listener.onSuccess(user)
             }
 
