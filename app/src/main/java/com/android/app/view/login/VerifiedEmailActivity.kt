@@ -3,16 +3,12 @@ package com.android.app.view.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.View
 import com.android.app.MainActivity
 import com.android.app.R
 import com.android.app.contract.IVerifiedEmailContract
 import com.android.app.data.UserSingleton
-import com.android.app.data.model.BaseUser
 import com.android.app.presenter.login.VerifiedEmailPresenter
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_verified_email.*
 
 class VerifiedEmailActivity : AppCompatActivity(), IVerifiedEmailContract.View {

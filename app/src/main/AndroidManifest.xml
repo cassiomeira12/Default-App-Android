@@ -7,21 +7,58 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:usesCleartextTraffic="true"
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.settings.DisableAccountActivity"
+            android:label="Desativar conta"
+            android:parentActivityName=".view.settings.DisableAccountActivity"/>
+        <activity
+            android:name=".view.settings.ChangePasswordActivity"
+            android:label="Alterar senha"
+            android:parentActivityName=".view.settings.ChangePasswordActivity" />
+        <activity
+            android:name=".view.settings.AboutAppActivity"
+            android:label="Sobre"
+            android:parentActivityName=".view.settings.AboutAppActivity" />
+        <activity
+            android:name=".view.settings.UserSettingsActivity"
+            android:label="Perfil"
+            android:parentActivityName=".view.settings.UserSettingsActivity" />
+        <activity
+            android:name=".view.notifications.NotificationsConfigActivity"
+            android:label="Notificações"
+            android:parentActivityName=".view.notifications.NotificationsConfigActivity" />
+        <activity
+            android:name=".view.notifications.NotificationActivity"
+            android:label="Notificação"
+            android:parentActivityName=".view.notifications.NotificationActivity" />
+        <activity
+            android:name=".view.chat.ChatConfigActivity"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".view.chat.ChatConfigGroupActivity"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".view.chat.ChatActivity"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".view.chat.ChatsActivity"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".view.login.VerifiedEmailActivity"
             android:label=""
-            android:screenOrientation="portrait"
             android:parentActivityName=".view.login.VerifiedEmailActivity"
-            android:name=".view.login.VerifiedEmailActivity"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.login.TermosAppActivity"
             android:label="Termos do App"
@@ -48,10 +85,10 @@
             android:name=".view.login.LoginActivity"
             android:theme="@style/AppThemeNoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".MainActivity" />
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".view.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

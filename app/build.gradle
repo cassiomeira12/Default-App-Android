@@ -30,14 +30,17 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
 
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0' //AndroidX
 
+    //Interface
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'androidx.navigation:navigation-fragment:2.1.0'
     implementation 'androidx.navigation:navigation-ui:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'//Picasso
+    implementation 'de.hdodenhof:circleimageview:2.2.0'//Circle ImageView
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
@@ -49,7 +52,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
     //Firebase
-    implementation 'com.google.firebase:firebase-auth:19.2.0' //Authentication
-    implementation 'com.google.android.gms:play-services-auth:17.0.0' //Google Authentication
-    implementation 'com.google.firebase:firebase-firestore:21.3.1' //Firestore
+    implementation 'com.google.firebase:firebase-auth:19.2.0'//Authentication
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'//Google Authentication
+    implementation 'com.google.firebase:firebase-firestore:21.3.1'//Firestore
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'//Cloud Messaging
 }

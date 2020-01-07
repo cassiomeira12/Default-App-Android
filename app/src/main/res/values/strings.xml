@@ -50,4 +50,16 @@
     <string name="esse_email_ja_esta_sendo_usado">Esse email já está sendo utilizado em outra conta</string>
     <string name="digite_seu_nome">Digite seu nome</string>
     <string name="senha_nao_sao_iguais">Senha não são iguais</string>
+    <string name="action_settings">Settings</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="sim">Sim</string>
+    <string name="mensagem_copiada">Mensagem copiada!</string>
+    <string name="configuracao">Configuração</string>
+    <string name="adicionar_usuario">Adicionar usuário</string>
+    <string name="online">online</string>
+    <string name="online_ha">online há</string>
+    <string name="saiu_do_grupo">saiu do grupo</string>
+    <string name="entrou_no_grupo">entrou no grupo</string>
+    <string name="settings">Configurações</string>
+    <string name="conversas">Conversas</string>
 </resources>
