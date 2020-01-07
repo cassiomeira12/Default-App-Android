@@ -1,8 +1,5 @@
 package com.android.app.data.model;
 
-import androidx.annotation.Nullable;
-
-import com.android.app.data.UserSingleton;
 import com.google.firebase.firestore.Exclude;
 import com.google.gson.annotations.SerializedName;
 

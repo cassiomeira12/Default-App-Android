@@ -3,10 +3,8 @@ package com.android.app.view.login
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.android.app.MainActivity
 import com.android.app.R
 import com.android.app.data.model.BaseUser
 import com.android.app.contract.ICreateAccountContract
