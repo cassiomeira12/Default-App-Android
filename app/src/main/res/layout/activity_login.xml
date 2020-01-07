@@ -115,6 +115,7 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:orientation="horizontal"
+                android:onClick="googleSignIn"
                 android:background="@drawable/btn_round_google">
 
                 <ImageView
@@ -144,6 +145,7 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:orientation="horizontal"
+                android:onClick="facebookSignIn"
                 android:background="@drawable/btn_round_facebook">
 
                 <ImageView

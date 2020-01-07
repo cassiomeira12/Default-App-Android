@@ -16,6 +16,7 @@ import com.android.app.data.UserSingleton
 import com.android.app.data.model.BaseUser
 import com.android.app.presenter.login.UserPresenter
 import com.android.app.utils.ImageUtils
+import com.android.app.view.login.LoginActivity
 import com.android.app.view.login.TermosAppActivity
 import com.android.app.view.notifications.NotificationsConfigActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
@@ -68,7 +69,7 @@ class SettingsFragment: Fragment(), View.OnClickListener {
                 startActivity(Intent(getContext(), DisableAccountActivity::class.java))
             }
             R.id.layoutExitApp -> {
-                //showDialogDeleteMessages(getActivity(), "Sair", "Deseja realmente sair do aplicativo ?")
+                showDialogDeleteMessages(getActivity()!!, "Sair", "Deseja realmente sair do aplicativo ?")
             }
         }
     }
@@ -83,7 +84,7 @@ class SettingsFragment: Fragment(), View.OnClickListener {
         alertBuilder.setTitle(title)
         alertBuilder.setMessage(message)
         alertBuilder.setPositiveButton(activity.getString(R.string.sim)) { dialog, which ->
-            //exitToApp()
+            exitToApp()
             dialog.dismiss()
         }
         alertBuilder.setNegativeButton(activity.getString(R.string.cancelar)) { dialog, which ->
@@ -95,10 +96,12 @@ class SettingsFragment: Fragment(), View.OnClickListener {
     }
 
     private fun exitToApp() {
-//        UserPresenter(object : IUser.View {
-//            override fun onResult(user: BaseUser?) {
-//                Toast.makeText(getContext(), "Saiu do App", Toast.LENGTH_LONG).show()
-//            }
-//        }).signOut(this)
+        UserPresenter(object : IUser.View {
+            override fun onResult(user: BaseUser?) {
+                Toast.makeText(getContext(), "Saiu do App", Toast.LENGTH_LONG).show()
+                startActivity(Intent(getContext(), LoginActivity::class.java))
+                getActivity()!!.finish()
+            }
+        }).signOut(getContext()!!)
     }
 }
