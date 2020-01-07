@@ -3,6 +3,7 @@ package com.android.app.view.settings
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import com.android.app.view.notifications.NotificationsConfigActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment: Fragment(), View.OnClickListener {
+    private val TAG = "cassio"//javaClass.simpleName
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_settings, container, false)
@@ -27,6 +29,8 @@ class SettingsFragment: Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.d(TAG, javaClass.simpleName)
 
         setHasOptionsMenu(true)
         getActivity()!!.invalidateOptionsMenu()
@@ -71,7 +75,7 @@ class SettingsFragment: Fragment(), View.OnClickListener {
 
     private fun showUserData(user: BaseUser) {
         txtUserName.setText(user.name)
-        //ImageUtils(getContext()).picassoImageUser(user.uID, imgUser, "asdfasdf", progressBar)
+        ImageUtils(getContext()!!).picassoImageUser(user.uID, imgUser, "asdfasdf", progressBar)
     }
 
     private fun showDialogDeleteMessages(activity: Activity, title: String, message: String) {

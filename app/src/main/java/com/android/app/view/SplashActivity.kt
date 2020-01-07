@@ -2,7 +2,6 @@ package com.android.app.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.android.app.MainActivity
 import com.android.app.R

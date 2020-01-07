@@ -1,6 +1,7 @@
 package com.android.app.view.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.android.app.R
 
 class HomeFragment: Fragment() {
+    private val TAG = "cassio"//javaClass.simpleName
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -16,7 +18,7 @@ class HomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(getContext(), "aqui", Toast.LENGTH_LONG).show()
+        Log.d(TAG, javaClass.simpleName)
     }
 
 }

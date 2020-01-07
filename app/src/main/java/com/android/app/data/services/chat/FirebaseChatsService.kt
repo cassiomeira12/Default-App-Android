@@ -85,6 +85,21 @@ class FirebaseChatsService(var listener : IChatsContract.Listener) : IChatsContr
                 if (task.isSuccessful) {
                     Log.d(TAG, "Itens Chatsss " + task.result!!.size())
                     listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
+                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
                 } else {
                     checkException(task.exception!!)
                 }

@@ -122,7 +122,7 @@ class ImageUtils(var context: Context) {
             fileNameWithExtension = fileName.plus(PNG)
         }
         val file = FileUtils(context).readFileInStorage(fileNameWithExtension)
-        if (file == null) {
+        if (file == null || !file.exists()) {
             Log.w(TAG, "Image not find in storage")
             return null
         }

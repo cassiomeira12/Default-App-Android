@@ -2,7 +2,9 @@ package com.android.app.view.notifications
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.app.R
@@ -12,6 +14,7 @@ import com.android.app.view.adapter.AdapterNotification
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
 class NotificationsFragment: Fragment(), Adapter.Actions {
+    private val TAG = "cassio"//javaClass.simpleName
 
     lateinit var adapter: AdapterNotification
 
@@ -21,11 +24,18 @@ class NotificationsFragment: Fragment(), Adapter.Actions {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configFragmentAppBar()
+        configAdapter()
 
+        Log.d(TAG, javaClass.simpleName)
+
+        list()
+    }
+
+    private fun configFragmentAppBar() {
+        (getActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         setHasOptionsMenu(true)
         getActivity()!!.invalidateOptionsMenu()
-        configAdapter()
-        list()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
