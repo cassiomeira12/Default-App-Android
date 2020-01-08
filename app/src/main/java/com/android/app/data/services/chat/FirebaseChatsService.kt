@@ -1,15 +1,12 @@
 package com.android.app.data.services.chat
 
-import android.app.Activity
+import android.content.Context
 import android.util.Log
 import com.android.app.R
 import com.android.app.contract.IChatsContract
 import com.android.app.data.UserSingleton
 import com.android.app.data.model.Chat
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.HashMap
@@ -17,10 +14,10 @@ import kotlin.collections.HashMap
 class FirebaseChatsService(var listener : IChatsContract.Listener) : IChatsContract.Service {
     private val TAG = this::class.java.canonicalName
 
-    private lateinit var activity: Activity
+    private lateinit var context: Context
 
-    override fun createChat(activity: Activity, chat: Chat) {
-        this.activity = activity
+    override fun createChat(context: Context, chat: Chat) {
+        this.context = context
         createChatTransaction(chat)
     }
 
@@ -84,21 +81,6 @@ class FirebaseChatsService(var listener : IChatsContract.Listener) : IChatsContr
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "Itens Chatsss " + task.result!!.size())
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
-                    listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
                     listener.onListSuccess(task.result!!.toObjects(Chat::class.java))
                 } else {
                     checkException(task.exception!!)
@@ -174,7 +156,7 @@ class FirebaseChatsService(var listener : IChatsContract.Listener) : IChatsContr
         Log.e(TAG, ex.toString())
         when(ex.message) {
             DISCONNECTED_NETWORK -> {
-                listener.onFailure(activity.getString(R.string.verifique_sua_conexao_internet))
+                listener.onFailure(context.getString(R.string.verifique_sua_conexao_internet))
             }
             else -> {
                 listener.onFailure(ex.message.toString())

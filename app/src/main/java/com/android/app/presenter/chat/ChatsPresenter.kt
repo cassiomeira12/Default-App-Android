@@ -1,6 +1,6 @@
 package com.android.app.presenter.chat
 
-import android.app.Activity
+import android.content.Context
 import com.android.app.contract.IChatsContract
 import com.android.app.data.model.Chat
 import com.android.app.data.services.chat.FirebaseChatsService
@@ -13,9 +13,9 @@ class ChatsPresenter (view: IChatsContract.View) : IChatsContract.Presenter, ICh
         this.view = null
     }
 
-    override fun createChat(activity: Activity, chat: Chat) {
+    override fun createChat(context: Context, chat: Chat) {
         view!!.showProgress()
-        service.createChat(activity, chat)
+        service.createChat(context, chat)
     }
 
     override fun removeChat(chat: Chat) {

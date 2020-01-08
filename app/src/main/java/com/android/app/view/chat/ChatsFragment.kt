@@ -20,7 +20,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View {
-    private val TAG = "cassio"//javaClass.simpleName
+    private val TAG = javaClass.simpleName
 
     internal lateinit var iPresenter: IChatsContract.Presenter
     lateinit var adapter: AdapterChat
@@ -34,8 +34,6 @@ class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View {
         configFragmentAppBar()
         configAdapter()
 
-        Log.d(TAG, javaClass.simpleName)
-
         iPresenter = ChatsPresenter(this)
         iPresenter.listChats()
 
@@ -46,7 +44,7 @@ class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View {
             chat.administradores.put(userID, userID)
             chat.users.put(userID, userID)
             chat.descricao = "Descricao do grupo"
-            //iPresenter.createChat(this, chat)
+            iPresenter.createChat(getContext()!!, chat)
         }
     }
 

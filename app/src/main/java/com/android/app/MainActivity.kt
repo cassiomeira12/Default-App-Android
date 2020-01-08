@@ -56,31 +56,31 @@ class MainActivity: AppCompatActivity() {
         NavigationUI.setupWithNavController(navView, navController)
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        showBadge(this, navView, R.id.navigation_home, 0)
-        showBadge(this, navView, R.id.navigation_notifications, 11)
-        showBadge(this, navView, R.id.navigation_chats, 0)
-        showBadge(this, navView, R.id.navigation_settings, 9)
+//        showBadge(this, navView, R.id.navigation_home, 0)
+//        showBadge(this, navView, R.id.navigation_notifications, 11)
+//        showBadge(this, navView, R.id.navigation_chats, 0)
+//        showBadge(this, navView, R.id.navigation_settings, 9)
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when(destination.id) {
                 R.id.navigation_home -> {
                     Handler().post(Runnable {
-                        showBadge(this, navView, R.id.navigation_home, 0);
+                        //showBadge(this, navView, R.id.navigation_home, 0);
                     })
                 }
                 R.id.navigation_notifications -> {
                     Handler().post(Runnable {
-                        showBadge(this, navView, R.id.navigation_notifications, 0);
+                        //showBadge(this, navView, R.id.navigation_notifications, 0);
                     })
                 }
                 R.id.navigation_chats -> {
                     Handler().post(Runnable {
-                        showBadge(this, navView, R.id.navigation_chats, 0);
+                        //showBadge(this, navView, R.id.navigation_chats, 0);
                     })
                 }
                 R.id.navigation_settings -> {
                     Handler().post(Runnable {
-                        showBadge(this, navView, R.id.navigation_settings, 0);
+                        //showBadge(this, navView, R.id.navigation_settings, 0);
                     })
                 }
             }

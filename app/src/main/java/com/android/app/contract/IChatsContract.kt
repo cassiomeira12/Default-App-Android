@@ -1,6 +1,7 @@
 package com.android.app.contract
 
 import android.app.Activity
+import android.content.Context
 import com.android.app.data.model.Chat
 
 interface IChatsContract {
@@ -26,13 +27,13 @@ interface IChatsContract {
     interface Presenter {
         fun onDestroy()
 
-        fun createChat(activity: Activity, chat: Chat)
+        fun createChat(context: Context, chat: Chat)
         fun removeChat(chat: Chat)
         fun listChats()
     }
 
     interface Service {
-        fun createChat(activity: Activity, chat: Chat)
+        fun createChat(context: Context, chat: Chat)
         fun removeChat(chat: Chat)
         fun listChats()
     }

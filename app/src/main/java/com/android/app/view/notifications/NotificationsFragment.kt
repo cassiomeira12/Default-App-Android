@@ -26,8 +26,7 @@ class NotificationsFragment: Fragment(), Adapter.Actions {
         super.onViewCreated(view, savedInstanceState)
         configFragmentAppBar()
         configAdapter()
-
-        list()
+        //list()
     }
 
     private fun configFragmentAppBar() {
