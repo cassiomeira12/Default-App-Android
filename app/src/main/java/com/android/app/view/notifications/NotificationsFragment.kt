@@ -14,7 +14,7 @@ import com.android.app.view.adapter.AdapterNotification
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
 class NotificationsFragment: Fragment(), Adapter.Actions {
-    private val TAG = "cassio"//javaClass.simpleName
+    private val TAG = javaClass.simpleName
 
     lateinit var adapter: AdapterNotification
 
