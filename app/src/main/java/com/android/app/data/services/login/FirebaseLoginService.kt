@@ -14,26 +14,27 @@ class FirebaseLoginService (var listener : ILoginContract.Listener) : ILoginCont
     val TAG = this::class.java.canonicalName
 
     override fun onLogin(activity: Activity, login: String, password: String) {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(login, password).
-                addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val user = FirebaseAuth.getInstance().currentUser
-                        findUserByEmail(user?.email!!)
-                    } else {
-                        Log.e(TAG, task.exception.toString())
-                        when (task.exception!!.message) {
-                            USUARIO_NOT_FOUND -> {
-                                listener.onFailure("Não foi possível encontrar usuário com esse e-mail")
-                            }
-                            PASSWORD_INVALID -> {
-                                listener.onFailure("Sua senha está incorreta")
-                            }
-                            DISCONNECTED_NETWORK -> {
-                                listener.onFailure("Verifique sua conexão com a internet")
-                            }
+        FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(login, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = FirebaseAuth.getInstance().currentUser
+                    findUserByEmail(user?.email!!)
+                } else {
+                    Log.e(TAG, task.exception.toString())
+                    when (task.exception!!.message) {
+                        USUARIO_NOT_FOUND -> {
+                            listener.onFailure("Não foi possível encontrar usuário com esse e-mail")
+                        }
+                        PASSWORD_INVALID -> {
+                            listener.onFailure("Sua senha está incorreta")
+                        }
+                        DISCONNECTED_NETWORK -> {
+                            listener.onFailure("Verifique sua conexão com a internet")
                         }
                     }
                 }
+            }
     }
 
     private fun findUserByEmail(email: String) {

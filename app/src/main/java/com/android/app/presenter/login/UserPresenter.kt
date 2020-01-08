@@ -21,8 +21,20 @@ class UserPresenter (view: IUser.View) : IUser.Presenter, IUser.Listener {
         service.updateOnline()
     }
 
+    override fun onChangePassword(email: String, password: String, newPassword: String) {
+        service.onChangePassword(email, password, newPassword)
+    }
+
+    override fun onChangeEmail(email: String) {
+        service.onChangeEmail(email)
+    }
+
     override fun onDestroy() {
         this.view = null
+    }
+
+    override fun onFailure(message: String) {
+        view?.onFailure(message)
     }
 
     override fun onResult(user: BaseUser?) {

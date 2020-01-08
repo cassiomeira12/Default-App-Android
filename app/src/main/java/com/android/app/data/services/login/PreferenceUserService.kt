@@ -28,5 +28,15 @@ class PreferenceUserService (var listener : IUser.Listener) : IUser.Service {
         PreferenceUtils(context).setUserEmail(null)
     }
 
-    override fun updateOnline() { }
+    override fun updateOnline() {
+
+    }
+
+    override fun onChangePassword(email: String, password: String, newPassword: String) {
+
+    }
+
+    override fun onChangeEmail(email: String) {
+
+    }
 }

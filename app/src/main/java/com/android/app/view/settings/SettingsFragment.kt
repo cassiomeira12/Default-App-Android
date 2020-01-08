@@ -22,7 +22,7 @@ import com.android.app.view.notifications.NotificationsConfigActivity
 import kotlinx.android.synthetic.main.fragment_settings.*
 
 class SettingsFragment: Fragment(), View.OnClickListener {
-    private val TAG = javaClass.simpleName
+    private val TAG = "cassio"//javaClass.simpleName
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_settings, container, false)
@@ -30,6 +30,8 @@ class SettingsFragment: Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.d(TAG, javaClass.simpleName)
 
         setHasOptionsMenu(true)
         getActivity()!!.invalidateOptionsMenu()
@@ -74,8 +76,7 @@ class SettingsFragment: Fragment(), View.OnClickListener {
 
     private fun showUserData(user: BaseUser) {
         txtUserName.setText(user.name)
-        Log.d(TAG, user.toString())
-        ImageUtils(getContext()!!).picassoImageUser(user.uID, imgUser, user.avatarURL, progressBar)
+        ImageUtils(getContext()!!).picassoImageUser(user.uID, imgUser, "asdfasdf", progressBar)
     }
 
     private fun showDialogDeleteMessages(activity: Activity, title: String, message: String) {
@@ -101,6 +102,7 @@ class SettingsFragment: Fragment(), View.OnClickListener {
                 startActivity(Intent(getContext(), LoginActivity::class.java))
                 getActivity()!!.finish()
             }
+            override fun onFailure(message: String) { }
         }).signOut(getContext()!!)
     }
 }

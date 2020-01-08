@@ -43,6 +43,10 @@ class SplashActivity : AppCompatActivity(), IUser.View {
         }
     }
 
+    override fun onFailure(message: String) {
+
+    }
+
     private fun navigateToMainActivity() {
         startActivity(Intent(getApplication(), MainActivity::class.java))
         finish()

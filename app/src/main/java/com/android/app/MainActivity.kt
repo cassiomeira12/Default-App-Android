@@ -87,7 +87,8 @@ class MainActivity: AppCompatActivity() {
         }
 
         UserPresenter(object : IUser.View {
-            override fun onResult(user: BaseUser?) {}
+            override fun onFailure(message: String) { }
+            override fun onResult(user: BaseUser?) { }
         }).updateOnline()
 
         PermissionUtils.requestPermissionWriteStorage(this)
