@@ -29,14 +29,14 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="3dp"
+                android:padding="2dp"
                 android:src="@color/colorPrimary"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgChat"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="3dp"
+                android:padding="2dp"
                 android:visibility="visible"
                 android:src="@drawable/user_default_img_white_48dp"/>
 
