@@ -33,19 +33,9 @@ public class BaseUser implements Serializable {
         //Firebase
     }
 
-    public BaseUser(String uID, Status status, String name, String email, Boolean emailVerified, Date createAt, Date updateAt, Date online) {
-        this.uID = uID;
-        this.status = status;
-        this.name = name;
-        this.email = email;
-        this.emailVerified = emailVerified;
-        this.createAt = createAt;
-        this.updateAt = updateAt;
-        this.online = online;
-    }
-
     public void setUser(BaseUser user) {
         this.uID = user.uID;
+        this.avatarURL = user.avatarURL;
         this.status = user.status;
         this.name = user.name;
         this.email = user.email;
@@ -60,6 +50,7 @@ public class BaseUser implements Serializable {
     public String toString() {
         return "BaseUser"
                 + "\nuID ".concat(uID)
+                + "\navatarURL ".concat(avatarURL == null ? "null" : avatarURL)
                 + "\nstatus ".concat(status.toString())
                 + "\nname ".concat(name)
                 + "\nemail ".concat(email)
