@@ -6,6 +6,7 @@ import java.util.Date;
 public class Notification implements Serializable {
 
     public String id;
+    public String idDestinatario;
     public String titulo;
     public String mensagem;
     public String topico;

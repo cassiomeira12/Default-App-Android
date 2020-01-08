@@ -27,8 +27,6 @@ class NotificationsFragment: Fragment(), Adapter.Actions {
         configFragmentAppBar()
         configAdapter()
 
-        Log.d(TAG, javaClass.simpleName)
-
         list()
     }
 
