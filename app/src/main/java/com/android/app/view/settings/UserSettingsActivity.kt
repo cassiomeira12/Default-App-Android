@@ -69,7 +69,7 @@ class UserSettingsActivity : AppCompatActivity() {
     private fun showUserData(user: BaseUser) {
         edtName.setText(user.name)
         edtEmail.setText(user.email)
-        ImageUtils(this).picassoImageUser(user.uID, imgUser, "asdfasdf", progressBar)
+        ImageUtils(this).picassoImageUser(user.uID, imgUser, user.avatarURL, progressBar)
     }
 
     fun changePassword(view: View) {
