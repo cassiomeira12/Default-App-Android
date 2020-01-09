@@ -1,6 +1,7 @@
 package com.android.app.view.adapter
 
 import android.content.Context
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,8 @@ import com.android.app.data.UserSingleton
 import com.android.app.data.model.Chat
 import com.android.app.data.model.Message
 import com.android.app.utils.DateUtils
+import com.android.app.utils.ImageUtils
+import de.hdodenhof.circleimageview.CircleImageView
 
 class AdapterMessage(itensList: MutableList<Message>, context: Context, actions: Actions): Adapter<Message>(itensList, context, actions) {
     private val TAG = javaClass.simpleName
@@ -53,6 +56,7 @@ class AdapterMessage(itensList: MutableList<Message>, context: Context, actions:
                     viewHolder.txtRemetente.text = item.remetenteNome
                     viewHolder.txtMessageR.text = item.message
                     viewHolder.txtSendDateR.text = DateUtils.getHourMinute(item.sendDate)
+                    //ImageUtils(context).picassoImageUser(item.remetenteID, viewHolder.imgUser, item.mediaURL)
                 }
             }
             Message.Tipo.PHOTO -> {
@@ -86,6 +90,7 @@ class AdapterMessage(itensList: MutableList<Message>, context: Context, actions:
         val layout: FrameLayout
 
         val layoutTextR: FrameLayout
+        val imgUser: CircleImageView
         val txtRemetente: TextView
         val txtMessageR: TextView
         val txtSendDateR: TextView
@@ -101,6 +106,7 @@ class AdapterMessage(itensList: MutableList<Message>, context: Context, actions:
             layout = itemView.findViewById(R.id.item_message)
 
             layoutTextR = itemView.findViewById(R.id.layoutTextR)
+            imgUser = itemView.findViewById(R.id.imgUser)
             txtRemetente = itemView.findViewById(R.id.txtRemetente)
             txtMessageR = itemView.findViewById(R.id.txtMessageR)
             txtSendDateR = itemView.findViewById(R.id.txtSendDateR)

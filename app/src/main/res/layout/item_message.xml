@@ -40,7 +40,7 @@
 
     <FrameLayout
         android:id="@+id/layoutTextR"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -48,11 +48,21 @@
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="4dp">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgUser"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:visibility="gone"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="left"
+            android:src="@drawable/user_default_img_white"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="100dp"
-            android:background="@drawable/shape_round_message_received"
+            android:layout_marginLeft="0dp"
+            android:background="@drawable/shape_round_message_sent"
             android:layout_gravity="left"
             android:orientation="vertical"
             android:padding="8dp">
@@ -61,6 +71,8 @@
                 android:id="@+id/txtRemetente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
                 android:text="Remetente"/>
 
             <TextView
@@ -69,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:gravity="left"
                 android:text="mensagem"/>
 
@@ -100,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
-            android:background="@drawable/shape_round_message_sent"
+            android:background="@drawable/shape_round_message_received"
             android:layout_gravity="right"
             android:orientation="vertical"
             android:padding="8dp">

@@ -3,11 +3,10 @@ package com.android.app.utils
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
 
 object DateUtils {
     private val locale = Locale("pt", "BR")
-    private val df: DateFormat = SimpleDateFormat("dd/MM/yyyy", locale)
+    private val df: DateFormat = SimpleDateFormat("dd/MM/yyyy", locale) as DateFormat
     private val timeZone = TimeZone.getTimeZone("GMT-03:00")
 
 
@@ -40,7 +39,25 @@ object DateUtils {
     }
 
     fun getHourMinute(date: Date): String {
-        return date.hours.toString().plus(":").plus(date.minutes.toString())
+        val hours = date.hours
+        val minutes = date.minutes
+
+        val hoursString: String
+        val minutesString: String
+
+        if (hours < 10) {
+            hoursString = "0${hours}"
+        } else {
+            hoursString = hours.toString()
+        }
+
+        if (minutes < 10) {
+            minutesString = "0${minutes}"
+        } else {
+            minutesString = minutes.toString()
+        }
+
+        return hoursString.plus(":").plus(minutesString)
     }
 
     fun getMinutosPassados(start: Date, end: Date): Int {
