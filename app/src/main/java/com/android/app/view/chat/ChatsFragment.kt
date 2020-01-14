@@ -46,14 +46,6 @@ class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View {
             chat.users.put(userID, userID)
             chat.descricao = "Descricao do grupo"
             //iPresenter.createChat(getContext()!!, chat)
-            val db = FirebaseFirestore.getInstance().collection("notifications")
-            val not = Notification()
-            not.title = "titlo"
-            not.token = "c2SlOJqk10I:APA91bFgMzXHM1zW4SjA7qAYxpxUwvbvyqc2GEuYR0eZSpl57iTqgRZRwP_8PVkEJ0Flrx8qaACqjEYXyftSiSh1YsWEX2sKfbZtwKh2nu0CkA6rh3hOyuQLtO5jVgyg5a1p42FL4Xu5"
-            not.message = "message"
-            not.date = Date()
-
-            db.document().set(not)
         }
     }
 

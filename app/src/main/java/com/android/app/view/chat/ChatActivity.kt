@@ -19,11 +19,14 @@ import com.android.app.contract.IMessagesContract
 import com.android.app.data.UserSingleton
 import com.android.app.data.model.Chat
 import com.android.app.data.model.Message
+import com.android.app.data.model.Notification
 import com.android.app.presenter.chat.MessagePresenter
 import com.android.app.utils.ImageUtils
 import com.android.app.utils.KeyboardUtils
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterMessage
+import com.android.app.view.notifications.FirebaseCloudMessaging
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_chat.imgChat
 import java.util.*
@@ -241,9 +244,28 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
         message.remetenteID = UserSingleton.instance.uID
         message.remetenteNome = UserSingleton.instance.name
 
+        createNotification(message)
+
         addMessage(message)
         edtMessage.text.clear()
         iPresenter.sendMessage(message)
+    }
+
+    private fun createNotification(message: Message) {
+        val db = FirebaseFirestore.getInstance().collection("notifications")
+        val not = Notification()
+        not.id = db.document().id
+        not.avatarURL = chat.avatarURL
+        not.idDestinatario = message.remetenteID
+        not.title = chat.nome
+        //not.token = UserSingleton.instance.notificationToken
+        not.topic = chat.id
+        not.message = message.message
+        not.date = Date()
+
+        //FirebaseCloudMessaging().subscribeToTopic(chat.id)
+
+        db.document().set(not)
     }
 
     override fun showProgress() {

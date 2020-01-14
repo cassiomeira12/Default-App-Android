@@ -6,6 +6,7 @@ import com.android.app.R
 import com.android.app.contract.IChatsContract
 import com.android.app.data.UserSingleton
 import com.android.app.data.model.Chat
+import com.android.app.view.notifications.FirebaseCloudMessaging
 import com.google.firebase.firestore.FirebaseFirestore
 import java.lang.Exception
 import java.util.*
@@ -50,6 +51,7 @@ class FirebaseChatsService(var listener : IChatsContract.Listener) : IChatsContr
 
             }
             .addOnSuccessListener { result ->
+                FirebaseCloudMessaging().subscribeToTopic(chat.id)
                 listener.onCreatedSuccess(chat)
             }
             .addOnFailureListener {exception ->
@@ -64,6 +66,7 @@ class FirebaseChatsService(var listener : IChatsContract.Listener) : IChatsContr
             .delete()
             .addOnSuccessListener {
                 Log.d(TAG, "Chat removido no BD com sucesso")
+                FirebaseCloudMessaging().unsubscribeFromTopic(chat.id)
                 listener.onRemovedSuccess(chat)
             }
             .addOnFailureListener { exception ->

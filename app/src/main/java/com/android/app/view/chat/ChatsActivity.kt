@@ -56,6 +56,7 @@ class ChatsActivity : AppCompatActivity(), Adapter.Actions, IChatsContract.View 
             chat.administradores.put(userID, userID)
             chat.users.put(userID, userID)
             chat.descricao = "Descricao do grupo"
+
             //iPresenter.createChat(this, chat)
         }
 
