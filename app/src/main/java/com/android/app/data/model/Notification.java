@@ -1,5 +1,7 @@
 package com.android.app.data.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,7 +16,7 @@ public class Notification implements Serializable {
     public Tipo type;
     public Date date;
     public String avatarURL;
-    public boolean lida = true;
+    public boolean lida = false;
 
     public Notification() {
         type = Tipo.TEXT;

@@ -8,7 +8,10 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.android.app.R
 import com.android.app.data.model.Notification
+import com.android.app.utils.DateUtils
+import com.android.app.utils.ImageUtils
 import de.hdodenhof.circleimageview.CircleImageView
+import java.util.*
 
 class AdapterNotification(itensList: MutableList<Notification>, context: Context, actions: Actions): Adapter<Notification>(itensList, context, actions) {
     private val TAG = javaClass.simpleName
@@ -67,13 +70,13 @@ class AdapterNotification(itensList: MutableList<Notification>, context: Context
             layoutNotificationImg = itemView.findViewById(R.id.layoutNotificationImg)
             imgNotificationImg = itemView.findViewById(R.id.imgNotificationImg)
             progressBarImg = itemView.findViewById(R.id.progressBarImg)
-            txtNotificationImg = itemView.findViewById(R.id.txtDataNotificationImg)
+            txtNotificationImg = itemView.findViewById(R.id.txtNotificationImg)
             txtDataNotificationImg = itemView.findViewById(R.id.txtDataNotificationImg)
 
             layoutNotificationSeguir = itemView.findViewById(R.id.layoutNotificationSeguir)
             imgNotificationSeguir = itemView.findViewById(R.id.imgNotificationImg)
             progressBarSeguir = itemView.findViewById(R.id.progressBarImg)
-            txtNotificationSeguir = itemView.findViewById(R.id.txtDataNotificationImg)
+            txtNotificationSeguir = itemView.findViewById(R.id.txtNotificationSeguir)
             txtDataNotificationSeguir = itemView.findViewById(R.id.txtDataNotificationImg)
             btnSeguir = itemView.findViewById(R.id.btnSeguir)
 
@@ -91,9 +94,14 @@ class AdapterNotification(itensList: MutableList<Notification>, context: Context
             hideAll()
             when(notification.type) {
                 Notification.Tipo.TEXT -> {
+                    txtNotificationText.setText(notification.message)
+                    txtDataNotificationText.setText(DateUtils.getMinutosPassadosString(notification.date, Date()))
                     layoutNotificationText.visibility = View.VISIBLE
                 }
                 Notification.Tipo.TEXT_IMG -> {
+                    txtNotificationImg.setText(notification.message)
+                    txtDataNotificationImg.setText(DateUtils.getMinutosPassadosString(notification.date, Date()))
+                    ImageUtils(context).picassoImageUser(notification.idDestinatario, imgNotificationImg, notification.avatarURL)
                     layoutNotificationImg.visibility = View.VISIBLE
                 }
                 Notification.Tipo.USER_SEGUIR -> {

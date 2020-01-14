@@ -30,14 +30,14 @@
         android:paddingTop="?attr/actionBarSize"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/clip_margin"
-        tools:listitem="@layout/item_chat"/>
+        tools:listitem="@layout/item_notification"/>
 
     <LinearLayout
         android:id="@+id/layoutCarregando"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_gravity="center"
         android:orientation="vertical">
 
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_gravity="center"
         android:padding="12dp"
         android:orientation="vertical">

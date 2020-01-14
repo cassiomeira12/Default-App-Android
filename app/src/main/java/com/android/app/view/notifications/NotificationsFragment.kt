@@ -4,18 +4,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.app.R
+import com.android.app.contract.INotificationsContract
 import com.android.app.data.model.Notification
+import com.android.app.presenter.notifications.NotificationsPresenter
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterNotification
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
-class NotificationsFragment: Fragment(), Adapter.Actions {
+class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract.View {
     private val TAG = javaClass.simpleName
 
+    internal lateinit var iPresenter: INotificationsContract.Presenter
     lateinit var adapter: AdapterNotification
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -26,7 +30,14 @@ class NotificationsFragment: Fragment(), Adapter.Actions {
         super.onViewCreated(view, savedInstanceState)
         configFragmentAppBar()
         configAdapter()
-        //list()
+
+        iPresenter = NotificationsPresenter(this)
+        iPresenter.listNotifications()
+    }
+
+    override fun onDestroyView() {
+        iPresenter.onDestroy()
+        super.onDestroyView()
     }
 
     private fun configFragmentAppBar() {
@@ -53,23 +64,10 @@ class NotificationsFragment: Fragment(), Adapter.Actions {
     private fun configAdapter() {
         adapter = AdapterNotification(ArrayList<Notification>(), getContext()!!, this)
         val layout = LinearLayoutManager(getContext()!!, LinearLayoutManager.VERTICAL, false)
+        layout.setReverseLayout(true)
+        layout.setStackFromEnd(true)
         recyclerNotifications.layoutManager = layout
         recyclerNotifications.adapter = adapter
-    }
-
-    fun list() {
-        adapter.add(Notification())
-        adapter.add(Notification("asdfasd", Notification.Tipo.TEXT_IMG))
-        adapter.add(Notification())
-        adapter.add(Notification("asfasdfasdf", Notification.Tipo.USER_SEGUIR))
-        adapter.add(Notification("asdfasd", Notification.Tipo.TEXT_IMG))
-        adapter.add(Notification())
-        adapter.add(Notification())
-        adapter.add(Notification("asfasdfasdf", Notification.Tipo.USER_SEGUIR))
-        adapter.add(Notification("asdfasd", Notification.Tipo.TEXT_IMG))
-        adapter.add(Notification())
-        adapter.add(Notification("asfasdfasdf", Notification.Tipo.USER_SEGUIR))
-        adapter.add(Notification())
     }
 
     override fun onLongClickItem(view: View?) {
@@ -79,6 +77,30 @@ class NotificationsFragment: Fragment(), Adapter.Actions {
     override fun onClickItem(view: View?) {
         adapter.objectSelected.lida = false
         startActivity(Intent(getContext(), NotificationActivity::class.java))
+    }
+
+    override fun showProgress() {
+        layoutCarregando.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        layoutCarregando?.visibility = View.GONE
+    }
+
+    override fun onFailure(message: String) {
+        layoutErrorNetwork.visibility = View.VISIBLE
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onListSuccess(list: List<Notification>) {
+        adapter.itensList.addAll(list)
+        adapter.notifyDataSetChanged()
+        recyclerNotifications.smoothScrollToPosition(adapter.itemCount)
+        if (adapter.isEmpty) {
+            layoutSemNotificacoes.visibility = View.VISIBLE
+        } else {
+            layoutSemNotificacoes.visibility = View.GONE
+        }
     }
 
 }

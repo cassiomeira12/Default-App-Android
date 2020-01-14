@@ -4,6 +4,7 @@
     android:id="@+id/item_notification"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
     android:background="@drawable/view">
 
     <LinearLayout
@@ -31,7 +32,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Nos próximos 3 pagamentos que você fizer com o Picpay nas máquinas CIELO, daremos 10% de volta"/>
+                    android:text="Texto"/>
 
             </LinearLayout>
 
@@ -50,7 +51,7 @@
 
     <LinearLayout
         android:id="@+id/layoutNotificationImg"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -101,7 +102,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Nos próximos 3 pagamentos 10% de   akjdfh asdkjfhasjkdfhjkasdf kjasdhfkjs fdh"/>
+                    android:text="Texto"/>
 
             </LinearLayout>
 
@@ -120,7 +121,7 @@
 
     <LinearLayout
         android:id="@+id/layoutNotificationSeguir"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -173,7 +174,7 @@
                     android:layout_weight="1"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:text="Fulano de tal asd asdfas asdfasdf asdfdf "/>
+                    android:text="Name"/>
 
                 <Button
                     android:id="@+id/btnSeguir"

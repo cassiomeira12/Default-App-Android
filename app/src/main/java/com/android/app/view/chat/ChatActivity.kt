@@ -254,6 +254,7 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
     private fun createNotification(message: Message) {
         val db = FirebaseFirestore.getInstance().collection("notifications")
         val not = Notification()
+        not.type = Notification.Tipo.TEXT_IMG
         not.id = db.document().id
         not.avatarURL = chat.avatarURL
         not.idDestinatario = message.remetenteID

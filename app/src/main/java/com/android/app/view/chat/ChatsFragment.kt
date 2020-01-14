@@ -49,6 +49,11 @@ class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View {
         }
     }
 
+    override fun onDestroyView() {
+        iPresenter.onDestroy()
+        super.onDestroyView()
+    }
+
     private fun configFragmentAppBar() {
         (getActivity() as AppCompatActivity).setSupportActionBar(toolbar)
         setHasOptionsMenu(true)
