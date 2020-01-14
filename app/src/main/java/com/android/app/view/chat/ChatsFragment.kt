@@ -2,7 +2,6 @@ package com.android.app.view.chat
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,9 +11,11 @@ import com.android.app.R
 import com.android.app.contract.IChatsContract
 import com.android.app.data.UserSingleton
 import com.android.app.data.model.Chat
+import com.android.app.data.model.Notification
 import com.android.app.presenter.chat.ChatsPresenter
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterChat
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_chats.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -44,7 +45,15 @@ class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View {
             chat.administradores.put(userID, userID)
             chat.users.put(userID, userID)
             chat.descricao = "Descricao do grupo"
-            iPresenter.createChat(getContext()!!, chat)
+            //iPresenter.createChat(getContext()!!, chat)
+            val db = FirebaseFirestore.getInstance().collection("notifications")
+            val not = Notification()
+            not.title = "titlo"
+            not.token = "c2SlOJqk10I:APA91bFgMzXHM1zW4SjA7qAYxpxUwvbvyqc2GEuYR0eZSpl57iTqgRZRwP_8PVkEJ0Flrx8qaACqjEYXyftSiSh1YsWEX2sKfbZtwKh2nu0CkA6rh3hOyuQLtO5jVgyg5a1p42FL4Xu5"
+            not.message = "message"
+            not.date = Date()
+
+            db.document().set(not)
         }
     }
 

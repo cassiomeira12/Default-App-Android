@@ -10,7 +10,7 @@ public class Message {
     public String id;
     @SerializedName("idChat")
     public String idChat;
-    @SerializedName("tipo")
+    @SerializedName("type")
     public Tipo tipo;
     @SerializedName("message")
     public String message;
@@ -67,7 +67,7 @@ public class Message {
         return "Message"
                 + "\nid " + id
                 + "\nidChat " + idChat
-                + "\ntipo " + tipo
+                + "\ntype " + tipo
                 + "\nmessage " + message
                 + "\nhide " + hide
                 + "\nsendDate " + sendDate
