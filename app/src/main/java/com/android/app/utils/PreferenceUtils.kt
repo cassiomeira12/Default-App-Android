@@ -10,6 +10,7 @@ class PreferenceUtils (private var context: Context?) {
     private val AUTH_TOKEN = "auth-token"
     private val USER_NAME = "user_name"
     private val USER_EMAIL = "user_email"
+    private val TOKEN_NOTIFICATION = "token_notification"
     private val PUSH_NOTIFICATION = "push_notification"
 
     private fun getPreference(): SharedPreferences {
@@ -38,6 +39,14 @@ class PreferenceUtils (private var context: Context?) {
 
     fun setUserEmail(value: String?) {
         getPreference().edit().putString(USER_EMAIL, value).apply()
+    }
+
+    fun getTokenNotification(): String? {
+        return getPreference().getString(TOKEN_NOTIFICATION, null)
+    }
+
+    fun setTokenNotification(value: String) {
+        getPreference().edit().putString(TOKEN_NOTIFICATION, value).apply()
     }
 
     fun getPushNotification(): Boolean {
