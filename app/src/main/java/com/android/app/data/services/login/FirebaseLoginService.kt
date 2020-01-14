@@ -34,29 +34,29 @@ class FirebaseLoginService (var listener : ILoginContract.Listener) : ILoginCont
     private fun findUserByEmail(email: String) {
         val db = FirebaseFirestore.getInstance()
         db.collection("users")
-                .whereEqualTo("email", email)
-                .get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "Size " + task.result!!.documents.size)
-                        if (task.result!!.documents.size == 0) {
-                            Log.d(TAG, "Usuario nao encontrado")
-                            listener.onFailure("Usuário não encontrado")//Erro usuario nao encontrado
-                        } else if (task.result!!.documents.size == 1) {
-                            val user = task.result!!.documents.get(0).toObject(BaseUser::class.java)
-                            user!!.notificationToken = PreferenceUtils(activity).getTokenNotification()
-                            updateUserNotificationToken(user)
-                            Log.d(TAG, user.toString())
-                            listener.onSuccess(user!!)
-                        } else {
-                            Log.e(TAG, "Foram encontradas " + task.result!!.documents.size + " contas com email " + email)
-                            listener.onFailure("Multiplas contas com mesmo email")
-                        }
+            .whereEqualTo("email", email)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "Size " + task.result!!.documents.size)
+                    if (task.result!!.documents.size == 0) {
+                        Log.d(TAG, "Usuario nao encontrado")
+                        listener.onFailure("Usuário não encontrado")//Erro usuario nao encontrado
+                    } else if (task.result!!.documents.size == 1) {
+                        val user = task.result!!.documents.get(0).toObject(BaseUser::class.java)
+                        user!!.notificationToken = PreferenceUtils(activity).getTokenNotification()
+                        updateUserNotificationToken(user)
+                        Log.d(TAG, user.toString())
+                        listener.onSuccess(user!!)
                     } else {
-                        Log.e(TAG, task.exception.toString())
-                        listener.onFailure(task.exception.toString())
+                        Log.e(TAG, "Foram encontradas " + task.result!!.documents.size + " contas com email " + email)
+                        listener.onFailure("Multiplas contas com mesmo email")
                     }
+                } else {
+                    Log.e(TAG, task.exception.toString())
+                    listener.onFailure(task.exception.toString())
                 }
+            }
     }
 
     private fun updateUserNotificationToken(user: BaseUser) {
