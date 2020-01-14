@@ -36,7 +36,7 @@ class RestLoginService (var listener : ILoginContract.Listener) : ILoginContract
                 }
 
                 //Salvando o token de autenticacao
-                PreferenceUtils(activity).setToken(response.headers().get("auth-token")!!)
+                PreferenceUtils(activity).setAuthToken(response.headers().get("auth-token")!!)
                 listener.onSuccess(user)
             }
 

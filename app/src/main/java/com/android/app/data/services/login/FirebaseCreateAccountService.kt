@@ -6,6 +6,7 @@ import com.android.app.R
 import com.android.app.contract.ICreateAccountContract
 import com.android.app.data.model.BaseUser
 import com.android.app.data.model.Status
+import com.android.app.utils.PreferenceUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,14 +21,14 @@ class FirebaseCreateAccountService (var listener : ICreateAccountContract.Listen
     override fun register(activity: Activity, user: BaseUser, login: String, password: String) {
         this.activity = activity
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(login, password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "Login criado com sucesso")
-                        createUser(user)
-                    } else {
-                        checkException(task.exception!!)
-                    }
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "Login criado com sucesso")
+                    createUser(user)
+                } else {
+                    checkException(task.exception!!)
                 }
+            }
     }
 
     private fun createUser(user: BaseUser) {
@@ -36,6 +37,7 @@ class FirebaseCreateAccountService (var listener : ICreateAccountContract.Listen
 
         //Atualizando informacoes ao criar novo usuario
         user.uID = uID
+        user.notificationToken = PreferenceUtils(activity).getTokenNotification()
         user.emailVerified = false
         user.createAt = Date()
         user.updateAt = Date()
@@ -43,15 +45,15 @@ class FirebaseCreateAccountService (var listener : ICreateAccountContract.Listen
         user.password = null //Nao adicionar a senha no BD
 
         db.collection("users")
-                .document(uID)
-                .set(user)
-                .addOnSuccessListener {
-                    Log.d(TAG, "Usuario adicionado no BD com sucesso")
-                    listener.onCreatedSuccess(user)
-                }
-                .addOnFailureListener { exception ->
-                    checkException(exception)
-                }
+            .document(uID)
+            .set(user)
+            .addOnSuccessListener {
+                Log.d(TAG, "Usuario adicionado no BD com sucesso")
+                listener.onCreatedSuccess(user)
+            }
+            .addOnFailureListener { exception ->
+                checkException(exception)
+            }
     }
 
     private fun checkException(ex: Exception) {

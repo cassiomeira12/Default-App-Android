@@ -33,7 +33,12 @@ class FirebaseCloudMessaging: FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.d(TAG, "Token: $token")
+        saveTokenInPreferences(token)
+    }
+
+    private fun saveTokenInPreferences(token: String) {
+        Log.d(TAG, "saveNotificationToken: $token")
+        PreferenceUtils(getApplicationContext()).setTokenNotification(token)
     }
 
     fun criarNotificacao(title: String, message: String, channelId: String?, data: Map<String, String>, context: Context) {

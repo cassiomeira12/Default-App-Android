@@ -17,11 +17,11 @@ class PreferenceUtils (private var context: Context?) {
         return context!!.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     }
 
-    fun getToken(): String? {
+    fun getAuthToken(): String? {
         return getPreference().getString(AUTH_TOKEN, null)
     }
 
-    fun setToken(value: String) {
+    fun setAuthToken(value: String) {
         getPreference().edit().putString(AUTH_TOKEN, value).apply()
     }
 

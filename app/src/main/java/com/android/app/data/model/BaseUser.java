@@ -10,6 +10,8 @@ import java.util.Date;
 public class BaseUser implements Serializable {
     @SerializedName("_id")
     public String uID;
+    @SerializedName("notification_token")
+    public String notificationToken;
     @SerializedName("avatarURL")
     public String avatarURL;
     @SerializedName("status")
@@ -35,6 +37,7 @@ public class BaseUser implements Serializable {
 
     public void setUser(BaseUser user) {
         this.uID = user.uID;
+        this.notificationToken = user.notificationToken;
         this.avatarURL = user.avatarURL;
         this.status = user.status;
         this.name = user.name;
@@ -50,6 +53,7 @@ public class BaseUser implements Serializable {
     public String toString() {
         return "BaseUser"
                 + "\nuID ".concat(uID)
+                + "\nnotificationToken ".concat(notificationToken == null ? "null" : notificationToken)
                 + "\navatarURL ".concat(avatarURL == null ? "null" : avatarURL)
                 + "\nstatus ".concat(status.toString())
                 + "\nname ".concat(name)

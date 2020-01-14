@@ -5,8 +5,10 @@ import android.content.Intent
 import android.util.Log
 import com.android.app.R
 import com.android.app.contract.IGoogleSignContract
+import com.android.app.data.UserSingleton
 import com.android.app.data.model.BaseUser
 import com.android.app.data.model.Status
+import com.android.app.utils.PreferenceUtils
 import com.google.android.gms.auth.api.signin.*
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
@@ -27,10 +29,10 @@ class FirebaseGoogleSignService (var listener : IGoogleSignContract.Listener): I
     override fun createGoogleClient(activity: Activity) {
         this.activity = activity
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
-                requestIdToken(activity.getString(R.string.default_web_client_id)).
-                requestEmail().
-                build()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(activity.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
 
         googleSignInClient = GoogleSignIn.getClient(activity, gso)
         auth = FirebaseAuth.getInstance()
@@ -56,36 +58,38 @@ class FirebaseGoogleSignService (var listener : IGoogleSignContract.Listener): I
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        auth.signInWithCredential(credential).
-                addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val googleUser = FirebaseAuth.getInstance().currentUser
-                        loginWithGoogle(googleUser!!)
-                    } else {
-                        Log.e(TAG, "2 " + task.exception.toString())
-                        checkException(task.exception!!)
-                    }
-                }
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val googleUser = FirebaseAuth.getInstance().currentUser
+                loginWithGoogle(googleUser!!)
+            } else {
+                Log.e(TAG, "2 " + task.exception.toString())
+                checkException(task.exception!!)
+            }
+        }
     }
 
     private fun loginWithGoogle(googleUser: FirebaseUser) {
         val db = FirebaseFirestore.getInstance()
         db.collection("users")
-                .whereEqualTo("email", googleUser.email)
-                .get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        if (task.result!!.isEmpty) {//Caso nao exista o usuario ja cadastrado
-                            createAccount(googleUser)//Cadastrar novo usuario
-                        } else {
-                            val user = task.result!!.documents.get(0).toObject(BaseUser::class.java)
-                            listener.onSuccess(user!!)
-                        }
+            .whereEqualTo("email", googleUser.email)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    if (task.result!!.isEmpty) {//Caso nao exista o usuario ja cadastrado
+                        createAccount(googleUser)//Cadastrar novo usuario
                     } else {
-                        Log.d(TAG, "3 " + task.exception.toString())
-                        checkException(task.exception!!)
+                        val user = task.result!!.documents.get(0).toObject(BaseUser::class.java)
+                        user!!.notificationToken = PreferenceUtils(activity).getTokenNotification()
+                        updateUserNotificationToken(user)
+                        listener.onSuccess(user!!)
                     }
+                } else {
+                    Log.d(TAG, "3 " + task.exception.toString())
+                    checkException(task.exception!!)
                 }
+            }
     }
 
     private fun createAccount(googleUser: FirebaseUser) {
@@ -101,23 +105,31 @@ class FirebaseGoogleSignService (var listener : IGoogleSignContract.Listener): I
 
         //Atualizando informacoes ao criar novo usuario
         user.uID = uID
+        user.notificationToken = PreferenceUtils(activity).getTokenNotification()
         user.emailVerified = googleUser.isEmailVerified
         user.createAt = Date()
         user.updateAt = Date()
         user.status = Status.ATIVO
 
         db.collection("users")
-                .document(uID)
-                .set(user)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d(TAG, "Usuario adicionado no BD com sucesso")
-                        listener.onSuccess(user)
-                    } else {
-                        Log.e(TAG, "4 " + task.exception.toString())
-                        checkException(task.exception!!)
-                    }
+            .document(uID)
+            .set(user)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "Usuario adicionado no BD com sucesso")
+                    listener.onSuccess(user)
+                } else {
+                    Log.e(TAG, "4 " + task.exception.toString())
+                    checkException(task.exception!!)
                 }
+            }
+    }
+
+    private fun updateUserNotificationToken(user: BaseUser) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("users")
+            .document(user.uID)
+            .update("notificationToken", user.notificationToken)
     }
 
     private fun checkException(ex: Exception) {
