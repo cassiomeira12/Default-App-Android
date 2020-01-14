@@ -1,15 +1,12 @@
 package com.android.app.view.adapter
 
 import android.content.Context
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.android.app.R
-import com.android.app.data.UserSingleton
-import com.android.app.data.model.Message
 import com.android.app.data.model.Notification
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -92,7 +89,7 @@ class AdapterNotification(itensList: MutableList<Notification>, context: Context
 
         fun setTipo(notification: Notification) {
             hideAll()
-            when(notification.tipo) {
+            when(notification.type) {
                 Notification.Tipo.TEXT -> {
                     layoutNotificationText.visibility = View.VISIBLE
                 }

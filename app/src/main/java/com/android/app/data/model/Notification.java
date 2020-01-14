@@ -7,21 +7,22 @@ public class Notification implements Serializable {
 
     public String id;
     public String idDestinatario;
-    public String titulo;
-    public String mensagem;
-    public String topico;
-    public Tipo tipo;
+    public String token;
+    public String title;
+    public String message;
+    public String topic;
+    public Tipo type;
     public Date date;
     public String avatarURL;
     public boolean lida = true;
 
     public Notification() {
-        tipo = Tipo.TEXT;
+        type = Tipo.TEXT;
     }
 
-    public Notification(String mensagem, Tipo tipo) {
-        this.mensagem = mensagem;
-        this.tipo = tipo;
+    public Notification(String message, Tipo type) {
+        this.message = message;
+        this.type = type;
     }
 
     public enum Tipo {

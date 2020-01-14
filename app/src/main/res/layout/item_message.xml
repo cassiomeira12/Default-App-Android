@@ -32,7 +32,7 @@
                 android:textSize="16sp"
                 android:gravity="left"
                 android:textColor="@android:color/white"
-                android:text="mensagem"/>
+                android:text="message"/>
 
         </LinearLayout>
 
@@ -83,7 +83,7 @@
                 android:layout_marginTop="2dp"
                 android:textSize="16sp"
                 android:gravity="left"
-                android:text="mensagem"/>
+                android:text="message"/>
 
             <TextView
                 android:id="@+id/txtSendDateR"
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:gravity="left"
-                android:text="mensagem sdfasdf asd fasdf  asdfa sdfasdfa adsgadfgsdfg sdffg sdfg sdffg sdfg sdfg sdfgsd gsdg sdfg  sdfg sdfg sfd ggsdf gfg sdfg sdfgsdf gsdgf"/>
+                android:text="message sdfasdf asd fasdf  asdfa sdfasdfa adsgadfgsdfg sdffg sdfg sdffg sdfg sdfg sdfgsd gsdg sdfg  sdfg sdfg sfd ggsdf gfg sdfg sdfgsdf gsdgf"/>
 
             <TextView
                 android:id="@+id/txtSendDateS"
