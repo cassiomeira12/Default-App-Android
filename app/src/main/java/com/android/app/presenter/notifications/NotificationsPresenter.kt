@@ -17,6 +17,10 @@ class NotificationsPresenter(view: INotificationsContract.View) : INotifications
         service.listNotifications()
     }
 
+    override fun setReadNotification(notification: Notification) {
+        service.setReadNotification(notification)
+    }
+
     override fun onFailure(message: String) {
         view?.hideProgress()
         view?.onFailure(message)

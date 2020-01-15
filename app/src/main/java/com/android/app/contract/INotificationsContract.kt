@@ -22,10 +22,12 @@ interface INotificationsContract {
     interface Presenter {
         fun onDestroy()
         fun listNotifications()
+        fun setReadNotification(notification: Notification)
     }
 
     interface Service {
         fun listNotifications()
+        fun setReadNotification(notification: Notification)
     }
 
 }

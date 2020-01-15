@@ -33,6 +33,13 @@ class FirebaseNotificationsService(var listener : INotificationsContract.Listene
             }
     }
 
+    override fun setReadNotification(notification: Notification) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("notifications")
+            .document(notification.id)
+            .update("lida", true)
+    }
+
     private fun checkException(ex: Exception) {
         Log.e(TAG, ex.toString())
         when(ex.message) {

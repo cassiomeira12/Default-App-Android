@@ -46,7 +46,7 @@ class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract
     }
 
     override fun onDestroyView() {
-        //iPresenter.onDestroy()
+        iPresenter.onDestroy()
         super.onDestroyView()
     }
 
@@ -85,6 +85,7 @@ class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract
     }
 
     override fun onClickItem(view: View?) {
+        iPresenter.setReadNotification(adapter.objectSelected)
         adapter.objectSelected.lida = true
         adapter.notifyItemSelectedDataChanged()
         val intent = Intent(getContext(), NotificationActivity::class.java)
