@@ -73,6 +73,12 @@ public abstract class Adapter<T> extends RecyclerView.Adapter implements View.On
         return true;
     }
 
+    public void notifyItemSelectedDataChanged() {
+        if (objectSelected != null) {
+            notifyItemChanged(itensList.indexOf(objectSelected));
+        }
+    }
+
     @Override
     public int getItemCount() {
         return itensList.size();

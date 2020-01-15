@@ -64,8 +64,8 @@ class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract
     private fun configAdapter() {
         adapter = AdapterNotification(ArrayList<Notification>(), getContext()!!, this)
         val layout = LinearLayoutManager(getContext()!!, LinearLayoutManager.VERTICAL, false)
-        layout.setReverseLayout(true)
-        layout.setStackFromEnd(true)
+        layout.setReverseLayout(true) //Layout invertido
+        layout.setStackFromEnd(true) //Layout invertido
         recyclerNotifications.layoutManager = layout
         recyclerNotifications.adapter = adapter
     }
@@ -75,8 +75,11 @@ class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract
     }
 
     override fun onClickItem(view: View?) {
-        adapter.objectSelected.lida = false
-        startActivity(Intent(getContext(), NotificationActivity::class.java))
+        adapter.objectSelected.lida = true
+        adapter.notifyItemSelectedDataChanged()
+        val intent = Intent(getContext(), NotificationActivity::class.java)
+        intent.putExtra("notification", adapter.objectSelected)
+        startActivity(intent)
     }
 
     override fun showProgress() {
