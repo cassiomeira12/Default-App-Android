@@ -55,9 +55,6 @@
             android:name=".view.chat.ChatActivity"
             android:theme="@style/AppThemeNoActionBar" />
         <activity
-            android:name=".view.chat.ChatsActivity"
-            android:theme="@style/AppThemeNoActionBar" />
-        <activity
             android:name=".view.login.VerifiedEmailActivity"
             android:label=""
             android:parentActivityName=".view.login.VerifiedEmailActivity"
