@@ -86,6 +86,10 @@ class AdapterMessage(itensList: MutableList<Message>, context: Context, actions:
         return false
     }
 
+    override fun searchValue(item: Message?): String {
+        return item!!.message
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val layout: FrameLayout
 

@@ -62,4 +62,5 @@
     <string name="saiu_do_grupo">saiu do grupo</string>
     <string name="entrou_no_grupo">entrou no grupo</string>
     <string name="default_notification_channel_id">Default</string>
+    <string name="search">Pesquisar</string>
 </resources>

@@ -30,6 +30,8 @@ public abstract class Adapter<T> extends RecyclerView.Adapter implements View.On
 
     abstract Boolean update(T item);
 
+    abstract protected String searchValue(T item);
+
     @Override
     public void onClick(View view) {
         Log.d(TAG, "onClick");
@@ -91,9 +93,12 @@ public abstract class Adapter<T> extends RecyclerView.Adapter implements View.On
 
         query = query.toUpperCase();
         for (T t : itensList) {
-            if (!t.toString().toUpperCase().contains(query)) {
+            if (!searchValue(t).toUpperCase().contains(query)) {
                 itensHidden.add(t);
             }
+//            if (!t.toString().toUpperCase().contains(query)) {
+//                itensHidden.add(t);
+//            }
         }
 
         for (T t : itensHidden) {

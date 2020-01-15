@@ -40,6 +40,10 @@ class AdapterNotification(itensList: MutableList<Notification>, context: Context
         return false
     }
 
+    override fun searchValue(item: Notification?): String {
+        return item!!.toString()
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val layout: FrameLayout
 

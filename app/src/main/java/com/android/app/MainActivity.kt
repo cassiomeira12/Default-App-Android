@@ -31,7 +31,6 @@ class MainActivity: AppCompatActivity() {
     lateinit var navView: BottomNavigationView
 
     companion object {
-        var current: Fragment? = null
         var homeFragment = HomeFragment()
         var chatsFragment = ChatsFragment()
         var notificationsFragment = NotificationsFragment()
@@ -41,8 +40,6 @@ class MainActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        current = homeFragment
 
 //        val appBarConfiguration = AppBarConfiguration.Builder(
 //            R.id.navigation_home,
@@ -63,6 +60,8 @@ class MainActivity: AppCompatActivity() {
         showBadge(this, navView, R.id.navigation_chats, 0)
         showBadge(this, navView, R.id.navigation_settings, 9)
 
+        setFragment(homeFragment)
+
         UserPresenter(object : IUser.View {
             override fun onFailure(message: String) { }
             override fun onResult(user: BaseUser?) { }
@@ -71,46 +70,33 @@ class MainActivity: AppCompatActivity() {
         PermissionUtils.requestPermissionWriteStorage(this)
     }
 
+    private fun setFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
+            .commit()
+    }
+
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
         when (menuItem.itemId) {
             R.id.navigation_home -> {
                 //showBadge(this, navView, R.id.navigation_home, 0)
-                current = homeFragment
-                val fragment = current as Fragment
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
-                    .commit()
+                setFragment(homeFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_chats -> {
                 //showBadge(this, navView, R.id.navigation_chats, 5)
-                current = chatsFragment
-                val fragment = current as Fragment
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
-                    .commit()
+                setFragment(chatsFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
                 //showBadge(this, navView, R.id.navigation_notifications, 0)
-                current = notificationsFragment
-                val fragment = current as Fragment
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
-                    .commit()
+                setFragment(notificationsFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_settings -> {
                 //showBadge(this, navView, R.id.navigation_settings, 0)
-                current = settingsFragment
-                val fragment = current as Fragment
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
-                    .commit()
+                setFragment(settingsFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }

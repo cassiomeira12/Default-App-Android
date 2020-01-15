@@ -27,6 +27,15 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <include
+            android:id="@+id/viewSearch"
+            layout="@layout/view_search"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerUsers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerChats"
             android:layout_width="match_parent"
@@ -42,6 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:visibility="gone"
         android:layout_gravity="center"
         android:orientation="vertical">
 
@@ -74,6 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="bottom|right"
+        android:visibility="invisible"
         android:src="@drawable/ic_add_white"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

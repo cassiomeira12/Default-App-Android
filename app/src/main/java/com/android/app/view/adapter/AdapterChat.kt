@@ -112,6 +112,10 @@ class AdapterChat(itensList: MutableList<Chat>, context: Context, actions: Actio
         return false
     }
 
+    override fun searchValue(item: Chat?): String {
+        return item!!.nome
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val layout: FrameLayout
 

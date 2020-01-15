@@ -1,5 +1,7 @@
 package com.android.app.data.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.firestore.Exclude;
 import com.google.gson.annotations.SerializedName;
 
@@ -54,5 +56,20 @@ public class Chat implements Serializable, Comparable<Date> {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Chat"
+                + "\nid ".concat(id)
+                + "\navatarURl ".concat(avatarURL == null ? "null" : avatarURL)
+                + "\ncreatedAt ".concat(createdAt.toString())
+                + "\nupdateAt ".concat(updatedAt.toString())
+                + "\nnome ".concat(nome)
+                + "\ndescricao ".concat(descricao)
+                + "\ncriptografia ".concat(criptografia == null ? "null" : criptografia)
+                + "\nadaministradores ".concat(administradores.toString())
+                + "\nusers ".concat(users.toString());
+
     }
 }

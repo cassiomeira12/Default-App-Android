@@ -2,7 +2,6 @@ package com.android.app.view.chat
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,56 +10,49 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.app.R
 import com.android.app.contract.IChatsContract
 import com.android.app.data.UserSingleton
+import com.android.app.data.model.BaseUser
 import com.android.app.data.model.Chat
-import com.android.app.data.model.Notification
 import com.android.app.presenter.chat.ChatsPresenter
+import com.android.app.view.SearchComponent
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterChat
-import com.google.firebase.firestore.FirebaseFirestore
+import com.android.app.view.adapter.AdapterUser2
 import kotlinx.android.synthetic.main.fragment_chats.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View {
+class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View, View.OnClickListener {
     private val TAG = javaClass.simpleName
 
     internal lateinit var iPresenter: IChatsContract.Presenter
     lateinit var adapter: AdapterChat
+    lateinit var adapterUsers: AdapterUser2
+
+    companion object {
+        var listItens = ArrayList<Chat>()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Log.d("cassio", "Chats onCreateView")
-        Log.d(TAG, this.toString())
         return inflater.inflate(R.layout.fragment_chats, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d("cassio", "Chats onCreatedView")
         super.onViewCreated(view, savedInstanceState)
         configFragmentAppBar()
         configAdapter()
 
+        var search = SearchComponent(getContext()!!, viewSearch, adapter as Adapter<Any>)
+
         iPresenter = ChatsPresenter(this)
-        iPresenter.listChats()
 
-        fab.setOnClickListener { view ->
-            val chat = Chat("Grupo", Date())
-            val userID = UserSingleton.instance.uID
-            chat.createdBy = userID
-            chat.administradores.put(userID, userID)
-            chat.users.put(userID, userID)
-            chat.descricao = "Descricao do grupo"
-            //iPresenter.createChat(getContext()!!, chat)
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        Log.d("cassio", "Chats onSaveInstance")
-        super.onSaveInstanceState(outState)
+        fab.setOnClickListener(this)
     }
 
     override fun onResume() {
-        Log.d("cassio", "Chats onResume")
         super.onResume()
+        if (adapter.isEmpty) {
+            iPresenter.listChats()
+        }
     }
 
     override fun onDestroyView() {
@@ -94,10 +86,33 @@ class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View {
     }
 
     private fun configAdapter() {
-        adapter = AdapterChat(ArrayList<Chat>(), getContext()!!, this)
+        adapter = AdapterChat(listItens, getContext()!!, this)
         val layout = LinearLayoutManager(getContext()!!, LinearLayoutManager.VERTICAL, false)
         recyclerChats.layoutManager = layout
         recyclerChats.adapter = adapter
+
+        adapterUsers = AdapterUser2(ArrayList<BaseUser>(), getContext()!!, this)
+        val l2 = LinearLayoutManager(getContext()!!, LinearLayoutManager.HORIZONTAL, false)
+        recyclerUsers.layoutManager = l2
+        recyclerUsers.adapter = adapterUsers
+
+        adapterUsers.add(BaseUser())
+        adapterUsers.add(BaseUser())
+        adapterUsers.add(BaseUser())
+        adapterUsers.add(BaseUser())
+        adapterUsers.add(BaseUser())
+        adapterUsers.add(BaseUser())
+        adapterUsers.add(BaseUser())
+    }
+
+    override fun onClick(view: View?) {
+        val chat = Chat("Grupo", Date())
+        val userID = UserSingleton.instance.uID
+        chat.createdBy = userID
+        chat.administradores.put(userID, userID)
+        chat.users.put(userID, userID)
+        chat.descricao = "Descricao do grupo"
+        //iPresenter.createChat(getContext()!!, chat)
     }
 
     override fun onLongClickItem(view: View?) {
@@ -129,7 +144,8 @@ class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View {
     }
 
     override fun onListSuccess(list: List<Chat>) {
-        adapter.itensList.addAll(list.sortedWith(compareBy({ it.updatedAt.time })).reversed())
+        listItens.addAll(list.sortedWith(compareBy({ it.updatedAt.time })).reversed())
+        //adapter.itensList.addAll(list.sortedWith(compareBy({ it.updatedAt.time })).reversed())
         //adapter.itensList.addAll(list)
         adapter.notifyDataSetChanged()
         if (adapter.isEmpty) {

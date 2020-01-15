@@ -22,6 +22,10 @@ class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract
     internal lateinit var iPresenter: INotificationsContract.Presenter
     lateinit var adapter: AdapterNotification
 
+    companion object {
+        var listItens = ArrayList<Notification>()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_notifications, container, false)
     }
@@ -32,7 +36,13 @@ class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract
         configAdapter()
 
         iPresenter = NotificationsPresenter(this)
-        iPresenter.listNotifications()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (adapter.isEmpty) {
+            iPresenter.listNotifications()
+        }
     }
 
     override fun onDestroyView() {
@@ -62,7 +72,7 @@ class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract
     }
 
     private fun configAdapter() {
-        adapter = AdapterNotification(ArrayList<Notification>(), getContext()!!, this)
+        adapter = AdapterNotification(listItens, getContext()!!, this)
         val layout = LinearLayoutManager(getContext()!!, LinearLayoutManager.VERTICAL, false)
         layout.setReverseLayout(true) //Layout invertido
         layout.setStackFromEnd(true) //Layout invertido
@@ -96,7 +106,8 @@ class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract
     }
 
     override fun onListSuccess(list: List<Notification>) {
-        adapter.itensList.addAll(list)
+        //adapter.itensList.addAll(list)
+        listItens.addAll(list)
         adapter.notifyDataSetChanged()
         recyclerNotifications.smoothScrollToPosition(adapter.itemCount)
         if (adapter.isEmpty) {
