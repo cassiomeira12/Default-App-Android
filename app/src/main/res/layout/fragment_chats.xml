@@ -22,7 +22,7 @@
                 android:minHeight="?attr/actionBarSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="@string/conversas"
+                app:title="@string/title_chats"
                 android:background="?attr/colorPrimary"/>
 
         </com.google.android.material.appbar.AppBarLayout>

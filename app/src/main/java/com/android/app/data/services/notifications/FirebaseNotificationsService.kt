@@ -23,19 +23,6 @@ class FirebaseNotificationsService(var listener : INotificationsContract.Listene
                     //checkException(e)
                     return@addSnapshotListener
                 }
-                /*
-                for (msg in snapshots.documentChanges) {
-                        val message = msg.document.toObject(Message::class.java)
-                        Log.d(TAG, message.toString())
-                        if (message.hide) {
-                            listHide.add(message)
-                        } else if (!itensDeleted.contains(message)) {
-                            if (LIST_MESSAGES || !message.remetenteID.equals(UserSingleton.instance.uID)) {
-                                list.add(message)
-                            }
-                        }
-                    }
-                 */
                 val list = ArrayList<Notification>()
                 for (doc in snapshots!!.documentChanges) {
                     val notification = doc.document.toObject(Notification::class.java)

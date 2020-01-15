@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_chats"
         android:icon="@drawable/ic_chat_bubble_black"
-        android:title="@string/conversas" />
+        android:title="@string/title_chats" />
 
     <item
         android:id="@+id/navigation_notifications"
@@ -19,6 +19,6 @@
     <item
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings_black"
-        android:title="@string/settings" />
+        android:title="@string/title_settings" />
 
 </menu>

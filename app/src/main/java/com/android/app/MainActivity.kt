@@ -28,19 +28,21 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity: AppCompatActivity() {
     private val TAG = javaClass.simpleName
 
-    lateinit var homeFragment: HomeFragment
-    lateinit var chatsFragment: ChatsFragment
-    lateinit var notificationsFragment: NotificationsFragment
-    lateinit var settingsFragment: SettingsFragment
+    lateinit var navView: BottomNavigationView
+
+    companion object {
+        var current: Fragment? = null
+        var homeFragment = HomeFragment()
+        var chatsFragment = ChatsFragment()
+        var notificationsFragment = NotificationsFragment()
+        var settingsFragment = SettingsFragment()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        homeFragment = HomeFragment()
-//        chatsFragment = ChatsFragment()
-//        notificationsFragment = NotificationsFragment()
-//        settingsFragment = SettingsFragment()
+        current = homeFragment
 
 //        val appBarConfiguration = AppBarConfiguration.Builder(
 //            R.id.navigation_home,
@@ -49,42 +51,17 @@ class MainActivity: AppCompatActivity() {
 //            R.id.navigation_settings
 //        ).build()
 
-        val navView = findViewById<BottomNavigationView>(R.id.nav_view)
-        //navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        navView = findViewById(R.id.nav_view)
+        navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        NavigationUI.setupWithNavController(navView, navController)
+        //val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        //NavigationUI.setupWithNavController(navView, navController)
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-//        showBadge(this, navView, R.id.navigation_home, 0)
-//        showBadge(this, navView, R.id.navigation_notifications, 11)
-//        showBadge(this, navView, R.id.navigation_chats, 0)
-//        showBadge(this, navView, R.id.navigation_settings, 9)
-
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            when(destination.id) {
-                R.id.navigation_home -> {
-                    Handler().post(Runnable {
-                        //showBadge(this, navView, R.id.navigation_home, 0);
-                    })
-                }
-                R.id.navigation_notifications -> {
-                    Handler().post(Runnable {
-                        //showBadge(this, navView, R.id.navigation_notifications, 0);
-                    })
-                }
-                R.id.navigation_chats -> {
-                    Handler().post(Runnable {
-                        //showBadge(this, navView, R.id.navigation_chats, 0);
-                    })
-                }
-                R.id.navigation_settings -> {
-                    Handler().post(Runnable {
-                        //showBadge(this, navView, R.id.navigation_settings, 0);
-                    })
-                }
-            }
-        }
+        showBadge(this, navView, R.id.navigation_home, 0)
+        showBadge(this, navView, R.id.navigation_notifications, 11)
+        showBadge(this, navView, R.id.navigation_chats, 0)
+        showBadge(this, navView, R.id.navigation_settings, 9)
 
         UserPresenter(object : IUser.View {
             override fun onFailure(message: String) { }
@@ -97,7 +74,9 @@ class MainActivity: AppCompatActivity() {
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
         when (menuItem.itemId) {
             R.id.navigation_home -> {
-                val fragment = homeFragment
+                //showBadge(this, navView, R.id.navigation_home, 0)
+                current = homeFragment
+                val fragment = current as Fragment
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
@@ -105,7 +84,9 @@ class MainActivity: AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_chats -> {
-                val fragment = chatsFragment
+                //showBadge(this, navView, R.id.navigation_chats, 5)
+                current = chatsFragment
+                val fragment = current as Fragment
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
@@ -113,7 +94,9 @@ class MainActivity: AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                val fragment = notificationsFragment
+                //showBadge(this, navView, R.id.navigation_notifications, 0)
+                current = notificationsFragment
+                val fragment = current as Fragment
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
@@ -121,7 +104,9 @@ class MainActivity: AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_settings -> {
-                val fragment = settingsFragment
+                //showBadge(this, navView, R.id.navigation_settings, 0)
+                current = settingsFragment
+                val fragment = current as Fragment
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.container, fragment, fragment.javaClass.getSimpleName())
@@ -133,14 +118,16 @@ class MainActivity: AppCompatActivity() {
     }
 
     private fun showBadge(context: Context, navView: BottomNavigationView, @IdRes itemId: Int, number: Int) {
-        removeBadge(navView, itemId)
-        if (number > 0) {
-            val itemView: BottomNavigationItemView = navView.findViewById(itemId)
-            val badge = LayoutInflater.from(context).inflate(R.layout.layout_news_badge, navView, false)
-            val text = badge.findViewById<TextView>(R.id.badge_text_view)
-            text.text = number.toString()
-            itemView.addView(badge)
-        }
+        Handler().post(Runnable {
+            removeBadge(navView, itemId)
+            if (number > 0) {
+                val itemView: BottomNavigationItemView = navView.findViewById(itemId)
+                val badge = LayoutInflater.from(context).inflate(R.layout.layout_news_badge, navView, false)
+                val text = badge.findViewById<TextView>(R.id.badge_text_view)
+                text.text = number.toString()
+                itemView.addView(badge)
+            }
+        })
     }
 
     private fun removeBadge(navView: BottomNavigationView, @IdRes itemId: Int) {

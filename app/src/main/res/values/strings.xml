@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Default App Android</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_chats">Conversas</string>
+    <string name="title_notifications">Notificações</string>
+    <string name="title_settings">Configurações</string>
 
     <string name="login">Login</string>
     <string name="senha">Senha</string>
@@ -60,7 +61,5 @@
     <string name="online_ha">online há</string>
     <string name="saiu_do_grupo">saiu do grupo</string>
     <string name="entrou_no_grupo">entrou no grupo</string>
-    <string name="settings">Configurações</string>
-    <string name="conversas">Conversas</string>
     <string name="default_notification_channel_id">Default</string>
 </resources>

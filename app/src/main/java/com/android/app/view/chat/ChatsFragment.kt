@@ -2,6 +2,7 @@ package com.android.app.view.chat
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,10 +28,13 @@ class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View {
     lateinit var adapter: AdapterChat
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Log.d("cassio", "Chats onCreateView")
+        Log.d(TAG, this.toString())
         return inflater.inflate(R.layout.fragment_chats, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d("cassio", "Chats onCreatedView")
         super.onViewCreated(view, savedInstanceState)
         configFragmentAppBar()
         configAdapter()
@@ -47,6 +51,16 @@ class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View {
             chat.descricao = "Descricao do grupo"
             //iPresenter.createChat(getContext()!!, chat)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        Log.d("cassio", "Chats onSaveInstance")
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onResume() {
+        Log.d("cassio", "Chats onResume")
+        super.onResume()
     }
 
     override fun onDestroyView() {

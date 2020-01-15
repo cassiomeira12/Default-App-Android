@@ -36,7 +36,7 @@ class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract
     }
 
     override fun onDestroyView() {
-        iPresenter.onDestroy()
+        //iPresenter.onDestroy()
         super.onDestroyView()
     }
 
