@@ -16,10 +16,10 @@ public class Notification implements Serializable {
     public Tipo type;
     public Date date;
     public String avatarURL;
-    public boolean lida = false;
+    public boolean lida;
 
     public Notification() {
-        type = Tipo.TEXT;
+        //Firebase
     }
 
     public Notification(String message, Tipo type) {

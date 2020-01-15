@@ -12,6 +12,26 @@ object PermissionUtils {
     val REQUEST_LOCATION = 1
     val REQUEST_STORAGE = 2
 
+    fun checkPermissionLocation(context: Context): Boolean {
+        val permissionCoarse = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+        val permissionFine = ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+        val permission = permissionCoarse.equals(PERMISSION_GRANTED) && permissionFine.equals(PERMISSION_GRANTED)
+        return permission
+    }
+
+    fun requestPermissionLocation(activity: Activity): Boolean {
+        if (checkPermissionLocation(activity)) {
+            return true
+        } else {
+            val arrayPermissions = arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            ActivityCompat.requestPermissions(activity, arrayPermissions, REQUEST_LOCATION)
+            return false
+        }
+    }
+
     fun checkPermissionWriteStorage(context: Context): Boolean {
         val permissionWrite = ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         val permissionRead = ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)

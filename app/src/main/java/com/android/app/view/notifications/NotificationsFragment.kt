@@ -7,13 +7,16 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.app.MainActivity
 import com.android.app.R
 import com.android.app.contract.INotificationsContract
 import com.android.app.data.model.Notification
 import com.android.app.presenter.notifications.NotificationsPresenter
 import com.android.app.view.adapter.Adapter
 import com.android.app.view.adapter.AdapterNotification
+import com.android.app.view.adapter.helper.SimpleItemTouchHelperCallback
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
 class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract.View {
@@ -78,6 +81,10 @@ class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract
         layout.setStackFromEnd(true) //Layout invertido
         recyclerNotifications.layoutManager = layout
         recyclerNotifications.adapter = adapter
+
+        val callback = SimpleItemTouchHelperCallback(adapter)
+        val itemTouch = ItemTouchHelper(callback)
+        itemTouch.attachToRecyclerView(recyclerNotifications)
     }
 
     override fun onLongClickItem(view: View?) {
@@ -116,6 +123,8 @@ class NotificationsFragment: Fragment(), Adapter.Actions, INotificationsContract
         } else {
             layoutSemNotificacoes.visibility = View.GONE
         }
+
+        (activity as MainActivity).showBadgeNotifications(list.size)
     }
 
 }

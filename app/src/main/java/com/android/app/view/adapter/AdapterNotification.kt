@@ -10,10 +10,12 @@ import com.android.app.R
 import com.android.app.data.model.Notification
 import com.android.app.utils.DateUtils
 import com.android.app.utils.ImageUtils
+import com.android.app.view.adapter.helper.ItemTouchHelperAdapter
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
-class AdapterNotification(itensList: MutableList<Notification>, context: Context, actions: Actions): Adapter<Notification>(itensList, context, actions) {
+
+class AdapterNotification(itensList: MutableList<Notification>, context: Context, actions: Actions): Adapter<Notification>(itensList, context, actions), ItemTouchHelperAdapter {
     private val TAG = javaClass.simpleName
     private val layoutID = R.layout.item_notification //Id do item layout
 
@@ -113,6 +115,25 @@ class AdapterNotification(itensList: MutableList<Notification>, context: Context
                 }
             }
         }
+    }
+
+    override fun onItemDismiss(position: Int) {
+        itensList.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(itensList, i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(itensList, i, i - 1)
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition)
+        return true
     }
 
 }

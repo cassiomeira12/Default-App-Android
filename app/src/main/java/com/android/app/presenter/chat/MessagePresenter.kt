@@ -31,7 +31,7 @@ class MessagePresenter(view: IMessagesContract.View) : IMessagesContract.Present
     }
 
     override fun onListSuccess(list: List<Message>) {
-        view?.hideProgress()
+        //view?.hideProgress()
         view?.onListSuccess(list)
     }
 

@@ -284,6 +284,7 @@ class ChatActivity : AppCompatActivity(), Adapter.Actions, IMessagesContract.Vie
             txtSemMensagens.visibility = View.INVISIBLE
             recyclerMensagens.smoothScrollToPosition(adapter.itemCount)
         }
+        hideProgress()
     }
 
     override fun onHideSuccess(list: List<Message>) {

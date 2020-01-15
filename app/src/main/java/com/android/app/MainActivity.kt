@@ -31,6 +31,7 @@ class MainActivity: AppCompatActivity() {
     lateinit var navView: BottomNavigationView
 
     companion object {
+        var currentFragment: Fragment? = null
         var homeFragment = HomeFragment()
         var chatsFragment = ChatsFragment()
         var notificationsFragment = NotificationsFragment()
@@ -55,11 +56,7 @@ class MainActivity: AppCompatActivity() {
         //NavigationUI.setupWithNavController(navView, navController)
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
-        showBadge(this, navView, R.id.navigation_home, 0)
-        showBadge(this, navView, R.id.navigation_notifications, 11)
-        showBadge(this, navView, R.id.navigation_chats, 0)
-        showBadge(this, navView, R.id.navigation_settings, 9)
-
+        currentFragment = homeFragment
         setFragment(homeFragment)
 
         UserPresenter(object : IUser.View {
@@ -68,6 +65,30 @@ class MainActivity: AppCompatActivity() {
         }).updateOnline()
 
         PermissionUtils.requestPermissionWriteStorage(this)
+    }
+
+    override fun onBackPressed() {
+        if (currentFragment == homeFragment) {
+            super.onBackPressed()
+        } else {
+            navView.setSelectedItemId(R.id.navigation_home)
+        }
+    }
+
+    fun showBadgeHome(number: Int) {
+        showBadge(this, navView, R.id.navigation_home, number)
+    }
+
+    fun showBadgeChats(number: Int) {
+        showBadge(this, navView, R.id.navigation_chats, number)
+    }
+
+    fun showBadgeNotifications(number: Int) {
+        showBadge(this, navView, R.id.navigation_notifications, number)
+    }
+
+    fun showBadgeSettings(number: Int) {
+        showBadge(this, navView, R.id.navigation_settings, number)
     }
 
     private fun setFragment(fragment: Fragment) {
@@ -81,21 +102,25 @@ class MainActivity: AppCompatActivity() {
         when (menuItem.itemId) {
             R.id.navigation_home -> {
                 //showBadge(this, navView, R.id.navigation_home, 0)
+                currentFragment = homeFragment
                 setFragment(homeFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_chats -> {
                 //showBadge(this, navView, R.id.navigation_chats, 5)
+                currentFragment = chatsFragment
                 setFragment(chatsFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
                 //showBadge(this, navView, R.id.navigation_notifications, 0)
+                currentFragment = notificationsFragment
                 setFragment(notificationsFragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_settings -> {
                 //showBadge(this, navView, R.id.navigation_settings, 0)
+                currentFragment = settingsFragment
                 setFragment(settingsFragment)
                 return@OnNavigationItemSelectedListener true
             }
