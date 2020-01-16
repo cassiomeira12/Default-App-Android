@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.login.ValidarTelefoneActivity">
+    tools:context=".view.login.PhoneNumberActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -37,41 +37,22 @@
                     android:gravity="center"
                     android:textSize="@dimen/title_card"
                     android:layout_marginTop="16dp"
-                    android:text="Validar telefone"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="@dimen/margin_card"
-                    android:layout_marginRight="@dimen/margin_card"
-                    android:text="Você receberá em breve um SMS com o código de verificação de conta."/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="@dimen/margin_card"
-                    android:layout_marginRight="@dimen/margin_card"
-                    android:text="+ 55 77 9 9911-6731"/>
+                    android:text="Número de telefone"/>
 
                 <EditText
+                    android:id="@+id/edtPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/xxxx"
+                    android:layout_marginTop="12dp"
+                    android:hint="(XX) X XXXX-XXXX"
                     android:gravity="center"
-                    android:inputType="number"
+                    android:inputType="phone"
+                    android:textSize="18sp"
                     android:layout_marginLeft="@dimen/margin_card"
                     android:layout_marginRight="@dimen/margin_card"/>
 
                 <Button
+                    android:id="@+id/buttomConfirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -80,6 +61,8 @@
                     android:layout_marginLeft="@dimen/margin_card"
                     android:layout_marginRight="@dimen/margin_card"
                     android:background="@drawable/btn_round"
+                    android:textColor="@color/white"
+                    android:onClick="confirm"
                     android:text="@string/confirmar"/>
 
             </LinearLayout>

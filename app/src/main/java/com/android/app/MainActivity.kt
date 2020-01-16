@@ -1,6 +1,7 @@
 package com.android.app
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -18,6 +19,7 @@ import com.android.app.presenter.login.UserPresenter
 import com.android.app.utils.PermissionUtils
 import com.android.app.view.chat.ChatsFragment
 import com.android.app.view.home.HomeFragment
+import com.android.app.view.login.PhoneNumberActivity
 import com.android.app.view.notifications.NotificationsFragment
 import com.android.app.view.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
@@ -63,6 +65,8 @@ class MainActivity: AppCompatActivity() {
             override fun onFailure(message: String) { }
             override fun onResult(user: BaseUser?) { }
         }).updateOnline()
+
+        startActivity(Intent(getApplicationContext(), PhoneNumberActivity::class.java))
 
         PermissionUtils.requestPermissionWriteStorage(this)
     }

@@ -7,11 +7,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-<!--    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />-->
 
     <application
         android:allowBackup="true"
@@ -22,9 +19,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:label=""
+            android:name=".view.login.PhoneNumberActivity"
+            android:parentActivityName=".view.login.PhoneNumberActivity"/>
+        <activity
+            android:label=""
+            android:name=".view.login.VerifiedPhoneNumberActivity"
+            android:parentActivityName=".view.login.VerifiedPhoneNumberActivity"/>
+        <activity
             android:name=".view.settings.DisableAccountActivity"
             android:label="Desativar conta"
-            android:parentActivityName=".view.settings.DisableAccountActivity"/>
+            android:parentActivityName=".view.settings.DisableAccountActivity" />
         <activity
             android:name=".view.settings.ChangePasswordActivity"
             android:label="Alterar senha"
@@ -88,7 +93,7 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoActionBar"/>
+            android:theme="@style/AppThemeNoActionBar" />
         <activity
             android:name=".view.SplashActivity"
             android:screenOrientation="portrait"
@@ -98,9 +103,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!--        Firebase Push Notification-->
+        </activity> <!-- Firebase Push Notification -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_stat_notification" />
@@ -109,14 +112,13 @@
             android:resource="@color/colorPrimary" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id"/>
+            android:value="@string/default_notification_channel_id" />
+
         <service android:name=".view.notifications.FirebaseCloudMessaging">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <!--        Firebase Push Notification-->
-
     </application>
 
 </manifest>
