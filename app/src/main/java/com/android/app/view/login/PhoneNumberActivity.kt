@@ -80,19 +80,18 @@ class PhoneNumberActivity : AppCompatActivity() {
             // (XX)_X_XXXX-XXXX
             PHONE_VALID = false
             var index = 0
-            var char = value[index]
+            var char: Char
 
-            if (!char.equals('(')) { // (
+            if (!value[index++].equals('(')) { // (
                 return false
             }
-            while (++index < 3) { // (XX
-                char = value[index]
+            while (index < 3) { // (XX
+                char = value[index++]
                 if (!char.isDigit()) {
                     return false
                 }
             }
-            char = value[index++]
-            if (!char.equals(')')) { // (XX)
+            if (!value[index++].equals(')')) { // (XX)
                 return false
             }
             if (!value[index++].isWhitespace()) { // (XX)_
@@ -104,17 +103,17 @@ class PhoneNumberActivity : AppCompatActivity() {
             if (!value[index++].isWhitespace()) { // (XX)_X_
                 return false
             }
-            while (++index <= 10) { // (XX)_X_XXXX
-                char = value[index]
+            while (index < 11) { // (XX)_X_XXXX
+                char = value[index++]
                 if (!char.isDigit()) {
                     return false
                 }
             }
-            if (!value[index].equals('-')) { // (XX)_X_XXXX-
+            if (!value[index++].equals('-')) { // (XX)_X_XXXX-
                 return false
             }
-            while (++index < MAX_DIGITS) { // (XX)_X_XXXX-XXXX
-                char = value[index]
+            while (index < MAX_DIGITS) { // (XX)_X_XXXX-XXXX
+                char = value[index++]
                 if (!char.isDigit()) {
                     return false
                 }
