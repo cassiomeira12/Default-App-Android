@@ -10,7 +10,7 @@ import java.util.Date;
 public class BaseUser implements Serializable {
     @SerializedName("_id")
     public String uID;
-    @SerializedName("notification_token")
+    @SerializedName("notificationToken")
     public String notificationToken;
     @SerializedName("avatarURL")
     public String avatarURL;

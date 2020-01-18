@@ -1,15 +1,18 @@
 package com.android.app.data.model;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
 public class PhoneNumber implements Serializable {
+    @SerializedName("countryCode")
     private String countryCode = "+55";
+    @SerializedName("ddd")
     private String ddd;
+    @SerializedName("number")
     private String number;
+    @SerializedName("verified")
+    public Boolean verified;
 
     public PhoneNumber() {
 
@@ -17,7 +20,6 @@ public class PhoneNumber implements Serializable {
 
     public PhoneNumber(String phoneNumber) {
         phoneNumber = phoneNumber.replace("-", "").replace("()", "").replace(" ", "");
-        Log.d("cassio", phoneNumber);
         if (phoneNumber.charAt(0) == '+') {//+5577999116731
             countryCode = phoneNumber.substring(0, 3);
             ddd = phoneNumber.substring(3, 5);

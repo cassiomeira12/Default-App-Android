@@ -9,8 +9,12 @@ import android.view.View
 import android.widget.EditText
 import com.android.app.R
 import com.android.app.data.model.PhoneNumber
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.activity_phone_number.*
 import kotlinx.android.synthetic.main.activity_verified_phone_number.*
+import java.util.concurrent.TimeUnit
 
 class VerifiedPhoneNumberActivity : AppCompatActivity() {
 
@@ -26,6 +30,25 @@ class VerifiedPhoneNumberActivity : AppCompatActivity() {
     }
 
     fun confirm(view: View) {
+        PhoneAuthProvider.getInstance()
+            .verifyPhoneNumber(phoneNumber.toString(), 60, TimeUnit.SECONDS, this, object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                    val code = credential.smsCode
+                    Log.d("cassio", code)
+                }
 
+                override fun onVerificationFailed(exception: FirebaseException) {
+                    Log.e("cassio", exception.toString())
+                }
+
+                override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
+                    Log.d("cassio", verificationId)
+                    Log.d("cassio", token.toString())
+                }
+            })
     }
+
+
+
+
 }
