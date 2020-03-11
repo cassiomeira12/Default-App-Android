@@ -66,7 +66,7 @@ class MainActivity: AppCompatActivity() {
             override fun onResult(user: BaseUser?) { }
         }).updateOnline()
 
-        startActivity(Intent(getApplicationContext(), PhoneNumberActivity::class.java))
+        //startActivity(Intent(getApplicationContext(), PhoneNumberActivity::class.java))
 
         PermissionUtils.requestPermissionWriteStorage(this)
     }

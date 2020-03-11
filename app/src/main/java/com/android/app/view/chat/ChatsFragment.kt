@@ -26,7 +26,6 @@ class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View, View.OnCl
 
     internal lateinit var iPresenter: IChatsContract.Presenter
     lateinit var adapter: AdapterChat
-    lateinit var adapterUsers: AdapterUser2
 
     companion object {
         var listItens = ArrayList<Chat>()
@@ -40,8 +39,6 @@ class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View, View.OnCl
         super.onViewCreated(view, savedInstanceState)
         configFragmentAppBar()
         configAdapter()
-
-        var search = SearchComponent(getContext()!!, viewSearch, adapter as Adapter<Any>)
 
         iPresenter = ChatsPresenter(this)
 
@@ -90,19 +87,6 @@ class ChatsFragment: Fragment(), Adapter.Actions, IChatsContract.View, View.OnCl
         val layout = LinearLayoutManager(getContext()!!, LinearLayoutManager.VERTICAL, false)
         recyclerChats.layoutManager = layout
         recyclerChats.adapter = adapter
-
-        adapterUsers = AdapterUser2(ArrayList<BaseUser>(), getContext()!!, this)
-        val l2 = LinearLayoutManager(getContext()!!, LinearLayoutManager.HORIZONTAL, false)
-        recyclerUsers.layoutManager = l2
-        recyclerUsers.adapter = adapterUsers
-
-        adapterUsers.add(BaseUser())
-        adapterUsers.add(BaseUser())
-        adapterUsers.add(BaseUser())
-        adapterUsers.add(BaseUser())
-        adapterUsers.add(BaseUser())
-        adapterUsers.add(BaseUser())
-        adapterUsers.add(BaseUser())
     }
 
     override fun onClick(view: View?) {

@@ -25,6 +25,15 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+        <include
+            android:id="@+id/viewSearch"
+            layout="@layout/view_search"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerUsers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

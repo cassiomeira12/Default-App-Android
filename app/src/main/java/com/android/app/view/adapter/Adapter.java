@@ -28,9 +28,9 @@ public abstract class Adapter<T> extends RecyclerView.Adapter implements View.On
         this.actions = actions;
     }
 
-    abstract Boolean update(T item);
+    abstract public Boolean update(T item);
 
-    abstract protected String searchValue(T item);
+    abstract public String searchValue(T item);
 
     @Override
     public void onClick(View view) {

@@ -66,7 +66,9 @@ class SearchComponent(var context: Context, var searchView : View, var adapter: 
     override fun afterTextChanged(s: Editable?) {
         Log.d("cassio", "after")
         Log.d("cassio", s.toString())
-        adapter!!.search(s.toString())
+        if (s.toString().isNotBlank()) {
+            adapter!!.search(s.toString())
+        }
     }
 
 }

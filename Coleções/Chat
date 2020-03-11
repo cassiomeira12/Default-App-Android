@@ -1,0 +1,46 @@
+[CONVERSAS] {
+    "1" {
+        "id": "1"
+        "avatar_url": "https://avatar.com.br"
+        "created_by": "user_id"
+        "created_at": "2013-01-30T18:13:42"
+        "update_at": "2019-11-06T15:31:22"
+        "nome": "Us Karas"
+        "descricao": "Descricao do grupo"
+        "criptografia": ""
+        "administradores": {
+            "1": "id_user" (created_by)
+        }
+        "users" : {
+            "1": "id_uer"
+        }
+        [MESSAGES]: {
+            "1": {
+                "id": "id_message"
+                "idChat": "id_chat"
+                "tipo": "LEAVE|JOIN|TEXT|PHOTO|VIDEO|AUDIO|ARQUIVO|LOCALIZACAO|CONTATO"
+                "mensagem": "mensagem de texto"
+                "hide": true|false
+                "sendDate": "2019-11-06T15:31:22"
+                "mediaURL": ""
+                "remetenteID": "id_user"
+                "remetenteNome": "user name"
+                "lido": {
+                    "1": {
+                        "user_id": "id"
+                        "name": "Cassio"
+                        "avatar_url": "https://avatar.com.br"
+                    }
+                }
+            }
+        }
+    }
+}
+
+"user": {
+    "conversas": {
+        "1": {
+            "id": "1"
+        }
+    }
+}

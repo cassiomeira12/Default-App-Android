@@ -27,22 +27,16 @@ class AdapterUser2(itensList: MutableList<BaseUser>, context: Context, actions: 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewHolder = holder as ViewHolder
 
-//        val item = itensList.get(position)
-//
-//        viewHolder.txtUserName.text = item.name
-//        if (chat != null && chat!!.administradores.containsValue(item.uID)) {
-//            viewHolder.txtAdmin.visibility = View.VISIBLE
-//        } else {
-//            viewHolder.txtAdmin.visibility = View.INVISIBLE
-//        }
-//
-//        if (itensSelected.contains(item)) {
-//            viewHolder.layout.isSelected = true
-//        } else {
-//            viewHolder.layout.isSelected = false
-//        }
-//
-//        ImageUtils(context).picassoImageUser(item.uID, viewHolder.imgUser, item.avatarURL, viewHolder.progressBar)
+        val item = itensList.get(position)
+
+        if (itensSelected.contains(item)) {
+            viewHolder.layout.isSelected = true
+        } else {
+            viewHolder.layout.isSelected = false
+        }
+
+        viewHolder.txtUserName.text = item.name
+        ImageUtils(context).picassoImageUser(item.uID, viewHolder.imgUser, item.avatarURL, viewHolder.progressBar)
 
         viewHolder.layout.setTag(position)
     }

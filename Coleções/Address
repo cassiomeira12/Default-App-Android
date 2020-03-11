@@ -1,0 +1,50 @@
+[PAISES] {
+    "1": {
+        "id": "1"
+        "nome": "Brasil"
+        "sigla": "BR"
+    }
+}
+
+[ESTADOS] {
+    "1": {
+        "id": "1"
+        "id_federacao": "1"
+        "federacao": "Brasil"
+        "federacao_sigla": "BR"
+        "nome": "Bahia"
+        "sigla": "BA"
+    }
+}
+
+[CIDADES] {
+    "1": {
+        "id": "1"
+        "nome": "Macaúbas"
+        "id_estado": "1"
+        "estado": "Bahia"
+        "estado_sigla": "BA"
+        "localizacao": {
+            "lat": "0"
+            "lon": "0"
+        }
+    }
+}
+
+address {
+    "municipio": {
+        "id": "1"
+        "nome": "Macaúbas"
+        "estado": "Bahia"
+        "estado_sigla": "BA"
+    }
+    "cep": "46500000"
+    "bairro": "alto do bonfim"
+    "rua": "Avenida senhor do bonfim"
+    "numero": "69"
+    "complemento": "alguma coisa"
+    "localizacao": {
+        "lat": "0"
+        "lon": "0"
+    }
+}
