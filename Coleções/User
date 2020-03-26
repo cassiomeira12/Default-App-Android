@@ -5,20 +5,20 @@
     "avatar_url": "https://avatar.com.br"
     "name": "cassio"
     "email": "cassio@email.com"
-    "isemailverified": false
+    "email_verified": true
     "status": active
-    "email_verified": True
     "created_at": "2013-01-30T18:13:42Z"
     "update_at": "2019-11-06T15:31:22Z"
-    "online": "2019-11-06T15:31:22Z"
     [PHONES]: {
         "1": {
             "country_code": "+55"
             "ddd": "77"
-            "number": "999116731"  
+            "number": "999116731"
         }
     }
     [ADDRESS]: {
         
     }
+    
+    "online": "2019-11-06T15:31:22Z"
 }
